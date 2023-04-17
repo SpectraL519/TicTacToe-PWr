@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         onePhoneTwoPlayersBT = findViewById(R.id.onePhoneTwoPlayersBT)
         onePhoneTwoPlayersBT.setOnClickListener {
             val startGameIntent = Intent(this, GameActivity::class.java)
-            startGameIntent.putExtra("size", "12")
+            startGameIntent.putExtra("size", "5")
             startActivity(startGameIntent)
         }
     }

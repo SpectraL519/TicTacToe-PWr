@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraintLayoutMenu"
+    android:id="@+id/linearLayoutMenu"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -37,12 +37,13 @@
     <com.tictactoe_master.SquareLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <TableLayout
             android:id="@+id/gameBoardTL"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center">
-        </TableLayout>
+            android:layout_margin="15dp"
+            android:gravity="center"></TableLayout>
     </com.tictactoe_master.SquareLayout>
 
 </LinearLayout>
