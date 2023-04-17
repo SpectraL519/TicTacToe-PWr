@@ -7,10 +7,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:constraint_referenced_tags="0dp"
-    tools:context=".MainActivity">
+    tools:context=".GameActivity">
 
     <TextView
-        android:id="@+id/coinsTV"
+        android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -18,7 +18,7 @@
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/titleTV"
+        android:id="@+id/textView6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -27,25 +27,22 @@
         android:text="@string/title_screen_text"
         android:textSize="34sp" />
 
-    <Button
-        android:id="@+id/onePhoneTwoPlayersBT"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:text="@string/twoPlayersOnePhone" />
+        android:layout_margin="10dp"
+        android:text="RUCH: X" />
 
-    <Button
-        android:id="@+id/twoPhonesTwoPlayersWiFiBT"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/twoPlayersTwoPhonesWiFi" />
+    <com.tictactoe_master.SquareLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TableLayout
+            android:id="@+id/gameBoardTL"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+        </TableLayout>
+    </com.tictactoe_master.SquareLayout>
 
-    <Button
-        android:id="@+id/onePhoneOnePlayerBT"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/onePlayerOnePhone" />
 </LinearLayout>

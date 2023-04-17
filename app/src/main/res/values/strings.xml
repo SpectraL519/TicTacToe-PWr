@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">TicTacToe-Master</string>
+
+    <string name="title_screen_text">TicTacToe\nMaster</string>
+    <string name="twoPlayersOnePhone">2 osoby na 1 telefonie</string>
+    <string name="twoPlayersTwoPhonesWiFi">2 osoby przez wi-fi</string>
+    <string name="onePlayerOnePhone">gra z botem</string>
 </resources>
