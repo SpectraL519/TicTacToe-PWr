@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="RUCH: X" />
+        android:text="TURN: X" />
 
     <com.tictactoe_master.SquareLayout
         android:layout_width="match_parent"

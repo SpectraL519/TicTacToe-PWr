@@ -13,7 +13,8 @@
         android:id="@+id/coinsTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:fontFamily="monospace"
         android:text="0 coins"
         android:textSize="20sp" />
@@ -28,25 +29,87 @@
         android:text="@string/title_screen_text"
         android:textSize="34sp" />
 
-    <Button
-        android:id="@+id/onePhoneTwoPlayersBT"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/oneVsOneCV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:text="@string/twoPlayersOnePhone" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        app:cardBackgroundColor="@color/light_green"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="8dp"
+        app:cardMaxElevation="10dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true">
 
-    <Button
-        android:id="@+id/twoPhonesTwoPlayersWiFiBT"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/twoPlayersTwoPhonesWiFi" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center_vertical"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="@string/twoPlayersOnePhone"
+            android:textAllCaps="true"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/onePhoneOnePlayerBT"
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/oneVsBotCV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/onePlayerOnePhone" />
+        android:layout_gravity="center_horizontal"
+        app:cardBackgroundColor="@color/light_green"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="8dp"
+        app:cardMaxElevation="10dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true">
+
+        <TextView
+            android:id="@+id/event_card_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center_vertical"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="@string/onePlayerOnePhone"
+            android:textAllCaps="true"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/oneVsOneWiFiCV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        app:cardBackgroundColor="@color/light_green"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="8dp"
+        app:cardMaxElevation="10dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center_vertical"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="@string/twoPlayersTwoPhonesWiFi"
+            android:textAllCaps="true"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </androidx.cardview.widget.CardView>
+
 </LinearLayout>

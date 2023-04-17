@@ -3,25 +3,20 @@ package com.tictactoe_master
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Spannable
-import android.text.SpannableStringBuilder
-import android.widget.Button
-import android.widget.TextView
-import androidx.annotation.DrawableRes
-import androidx.core.content.ContextCompat
+import androidx.cardview.widget.CardView
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var onePhoneTwoPlayersBT: Button
+    private lateinit var oneVsOneCV: CardView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        onePhoneTwoPlayersBT = findViewById(R.id.onePhoneTwoPlayersBT)
-        onePhoneTwoPlayersBT.setOnClickListener {
+        oneVsOneCV = findViewById(R.id.oneVsOneCV)
+        oneVsOneCV.setOnClickListener {
             val startGameIntent = Intent(this, GameActivity::class.java)
-            startGameIntent.putExtra("size", "5")
+            startGameIntent.putExtra("size", "8")
             startActivity(startGameIntent)
         }
     }
