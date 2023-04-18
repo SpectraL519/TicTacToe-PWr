@@ -22,4 +22,8 @@ data class GameBoard constructor(private val size: Int) {
             return Array<Figure>(this.size) { this.board[it][it] }
         return Array<Figure>(this.size) { this.board[it][this.size - 1 - it] }
     }
+
+    fun clear() {
+        this.board = Array<Array<Figure>>(this.size) { Array<Figure>(this.size) { Figure.EMPTY } }
+    }
 }

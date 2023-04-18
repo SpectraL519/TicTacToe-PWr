@@ -15,6 +15,12 @@ object ClassicWinCondition : IWinCondition {
         if (board.diagonal().all { it == Figure.X })
             return IWinCondition.Result.X
 
+        if (board.diagonal(false).all { it == Figure.O })
+            return IWinCondition.Result.O
+
+        if (board.diagonal(false).all { it == Figure.X })
+            return IWinCondition.Result.X
+
         for (i: Int in 0 until board.size()) {
             if (board.row(i).all { it == Figure.O })
                 return IWinCondition.Result.O
