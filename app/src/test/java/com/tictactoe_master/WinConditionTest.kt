@@ -1,7 +1,7 @@
 package com.tictactoe_master
 
-import com.tictactoe_master.logic.Figure
-import com.tictactoe_master.logic.GameBoard
+import com.tictactoe_master.logic.utils.Figure
+import com.tictactoe_master.logic.utils.GameBoard
 import com.tictactoe_master.logic.win_condition.ClassicWinCondition
 import com.tictactoe_master.logic.win_condition.IWinCondition
 import org.junit.Assert

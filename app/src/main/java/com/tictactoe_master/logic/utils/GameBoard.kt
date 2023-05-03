@@ -1,5 +1,4 @@
-package com.tictactoe_master.logic
-
+package com.tictactoe_master.logic.utils
 
 
 data class GameBoard constructor(private val size: Int) {

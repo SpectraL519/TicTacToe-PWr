@@ -1,6 +1,6 @@
 package com.tictactoe_master.logic.win_condition
 
-import com.tictactoe_master.logic.GameBoard
+import com.tictactoe_master.logic.utils.GameBoard
 
 
 
