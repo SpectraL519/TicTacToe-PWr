@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity
 
 class GameActivity : AppCompatActivity() {
 
+    private var size = 3
+
     private lateinit var gameBoardTL: TableLayout
     private lateinit var cells: Array<Array<TextView>>
 
@@ -21,10 +23,11 @@ class GameActivity : AppCompatActivity() {
         setContentView(R.layout.activity_game)
 
         gameBoardTL = findViewById(R.id.gameBoardTL)
-        intent.getStringExtra("size")?.let { placeSquares(it.toInt()) }
+        size = intent.getIntExtra("size", 3)
+        placeSquares()
     }
 
-    private fun placeSquares(size: Int) {
+    private fun placeSquares() {
         gameBoardTL.removeAllViews()
         cells = Array(size) { Array(size) { TextView(this) } }
         for (i in 0 until size) {
