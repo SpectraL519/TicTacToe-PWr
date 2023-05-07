@@ -2,15 +2,16 @@ package com.tictactoe_master.logic.game
 
 import com.tictactoe_master.logic.utils.Figure
 import com.tictactoe_master.logic.utils.GameBoard
+import com.tictactoe_master.logic.utils.Status
 import com.tictactoe_master.logic.win_condition.IWinCondition
 
 
 
-/*
 class PointGame
     constructor(
         private val _boardSize: Int,
-        private val _winCondition: IWinCondition
+        private val _winCondition: IWinCondition,
+        private val _points: Int = 3
     )
     : IGame {
 
@@ -19,6 +20,7 @@ class PointGame
             _board = GameBoard(this._boardSize),
             _score = GameState.DEFAULT_SCORE
         )
+
     override val state: GameState
         get() = this._state
 
@@ -30,13 +32,15 @@ class PointGame
         if (board[x][y] == Figure.EMPTY) {
             board[x][y] = this._state.currentPlayer;
 
-            val status: IWinCondition.Result = this.checkStatus()
-            val finished: Boolean = (status != IWinCondition.Result.NONE)
-
+            val status: Status = this.checkStatus()
+            val pointGained = (status.result != IWinCondition.Result.NONE)
             val score: MutableMap<IWinCondition.Result, Int> = this._state.score!!
-            if (finished) {
-                score[status] = score[status]?.plus(1)!!
-                // TODO: clear the point area (row, col, diag)
+            val finished: Boolean = (score.maxBy { it.value }.value == this._points)
+
+            if (pointGained) {
+                score[status.result] = score[status.result]?.plus(1)!!
+                for (coordinates in status.coordinates)
+                    board[coordinates.row][coordinates.column] = Figure.EMPTY
             }
 
             // this._state = this._state.copy(
@@ -53,7 +57,7 @@ class PointGame
         return false;
     }
 
-    override fun checkStatus(): IWinCondition.Result {
+    override fun checkStatus(): Status {
         return this._winCondition.check(this.board);
     }
 
@@ -69,5 +73,3 @@ class PointGame
         )
     }
 }
-
- */

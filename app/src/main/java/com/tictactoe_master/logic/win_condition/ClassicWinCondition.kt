@@ -7,13 +7,13 @@ import com.tictactoe_master.logic.utils.Status
 
 
 object ClassicWinCondition : IWinCondition {
-    // singleton class
-    
-    override fun check(board: GameBoard): Status {
+    override fun check (board: GameBoard): Status {
+        val boardSize: Int = board.size()
+        
         if (board.diagonal().all { it == Figure.O })
             return Status(
                 result = IWinCondition.Result.O,
-                coordinates = List<Coordinates>(board.size()) {
+                coordinates = List<Coordinates>(boardSize) {
                     index -> Coordinates(index, index)
                 }
             )
@@ -21,7 +21,7 @@ object ClassicWinCondition : IWinCondition {
         if (board.diagonal().all { it == Figure.X })
             return Status(
                 result = IWinCondition.Result.X,
-                coordinates = List<Coordinates>(board.size()) {
+                coordinates = List<Coordinates>(boardSize) {
                     index -> Coordinates(index, index)
                 }
             )
@@ -29,24 +29,24 @@ object ClassicWinCondition : IWinCondition {
         if (board.diagonal(false).all { it == Figure.O })
             return Status(
                 result = IWinCondition.Result.O,
-                coordinates = List<Coordinates>(board.size()) {
-                    index -> Coordinates(index, board.size() - 1 - index)
+                coordinates = List<Coordinates>(boardSize) {
+                    index -> Coordinates(index, boardSize - 1 - index)
                 }
             )
 
         if (board.diagonal(false).all { it == Figure.X })
             return Status(
                 result = IWinCondition.Result.X,
-                coordinates = List<Coordinates>(board.size()) {
-                        index -> Coordinates(index, board.size() - 1 - index)
+                coordinates = List<Coordinates>(boardSize) {
+                    index -> Coordinates(index, boardSize - 1 - index)
                 }
             )
 
-        for (i: Int in 0 until board.size()) {
+        for (i: Int in 0 until boardSize) {
             if (board.row(i).all { it == Figure.O })
                 return Status(
                     result = IWinCondition.Result.O,
-                    coordinates = List<Coordinates>(board.size()) {
+                    coordinates = List<Coordinates>(boardSize) {
                         index -> Coordinates(i, index)
                     }
                 )
@@ -54,7 +54,7 @@ object ClassicWinCondition : IWinCondition {
             if (board.row(i).all { it == Figure.X })
                 return Status(
                     result = IWinCondition.Result.X,
-                    coordinates = List<Coordinates>(board.size()) {
+                    coordinates = List<Coordinates>(boardSize) {
                         index -> Coordinates(i, index)
                     }
                 )
@@ -62,7 +62,7 @@ object ClassicWinCondition : IWinCondition {
             if (board.column(i).all { it == Figure.O })
                 return Status(
                     result = IWinCondition.Result.O,
-                    coordinates = List<Coordinates>(board.size()) {
+                    coordinates = List<Coordinates>(boardSize) {
                         index -> Coordinates(index, i)
                     }
                 )
@@ -70,7 +70,7 @@ object ClassicWinCondition : IWinCondition {
             if (board.column(i).all { it == Figure.X })
                 return Status(
                     result = IWinCondition.Result.X,
-                    coordinates = List<Coordinates>(board.size()) {
+                    coordinates = List<Coordinates>(boardSize) {
                         index -> Coordinates(index, i)
                     }
                 )
