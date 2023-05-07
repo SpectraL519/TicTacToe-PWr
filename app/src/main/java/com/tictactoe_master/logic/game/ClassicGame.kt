@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.tictactoe_master.logic.game.IGame
 import com.tictactoe_master.logic.utils.Figure
 import com.tictactoe_master.logic.utils.GameBoard
+import com.tictactoe_master.logic.utils.Status
 import com.tictactoe_master.logic.win_condition.IWinCondition
 
 
@@ -27,7 +28,7 @@ class ClassicGame
             this._state.update(
                 _board = board,
                 _currentPlayer = this._state.currentPlayer.next(),
-                _finished = (this.checkStatus() != IWinCondition.Result.NONE)
+                _finished = (this.checkStatus().result != IWinCondition.Result.NONE)
             )
 
             return true;
@@ -36,7 +37,7 @@ class ClassicGame
         return false;
     }
 
-    override fun checkStatus() : IWinCondition.Result {
+    override fun checkStatus() : Status {
         return this._winCondition.check(this._state.board);
     }
 

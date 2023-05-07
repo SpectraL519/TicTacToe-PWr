@@ -6,6 +6,7 @@ import com.tictactoe_master.logic.win_condition.IWinCondition
 
 
 
+/*
 class PointGame
     constructor(
         private val _boardSize: Int,
@@ -68,3 +69,5 @@ class PointGame
         )
     }
 }
+
+ */

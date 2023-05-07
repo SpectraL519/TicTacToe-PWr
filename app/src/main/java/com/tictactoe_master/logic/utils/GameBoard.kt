@@ -9,14 +9,16 @@ data class GameBoard constructor(private val size: Int) {
 
     fun isFull(): Boolean = this.board.all { row -> row.all { it != Figure.EMPTY } }
 
-    operator fun get(index: Int): Array<Figure> = this.board[index]
+    operator fun get (index: Int): Array<Figure> = this.board[index]
+    operator fun get (coordinates: Coordinates): Figure =
+        this.board[coordinates.row()][coordinates.column()]
 
-    fun row(index: Int): Array<Figure> = this.board[index]
+    fun row (index: Int): Array<Figure> = this.board[index]
 
-    fun column(index: Int): Array<Figure> =
+    fun column( index: Int): Array<Figure> =
         Array<Figure>(this.size) { this.board[it][index] }
 
-    fun diagonal(right: Boolean = true): Array<Figure> {
+    fun diagonal (right: Boolean = true): Array<Figure> {
         if (right)
             return Array<Figure>(this.size) { this.board[it][it] }
         return Array<Figure>(this.size) { this.board[it][this.size - 1 - it] }
