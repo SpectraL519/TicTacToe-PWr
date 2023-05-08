@@ -5,16 +5,12 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import com.tictactoe_master.R
 
-/*
-*   Before passing or reading values from file first
-*   use method setContext(AppCompatActivity).
-*/
-object DataToFile {
+object FileDataHandler : DataHandler {
 
     private var sharedPref: SharedPreferences? = null
     private var editor: SharedPreferences.Editor? = null
 
-    fun setContext(context: AppCompatActivity) {
+    private fun setContext(context: AppCompatActivity) {
         this.sharedPref = context.getSharedPreferences(
             context.getString(R.string.app_name),
             MODE_PRIVATE
@@ -22,34 +18,23 @@ object DataToFile {
         this.editor = this.sharedPref!!.edit()
     }
 
-    fun writeInt(key: String, value: Int) {
-        if (this.editor == null) {
-            throw Exception("No context given")
-        }
-
+    override fun writeInt(context: AppCompatActivity, key: String, value: Int) {
+        this.setContext(context)
         this.editor!!.putInt(key, value)
     }
 
-    fun writeFloat(key: String, value: Float) {
-        if (this.editor == null) {
-            throw Exception("No context given")
-        }
-
+    override fun writeFloat(context: AppCompatActivity, key: String, value: Float) {
+        this.setContext(context)
         this.editor!!.putFloat(key, value)
     }
 
-    fun writeString(key: String, value: String) {
-        if (this.editor == null) {
-            throw Exception("No context given")
-        }
-
+    override fun writeString(context: AppCompatActivity, key: String, value: String) {
+        this.setContext(context)
         this.editor!!.putString(key, value)
     }
 
-    fun readInt(key: String): Int {
-        if (this.sharedPref == null) {
-            throw Exception("No context given")
-        }
+    override fun readInt(context: AppCompatActivity, key: String): Int {
+        this.setContext(context)
 
         val value = this.sharedPref!!.getInt(key, Integer.MIN_VALUE)
 
@@ -59,10 +44,8 @@ object DataToFile {
         return value
     }
 
-    fun readFloat(key: String): Float {
-        if (this.sharedPref == null) {
-            throw Exception("No context given")
-        }
+    override fun readFloat(context: AppCompatActivity, key: String): Float {
+        this.setContext(context)
 
         val value = this.sharedPref!!.getFloat(key, Float.MIN_VALUE)
 
@@ -72,10 +55,8 @@ object DataToFile {
         return value
     }
 
-    fun readString(key: String): String {
-        if (this.sharedPref == null) {
-            throw Exception("No context given")
-        }
+    override fun readString(context: AppCompatActivity, key: String): String {
+        this.setContext(context)
 
         return sharedPref!!.getString(key, null)
             ?: throw Exception("No data given on key = $key")
