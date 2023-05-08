@@ -39,8 +39,14 @@ class PointGame
 
             if (pointGained) {
                 score[status.result] = score[status.result]?.plus(1)!!
-                for (coordinates in status.coordinates)
-                    board[coordinates.row][coordinates.column] = Figure.EMPTY
+
+                if (!finished) {
+                    if (status.result == IWinCondition.Result.TIE)
+                        board.clear()
+                    else
+                        for (coordinates in status.coordinates)
+                            board[coordinates.row][coordinates.column] = Figure.EMPTY
+                }
             }
 
             // this._state = this._state.copy(
