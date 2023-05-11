@@ -1,4 +1,4 @@
-package com.tictactoe_master.data_to_file
+package com.tictactoe_master.app_data
 
 import androidx.appcompat.app.AppCompatActivity
 

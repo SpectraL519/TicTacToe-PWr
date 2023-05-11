@@ -1,4 +1,4 @@
-package com.tictactoe_master.data_to_file
+package com.tictactoe_master.app_data
 
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
