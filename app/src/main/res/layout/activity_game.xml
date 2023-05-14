@@ -10,7 +10,7 @@
     tools:context=".GameActivity">
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/coins_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -18,7 +18,7 @@
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/title_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -28,22 +28,23 @@
         android:textSize="34sp" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/turn_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="TURN: X" />
+        android:text="TURN: O" />
 
     <com.tictactoe_master.SquareLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TableLayout
-            android:id="@+id/gameBoardTL"
+            android:id="@+id/game_board_tl"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="15dp"
-            android:gravity="center"></TableLayout>
+            android:gravity="center">
+        </TableLayout>
     </com.tictactoe_master.SquareLayout>
 
 </LinearLayout>
