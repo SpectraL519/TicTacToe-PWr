@@ -1,10 +1,10 @@
 package com.tictactoe_master.logic.game
 
-import androidx.lifecycle.ViewModel
-import com.tictactoe_master.logic.game.IGame
 import com.tictactoe_master.logic.utils.Figure
 import com.tictactoe_master.logic.utils.GameBoard
+import com.tictactoe_master.logic.utils.GameState
 import com.tictactoe_master.logic.utils.Status
+import com.tictactoe_master.logic.win_condition.ClassicWinCondition
 import com.tictactoe_master.logic.win_condition.IWinCondition
 
 
@@ -12,7 +12,7 @@ import com.tictactoe_master.logic.win_condition.IWinCondition
 class ClassicGame
     constructor(
         private val _boardSize: Int,
-        private val _winCondition: IWinCondition)
+        private val _winCondition: IWinCondition = ClassicWinCondition)
     : IGame {
 
     private var _state: GameState = GameState(GameBoard(this._boardSize))

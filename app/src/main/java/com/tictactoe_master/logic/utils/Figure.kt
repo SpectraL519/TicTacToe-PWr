@@ -10,12 +10,12 @@ enum class Figure {
 
     O {
         override fun next(): Figure = X
-        override fun toString(): String = "player O"
+        override fun toString(): String = "O"
     },
 
     X {
         override fun next(): Figure = O
-        override fun toString(): String = "player X"
+        override fun toString(): String = "X"
     };
 
     abstract fun next(): Figure
