@@ -10,7 +10,7 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/coinsTV"
+        android:id="@+id/coins_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -20,7 +20,7 @@
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/titleTV"
+        android:id="@+id/title_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -30,7 +30,7 @@
         android:textSize="34sp" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/oneVsOneCV"
+        android:id="@+id/one_v_one_cv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -58,7 +58,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/oneVsBotCV"
+        android:id="@+id/one_v_bot_cv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -70,7 +70,6 @@
         app:cardUseCompatPadding="true">
 
         <TextView
-            android:id="@+id/event_card_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start|center_vertical"
@@ -86,7 +85,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/oneVsOneWiFiCV"
+        android:id="@+id/one_v_one_online_cv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -113,7 +112,7 @@
     </androidx.cardview.widget.CardView>
 
     <LinearLayout
-        android:id="@+id/boardSizeLL"
+        android:id="@+id/board_size_ll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -122,6 +121,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="@string/chosen_board_size"
             android:textSize="20sp"
             android:padding="10dp"/>
@@ -131,30 +131,29 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/decreaseSizeBT"
+            <ImageView
+                android:id="@+id/decrease_size_iv"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="end|top"
-                android:textSize="24sp"/>
+                app:srcCompat="@drawable/left_arrow" />
 
             <TextView
                 android:id="@+id/sizeTV"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="3"
-                android:gravity="center|top"
-                android:textSize="24sp" />
+                android:gravity="center"
+                android:textSize="36sp" />
 
-            <TextView
-                android:id="@+id/increaseSizeBT"
+            <ImageView
+                android:id="@+id/increase_size_iv"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="start|top"
-                android:textSize="24sp"/>
+                app:srcCompat="@drawable/right_arrow" />
+
         </LinearLayout>
 
     </LinearLayout>
