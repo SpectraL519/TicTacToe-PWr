@@ -33,9 +33,9 @@ class MainActivity : AppCompatActivity() {
         this.sizeTV.text = this.chosenBoardSize.toString()
 
         this.oneVsOneCV.setOnClickListener {
-            val startGameIntent = Intent(this, GameActivity::class.java)
-            startGameIntent.putExtra("size", this.chosenBoardSize)
-            startActivity(startGameIntent)
+            val gameIntent = Intent(this, GameActivity::class.java)
+            gameIntent.putExtra("size", this.chosenBoardSize)
+            startActivity(gameIntent)
         }
 
         this.decreaseSizeBT.setOnClickListener {

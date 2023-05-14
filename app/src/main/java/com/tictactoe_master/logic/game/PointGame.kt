@@ -2,7 +2,9 @@ package com.tictactoe_master.logic.game
 
 import com.tictactoe_master.logic.utils.Figure
 import com.tictactoe_master.logic.utils.GameBoard
+import com.tictactoe_master.logic.utils.GameState
 import com.tictactoe_master.logic.utils.Status
+import com.tictactoe_master.logic.win_condition.ClassicWinCondition
 import com.tictactoe_master.logic.win_condition.IWinCondition
 
 
@@ -10,7 +12,7 @@ import com.tictactoe_master.logic.win_condition.IWinCondition
 class PointGame
     constructor(
         private val _boardSize: Int,
-        private val _winCondition: IWinCondition,
+        private val _winCondition: IWinCondition = ClassicWinCondition,
         private val _points: Int = 3
     )
     : IGame {

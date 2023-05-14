@@ -1,7 +1,5 @@
-package com.tictactoe_master.logic.game
+package com.tictactoe_master.logic.utils
 
-import com.tictactoe_master.logic.utils.Figure
-import com.tictactoe_master.logic.utils.GameBoard
 import com.tictactoe_master.logic.win_condition.IWinCondition
 
 
