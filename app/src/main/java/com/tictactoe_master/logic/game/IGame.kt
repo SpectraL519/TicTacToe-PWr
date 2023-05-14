@@ -7,8 +7,10 @@ import com.tictactoe_master.logic.utils.Status
 
 interface IGame {
     val state: GameState
+    val nextPointActionString: String
 
     fun placeFigure (x: Int, y: Int) : Boolean;
     fun checkStatus() : Status;
+    fun nextPointAction()
     fun reset();
 }

@@ -22,9 +22,11 @@ class PointGame
             _board = GameBoard(this._boardSize),
             _score = GameState.DEFAULT_SCORE
         )
-
     override val state: GameState
         get() = this._state
+
+    override val nextPointActionString: String
+        get() = if (this._state.gameFinished) "PLAY AGAIN" else "CONTINUE"
 
     private val board: GameBoard = GameBoard(this._boardSize)
     private var finished: Boolean = false
@@ -53,10 +55,10 @@ class PointGame
 
             // this._state = this._state.copy(
             this._state.update(
-                _board = board,
-                _currentPlayer = this._state.currentPlayer.next(),
-                _finished = finished,
-                _score = score
+                board = board,
+                currentPlayer = this._state.currentPlayer.next(),
+                finished = finished,
+                score = score,
             )
 
             return true;
@@ -67,6 +69,10 @@ class PointGame
 
     override fun checkStatus(): Status {
         return this._winCondition.check(this.board);
+    }
+
+    override fun nextPointAction() {
+        TODO("Not yet implemented")
     }
 
     override fun reset() {

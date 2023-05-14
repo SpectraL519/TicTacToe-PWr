@@ -8,7 +8,7 @@ data class GameState
         private var _board: GameBoard,
         private var _currentPlayer: Figure = Figure.O,
         private var _finished: Boolean = false,
-        private var _score: MutableMap<IWinCondition.Result, Int>? = null
+        private var _score: MutableMap<IWinCondition.Result, Int>? = null,
     ) {
 
     val board get() = this._board
@@ -26,15 +26,15 @@ data class GameState
     }
 
     fun update (
-        _board: GameBoard = this._board,
-        _currentPlayer: Figure = this._currentPlayer,
-        _finished: Boolean = this._finished,
-        _score: MutableMap<IWinCondition.Result, Int>? = this._score
+        board: GameBoard = this._board,
+        currentPlayer: Figure = this._currentPlayer,
+        finished: Boolean = this._finished,
+        score: MutableMap<IWinCondition.Result, Int>? = this._score,
     ) {
-        this._board = _board
-        this._currentPlayer = _currentPlayer
-        this._finished = _finished
-        this._score = _score
+        this._board = board
+        this._currentPlayer = currentPlayer
+        this._finished = finished
+        this._score = score
     }
 
     companion object {
