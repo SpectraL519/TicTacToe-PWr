@@ -38,7 +38,7 @@ class GameActivity : AppCompatActivity() {
 
     private fun initView() {
         this.turnTV = findViewById(R.id.turn_tv)
-        this.turnTV.text = "TURN: O"
+        this.turnTV.text = String.format("TURN: %s", this.game.state.currentPlayer.toString())
 
         this.gameBoardTL = findViewById(R.id.game_board_tl)
 

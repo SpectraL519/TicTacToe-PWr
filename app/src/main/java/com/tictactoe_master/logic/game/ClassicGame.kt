@@ -27,7 +27,6 @@ class ClassicGame
         if (board[x][y] == Figure.EMPTY) {
             board[x][y] = this._state.currentPlayer;
 
-            // this._state = this._state.copy(
             this._state.update(
                 board = board,
                 currentPlayer = this._state.currentPlayer.next(),
@@ -52,7 +51,6 @@ class ClassicGame
         val board = this._state.board
         board.clear()
 
-        // this._state = this._state.copy(
         this._state.update(
             board = board,
             currentPlayer = Figure.O,

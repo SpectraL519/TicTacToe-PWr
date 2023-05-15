@@ -27,12 +27,39 @@
         android:text="@string/title_screen_text"
         android:textSize="34sp" />
 
-    <TextView
-        android:id="@+id/turn_tv"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="TURN: O" />
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/points_o_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:textSize="12sp"
+            android:text="Player O: 0"/>
+
+        <TextView
+            android:id="@+id/points_tie_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:textSize="12sp"
+            android:text="Tie: 0"/>
+
+        <TextView
+            android:id="@+id/points_x_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:textSize="12sp"
+            android:text="Player X: 0"/>
+
+    </LinearLayout>
 
     <com.tictactoe_master.SquareLayout
         android:layout_width="match_parent"
@@ -47,4 +74,10 @@
         </TableLayout>
     </com.tictactoe_master.SquareLayout>
 
+    <TextView
+        android:id="@+id/turn_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="TURN: O" />
 </LinearLayout>
