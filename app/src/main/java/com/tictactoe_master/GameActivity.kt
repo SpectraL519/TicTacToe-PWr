@@ -1,10 +1,13 @@
 package com.tictactoe_master
 
 import android.graphics.Color
+import android.graphics.Point
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.Gravity
+import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
@@ -12,9 +15,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.tictactoe_master.logic.game.ClassicGame
 import com.tictactoe_master.logic.game.IGame
+import com.tictactoe_master.logic.game.PointGame
 import com.tictactoe_master.logic.utils.Coordinates
 import com.tictactoe_master.logic.utils.Figure
+import com.tictactoe_master.logic.win_condition.ClassicWinCondition
 import com.tictactoe_master.logic.win_condition.IWinCondition
+import com.tictactoe_master.logic.win_condition.MobiusStripWinCondition
 
 class GameActivity : AppCompatActivity() {
 
@@ -24,16 +30,32 @@ class GameActivity : AppCompatActivity() {
     private lateinit var turnTV: TextView
     private lateinit var gameBoardTL: TableLayout
     private lateinit var cells: Array<Array<TextView>>
-    // TODO: last win status
+    private lateinit var nextBT: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
-        this.size = intent.getIntExtra("size", 3)
-        this.game = ClassicGame(this.size)
-
+        this.initLogic()
         this.initView()
+    }
+
+    private fun initLogic() {
+        // TODO: add vs, bot, online modes handling
+
+        this.size = intent.getIntExtra("size", 3)
+        val winCondition = when (intent.getStringExtra("win_condition")) {
+            "mobius" -> MobiusStripWinCondition
+            else -> ClassicWinCondition
+        }
+        this.game = when (intent.getStringExtra("game_mode")) {
+            "point" -> PointGame(
+                this.size,
+                winCondition,
+                intent.getIntExtra("points_to_win", 3)
+            )
+            else -> ClassicGame(this.size, winCondition)
+        }
     }
 
     private fun initView() {
@@ -70,22 +92,48 @@ class GameActivity : AppCompatActivity() {
             this.gameBoardTL.addView(tableRow)
         }
 
+        this.nextBT = findViewById(R.id.next_bt)
+        this.nextBT.text = this.game.nextPointActionString
+        this.nextBT.setOnClickListener(View.OnClickListener {
+            if (this.game.state.gameBlocked) {
+                // clear win mark
+                for (i in 0 until this.size) {
+                    val tableRow = TableRow(this)
+                    for (j in 0 until this.size)
+                        this.cells[i][j].setBackgroundColor(Color.LTGRAY)
+                }
+
+                // clear figures
+                val coordinates = this.game.nextPointAction()
+                if (coordinates == null) {
+                    for (i in 0 until this.size) {
+                        val tableRow = TableRow(this)
+                        for (j in 0 until this.size)
+                            this.cells[i][j].text = ""
+                    }
+                }
+                else {
+                    for (c in coordinates)
+                        this.cells[c.row][c.column].text = ""
+                }
+
+                this.game.state.update()
+            }
+        })
     }
 
     private fun cellClick (textView: TextView, x: Int, y: Int) {
-        if (!this.game.state.gameFinished) {
-            if (this.game.placeFigure(x, y)) {
-                val figure = this.game.state.getFigure(x, y)
-                this.cells[x][y].text = figure.toString()
-                this.turnTV.text = String.format("TURN: %s", figure.next().toString())
+        if (this.game.placeFigure(x, y)) {
+            val figure = this.game.state.getFigure(x, y)
+            this.cells[x][y].text = figure.toString()
+            this.turnTV.text = String.format("TURN: %s", figure.next().toString())
 
-                this.game.state.gameFinished
+            this.game.state.gameFinished
 
-                val status = this.game.checkStatus()
-                if (status.result == IWinCondition.Result.O || status.result == IWinCondition.Result.X) {
-                    for (c in status.coordinates) {
-                        this.cells[c.row][c.column].setBackgroundColor(getColor(R.color.light_green))
-                    }
+            val status = this.game.checkStatus()
+            if (status.result == IWinCondition.Result.O || status.result == IWinCondition.Result.X) {
+                for (c in status.coordinates) {
+                    this.cells[c.row][c.column].setBackgroundColor(getColor(R.color.light_green))
                 }
             }
         }

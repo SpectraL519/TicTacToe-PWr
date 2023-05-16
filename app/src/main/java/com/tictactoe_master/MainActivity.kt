@@ -35,6 +35,9 @@ class MainActivity : AppCompatActivity() {
         this.oneVsOneCV.setOnClickListener {
             val gameIntent = Intent(this, GameActivity::class.java)
             gameIntent.putExtra("size", this.chosenBoardSize)
+            gameIntent.putExtra("win_condition", "mobius")
+            gameIntent.putExtra("game_mode", "point")
+            gameIntent.putExtra("points_to_win", 2)
             startActivity(gameIntent)
         }
 

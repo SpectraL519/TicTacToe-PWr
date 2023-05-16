@@ -1,9 +1,6 @@
 package com.tictactoe_master.logic.game
 
-import com.tictactoe_master.logic.utils.Figure
-import com.tictactoe_master.logic.utils.GameBoard
-import com.tictactoe_master.logic.utils.GameState
-import com.tictactoe_master.logic.utils.Status
+import com.tictactoe_master.logic.utils.*
 import com.tictactoe_master.logic.win_condition.ClassicWinCondition
 import com.tictactoe_master.logic.win_condition.IWinCondition
 
@@ -23,14 +20,22 @@ class ClassicGame
         get() = "PLAY AGAIN"
 
     override fun placeFigure (x: Int, y: Int) : Boolean {
+        if (this._state.gameFinished)
+            return false
+
+        if (this._state.gameBlocked)
+            return false
+
         val board = this._state.board
         if (board[x][y] == Figure.EMPTY) {
             board[x][y] = this._state.currentPlayer;
 
+            val gameFinished = (this.checkStatus().result != IWinCondition.Result.NONE)
             this._state.update(
                 board = board,
                 currentPlayer = this._state.currentPlayer.next(),
-                finished = (this.checkStatus().result != IWinCondition.Result.NONE)
+                blocked = gameFinished,
+                finished = gameFinished
             )
 
             return true;
@@ -43,8 +48,9 @@ class ClassicGame
         return this._winCondition.check(this._state.board);
     }
 
-    override fun nextPointAction() {
+    override fun nextPointAction() : List<Coordinates>? {
         this.reset()
+        return null
     }
 
     override fun reset() {
@@ -54,6 +60,7 @@ class ClassicGame
         this._state.update(
             board = board,
             currentPlayer = Figure.O,
+            blocked = false,
             finished = false
         )
     }

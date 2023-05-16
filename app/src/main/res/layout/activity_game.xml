@@ -34,8 +34,9 @@
 
         <TextView
             android:id="@+id/points_o_tv"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:layout_weight="1"
             android:layout_margin="10dp"
             android:textSize="12sp"
@@ -43,8 +44,9 @@
 
         <TextView
             android:id="@+id/points_tie_tv"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:layout_weight="1"
             android:layout_margin="10dp"
             android:textSize="12sp"
@@ -52,8 +54,9 @@
 
         <TextView
             android:id="@+id/points_x_tv"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:layout_weight="1"
             android:layout_margin="10dp"
             android:textSize="12sp"
@@ -80,4 +83,11 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="TURN: O" />
+
+    <Button
+        android:id="@+id/next_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="NEXT"/>
 </LinearLayout>
