@@ -30,12 +30,18 @@ class ClassicGame
         if (board[x][y] == Figure.EMPTY) {
             board[x][y] = this._state.currentPlayer;
 
-            val gameFinished = (this.checkStatus().result != IWinCondition.Result.NONE)
+            val result = this.checkStatus().result
+            val gameFinished = (result != IWinCondition.Result.NONE)
+            val score: MutableMap<IWinCondition.Result, Int> = this._state.score
+            if (gameFinished)
+                score[result] = score.getOrDefault(result, -1) + 1
+
             this._state.update(
                 board = board,
                 currentPlayer = this._state.currentPlayer.next(),
                 blocked = gameFinished,
-                finished = gameFinished
+                finished = gameFinished,
+                score = score
             )
 
             return true;

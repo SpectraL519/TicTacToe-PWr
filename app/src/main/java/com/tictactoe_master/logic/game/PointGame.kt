@@ -16,12 +16,7 @@ class PointGame
     )
     : IGame {
 
-    private var _state: GameState =
-        GameState(
-            _board = GameBoard(this._boardSize),
-            _score = GameState.DEFAULT_SCORE
-        )
-
+    private var _state: GameState = GameState(GameBoard(this._boardSize))
     private var _currentStatus: Status = Status()
 
     override val state: GameState
@@ -39,22 +34,18 @@ class PointGame
             return false
 
         val board = this._state.board
-        if (
-            this._currentStatus.result == IWinCondition.Result.NONE &&
-            board[x][y] == Figure.EMPTY
-        ) {
+        if (board[x][y] == Figure.EMPTY) {
             board[x][y] = this._state.currentPlayer;
 
             this._currentStatus = this.checkStatus()
             val pointGained = (this._currentStatus.result != IWinCondition.Result.NONE)
-            val score: MutableMap<IWinCondition.Result, Int> = this._state.score!!
-            val finished: Boolean = (
-                this._state.score!![IWinCondition.Result.O] == this._points ||
-                this._state.score!![IWinCondition.Result.X] == this._points
-            )
-
+            val score: MutableMap<IWinCondition.Result, Int> = this._state.score
             if (pointGained)
-                score[this._currentStatus.result] = score[this._currentStatus.result]?.plus(1)!!
+                score[this._currentStatus.result] = score.getOrDefault(this._currentStatus.result, -1) + 1
+            val finished: Boolean = (
+                this._state.score[IWinCondition.Result.O] == this._points ||
+                this._state.score[IWinCondition.Result.X] == this._points
+            )
 
             this._state.update(
                 board = board,
@@ -77,7 +68,6 @@ class PointGame
     override fun nextPointAction(): List<Coordinates>? {
         if (this._state.gameFinished) {
             this.reset()
-            Log.d("nextPointAction", "reset")
             return null
         }
 
@@ -97,7 +87,6 @@ class PointGame
 
         val coordinates = this._currentStatus.coordinates
         this._currentStatus = Status()
-        Log.d("nextPointAction", "continue")
         return coordinates
     }
 

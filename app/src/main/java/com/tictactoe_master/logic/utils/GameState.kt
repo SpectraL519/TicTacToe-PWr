@@ -9,7 +9,7 @@ data class GameState
         private var _currentPlayer: Figure = Figure.O,
         private var _blocked: Boolean = false,
         private var _finished: Boolean = false,
-        private var _score: MutableMap<IWinCondition.Result, Int>? = null,
+        private var _score: MutableMap<IWinCondition.Result, Int> = GameState.DEFAULT_SCORE,
     ) {
 
     val board get() = this._board
@@ -22,9 +22,7 @@ data class GameState
 
     val score get() = this._score
     fun getScore (result: IWinCondition.Result): Int {
-        if (this._score == null)
-            return 0
-        return this._score?.getOrDefault(result, 0)!!
+        return this._score.getOrDefault(result, 0)
     }
 
     fun update (
@@ -32,7 +30,7 @@ data class GameState
         currentPlayer: Figure = this._currentPlayer,
         blocked: Boolean = this._blocked,
         finished: Boolean = this._finished,
-        score: MutableMap<IWinCondition.Result, Int>? = this._score,
+        score: MutableMap<IWinCondition.Result, Int> = this._score,
     ) {
         this._board = board
         this._currentPlayer = currentPlayer
