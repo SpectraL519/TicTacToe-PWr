@@ -37,7 +37,7 @@ class ChooseGameTypeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_choose_game_type)
 
         this.gameMode = intent.getStringExtra("game_mode").toString()
-        // TODO: handle different game modes
+        // TODO: handle different game modes, now I don't do anything with this info
 
         this.initView()
     }

@@ -40,7 +40,7 @@
             android:layout_weight="1"
             android:layout_margin="10dp"
             android:textSize="12sp"
-            android:text="Player O: 0"/>
+            android:text="@string/player_o"/>
 
         <TextView
             android:id="@+id/points_tie_tv"
@@ -50,7 +50,7 @@
             android:layout_weight="1"
             android:layout_margin="10dp"
             android:textSize="12sp"
-            android:text="Tie: 0"/>
+            android:text="@string/tie"/>
 
         <TextView
             android:id="@+id/points_x_tv"
@@ -60,7 +60,7 @@
             android:layout_weight="1"
             android:layout_margin="10dp"
             android:textSize="12sp"
-            android:text="Player X: 0"/>
+            android:text="@string/player_x"/>
 
     </LinearLayout>
 

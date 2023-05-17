@@ -1,5 +1,6 @@
 package com.tictactoe_master
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.Point
 import android.graphics.Typeface
@@ -27,6 +28,9 @@ class GameActivity : AppCompatActivity() {
     private var size = 3
     private lateinit var game: IGame
 
+    private lateinit var pointsO: TextView
+    private lateinit var pointsTie: TextView
+    private lateinit var pointsX: TextView
     private lateinit var turnTV: TextView
     private lateinit var gameBoardTL: TableLayout
     private lateinit var cells: Array<Array<TextView>>
@@ -59,6 +63,10 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun initView() {
+        this.pointsO = findViewById(R.id.points_o_tv)
+        this.pointsTie = findViewById(R.id.points_tie_tv)
+        this.pointsX = findViewById(R.id.points_x_tv)
+
         this.turnTV = findViewById(R.id.turn_tv)
         this.turnTV.text = String.format("TURN: %s", this.game.state.currentPlayer.toString())
 
@@ -106,7 +114,6 @@ class GameActivity : AppCompatActivity() {
                 val coordinates = this.game.nextPointAction()
                 if (coordinates == null) {
                     for (i in 0 until this.size) {
-                        val tableRow = TableRow(this)
                         for (j in 0 until this.size)
                             this.cells[i][j].text = ""
                     }
@@ -118,6 +125,12 @@ class GameActivity : AppCompatActivity() {
 
                 this.game.state.update()
                 this.turnTV.text = String.format("TURN: %s", this.game.state.currentPlayer.toString())
+                this.pointsO.text = getString(R.string.player_o) +
+                        this.game.state.score[IWinCondition.Result.O].toString()
+                this.pointsTie.text = getString(R.string.tie) +
+                        this.game.state.score[IWinCondition.Result.TIE].toString()
+                this.pointsX.text = getString(R.string.player_x) +
+                        this.game.state.score[IWinCondition.Result.X].toString()
             }
         }
     }
@@ -128,7 +141,12 @@ class GameActivity : AppCompatActivity() {
             this.cells[x][y].text = figure.toString()
             this.turnTV.text = String.format("TURN: %s", figure.next().toString())
 
-            this.game.state.gameFinished
+            this.pointsO.text = getString(R.string.player_o) +
+                    this.game.state.score[IWinCondition.Result.O].toString()
+            this.pointsTie.text = getString(R.string.tie) +
+                    this.game.state.score[IWinCondition.Result.TIE].toString()
+            this.pointsX.text = getString(R.string.player_x) +
+                    this.game.state.score[IWinCondition.Result.X].toString()
 
             val status = this.game.checkStatus()
             if (status.result == IWinCondition.Result.O || status.result == IWinCondition.Result.X) {

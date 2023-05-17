@@ -14,4 +14,7 @@
     <string name="classic_win_condition">Classic</string>
     <string name="mobius_strip_win_condition">Möbius Strip</string>
     <string name="number_of_points_to_win">Number of points to win:</string>
+    <string name="player_o">Player O:</string>
+    <string name="tie">Tie:</string>
+    <string name="player_x">Player X:</string>
 </resources>
