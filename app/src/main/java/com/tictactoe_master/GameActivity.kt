@@ -94,11 +94,10 @@ class GameActivity : AppCompatActivity() {
 
         this.nextBT = findViewById(R.id.next_bt)
         this.nextBT.text = this.game.nextPointActionString
-        this.nextBT.setOnClickListener(View.OnClickListener {
+        this.nextBT.setOnClickListener {
             if (this.game.state.gameBlocked) {
                 // clear win mark
                 for (i in 0 until this.size) {
-                    val tableRow = TableRow(this)
                     for (j in 0 until this.size)
                         this.cells[i][j].setBackgroundColor(Color.LTGRAY)
                 }
@@ -118,8 +117,9 @@ class GameActivity : AppCompatActivity() {
                 }
 
                 this.game.state.update()
+                this.turnTV.text = String.format("TURN: %s", this.game.state.currentPlayer.toString())
             }
-        })
+        }
     }
 
     private fun cellClick (textView: TextView, x: Int, y: Int) {
