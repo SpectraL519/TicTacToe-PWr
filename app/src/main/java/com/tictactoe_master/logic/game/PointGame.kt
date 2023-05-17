@@ -27,9 +27,11 @@ class PointGame
 
 
     override fun placeFigure (x: Int, y: Int): Boolean {
+        Log.d("test", "finished = ${this._state.gameFinished}")
         if (this._state.gameFinished)
             return false
 
+        Log.d("test", "blocked = ${this._state.gameBlocked}")
         if (this._state.gameBlocked)
             return false
 
@@ -43,8 +45,8 @@ class PointGame
             if (pointGained)
                 score[this._currentStatus.result] = score.getOrDefault(this._currentStatus.result, -1) + 1
             val finished: Boolean = (
-                this._state.score[IWinCondition.Result.O] == this._points ||
-                this._state.score[IWinCondition.Result.X] == this._points
+                score[IWinCondition.Result.O] == this._points ||
+                score[IWinCondition.Result.X] == this._points
             )
 
             this._state.update(
@@ -54,6 +56,9 @@ class PointGame
                 finished = finished,
                 score = score,
             )
+
+            Log.d("test", "placeFigure: figure at ($x,$y): ${board[x][y]}")
+            Log.d("test", "score = ${this._state.score[IWinCondition.Result.O]}:${this._state.score[IWinCondition.Result.X]}")
 
             return true;
         }

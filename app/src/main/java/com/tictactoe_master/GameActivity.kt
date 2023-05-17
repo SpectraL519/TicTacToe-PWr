@@ -1,24 +1,19 @@
 package com.tictactoe_master
 
-import android.annotation.SuppressLint
 import android.graphics.Color
-import android.graphics.Point
 import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.tictactoe_master.logic.game.ClassicGame
 import com.tictactoe_master.logic.game.IGame
 import com.tictactoe_master.logic.game.PointGame
-import com.tictactoe_master.logic.utils.Coordinates
-import com.tictactoe_master.logic.utils.Figure
 import com.tictactoe_master.logic.win_condition.ClassicWinCondition
 import com.tictactoe_master.logic.win_condition.IWinCondition
 import com.tictactoe_master.logic.win_condition.MobiusStripWinCondition
@@ -123,37 +118,51 @@ class GameActivity : AppCompatActivity() {
                         this.cells[c.row][c.column].text = ""
                 }
 
-                this.game.state.update()
                 this.turnTV.text = String.format("TURN: %s", this.game.state.currentPlayer.toString())
-                this.pointsO.text = getString(R.string.player_o) +
-                        this.game.state.score[IWinCondition.Result.O].toString()
-                this.pointsTie.text = getString(R.string.tie) +
-                        this.game.state.score[IWinCondition.Result.TIE].toString()
-                this.pointsX.text = getString(R.string.player_x) +
-                        this.game.state.score[IWinCondition.Result.X].toString()
+                this.updateScoreView()
             }
         }
     }
 
     private fun cellClick (textView: TextView, x: Int, y: Int) {
+        Log.d("test", "clicked: ($x,$y)")
+
         if (this.game.placeFigure(x, y)) {
+            Log.d("test", "cellClick: figure at ($x,$y): ${this.game.state.getFigure(x, y)}")
             val figure = this.game.state.getFigure(x, y)
             this.cells[x][y].text = figure.toString()
             this.turnTV.text = String.format("TURN: %s", figure.next().toString())
 
-            this.pointsO.text = getString(R.string.player_o) +
-                    this.game.state.score[IWinCondition.Result.O].toString()
-            this.pointsTie.text = getString(R.string.tie) +
-                    this.game.state.score[IWinCondition.Result.TIE].toString()
-            this.pointsX.text = getString(R.string.player_x) +
-                    this.game.state.score[IWinCondition.Result.X].toString()
-
             val status = this.game.checkStatus()
-            if (status.result == IWinCondition.Result.O || status.result == IWinCondition.Result.X) {
-                for (c in status.coordinates) {
-                    this.cells[c.row][c.column].setBackgroundColor(getColor(R.color.light_green))
+            if (status.result != IWinCondition.Result.NONE) {
+                if (status.result == IWinCondition.Result.O || status.result == IWinCondition.Result.X) {
+                    for (c in status.coordinates) {
+                        this.cells[c.row][c.column].setBackgroundColor(getColor(R.color.light_green))
+                    }
+
+                    this.nextBT.text = this.game.nextPointActionString
                 }
+
+                this.updateScoreView()
             }
         }
+    }
+
+    private fun updateScoreView() {
+        this.pointsO.text = String.format(
+            "%s %s",
+            getString(R.string.player_o),
+            this.game.state.score[IWinCondition.Result.O].toString()
+        )
+        this.pointsTie.text = String.format(
+            "%s %s",
+            getString(R.string.tie),
+            this.game.state.score[IWinCondition.Result.TIE].toString()
+        )
+        this.pointsX.text = String.format(
+            "%s %s",
+            getString(R.string.player_x),
+            this.game.state.score[IWinCondition.Result.X].toString()
+        )
     }
 }
