@@ -3,11 +3,7 @@ package com.tictactoe_master
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.cardview.widget.CardView
-
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,19 +20,26 @@ class MainActivity : AppCompatActivity() {
 
     private fun initView() {
         this.oneVsOneCV = findViewById(R.id.one_v_one_cv)
-
+        this.oneVsBotCV = findViewById(R.id.one_v_bot_cv)
+        this.oneVsOneOnlineCV = findViewById(R.id.one_v_one_online_cv)
 
         this.oneVsOneCV.setOnClickListener {
-            /* TODO: otwierać nową akrtywność z parametrami
-            val gameIntent = Intent(this, GameActivity::class.java)
-            gameIntent.putExtra("size", this.chosenBoardSize)
-            gameIntent.putExtra("win_condition", "mobius")
-            gameIntent.putExtra("game_mode", "point")
-            gameIntent.putExtra("points_to_win", 2)
-            startActivity(gameIntent)*/
+            this.startGame("1_v_1")
         }
 
+        this.oneVsBotCV.setOnClickListener {
+            this.startGame("1_v_bot")
+        }
 
+        this.oneVsOneOnlineCV.setOnClickListener {
+            this.startGame("1_v_1_online")
+        }
+    }
+
+    private fun startGame(gameMode: String) {
+        val gameIntent = Intent(this, ChooseGameTypeActivity::class.java)
+        gameIntent.putExtra("game_mode", gameMode)
+        startActivity(gameIntent)
     }
 
 

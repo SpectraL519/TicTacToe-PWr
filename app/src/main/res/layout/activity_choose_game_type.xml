@@ -7,14 +7,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:constraint_referenced_tags="0dp"
-    tools:context=".ChooseGameTypeActivity">
+    tools:context=".ChooseGameTypeActivity"
+    android:layout_marginStart="10dp"
+    android:layout_marginTop="10dp">
 
     <TextView
         android:id="@+id/coins_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
         android:fontFamily="monospace"
         android:text="0 coins"
         android:textSize="20sp" />
@@ -32,9 +32,9 @@
     <LinearLayout
         android:id="@+id/board_size_ll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="10dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -75,5 +75,98 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/win_cond_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/chosen_win_condition"
+            android:textSize="20sp"
+            android:padding="10dp"/>
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:checked="true"
+            android:id="@+id/chosen_win_cond_sw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="18dp"
+            android:text="@string/classic_win_condition"
+            android:textColor="@color/text_color"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/classic_or_points_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/classic_or_point_game"
+            android:textSize="20sp"
+            android:padding="10dp"/>
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:checked="true"
+            android:id="@+id/chosen_game_type_sw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:text="@string/classic_game"
+            android:textColor="@color/text_color"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/points_to_win_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/points_to_win_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/number_of_points_to_win"
+            android:textSize="20sp"
+            android:padding="10dp"/>
+
+        <com.google.android.material.slider.RangeSlider
+            android:id="@+id/points_to_win_sb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stepSize="1"
+            android:valueFrom="2"
+            android:valueTo="10"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/start_game_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/start_game"
+        android:layout_marginTop="20dp"/>
 
 </LinearLayout>

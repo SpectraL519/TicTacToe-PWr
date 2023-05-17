@@ -44,15 +44,15 @@ class GameActivity : AppCompatActivity() {
         // TODO: add vs, bot, online modes handling
 
         this.size = intent.getIntExtra("size", 3)
-        val winCondition = when (intent.getStringExtra("win_condition")) {
+        val winCondition = when (intent.getStringExtra("win_cond")) {
             "mobius" -> MobiusStripWinCondition
             else -> ClassicWinCondition
         }
-        this.game = when (intent.getStringExtra("game_mode")) {
+        this.game = when (intent.getStringExtra("game_type")) {
             "point" -> PointGame(
                 this.size,
                 winCondition,
-                intent.getIntExtra("points_to_win", 3)
+                intent.getIntExtra("points_to_win", 2)
             )
             else -> ClassicGame(this.size, winCondition)
         }
