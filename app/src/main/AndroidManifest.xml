@@ -12,6 +12,10 @@
         android:theme="@style/Theme.TicTacToeMaster"
         tools:targetApi="31">
         <activity
+            android:name=".ChooseGameTypeActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
@@ -24,8 +28,7 @@
         <activity
             android:name=".GameActivity"
             android:exported="true"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

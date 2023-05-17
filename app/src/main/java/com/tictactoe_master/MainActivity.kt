@@ -10,12 +10,10 @@ import androidx.cardview.widget.CardView
 
 
 class MainActivity : AppCompatActivity() {
-    private var chosenBoardSize = 3
 
     private lateinit var oneVsOneCV: CardView
-    private lateinit var decreaseSizeBT: ImageView
-    private lateinit var increaseSizeBT: ImageView
-    private lateinit var sizeTV: TextView
+    private lateinit var oneVsBotCV: CardView
+    private lateinit var oneVsOneOnlineCV: CardView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,38 +24,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun initView() {
         this.oneVsOneCV = findViewById(R.id.one_v_one_cv)
-        this.decreaseSizeBT = findViewById(R.id.decrease_size_iv)
-        this.increaseSizeBT = findViewById(R.id.increase_size_iv)
-        this.sizeTV = findViewById(R.id.sizeTV)
 
-        this.sizeTV.text = this.chosenBoardSize.toString()
 
         this.oneVsOneCV.setOnClickListener {
+            /* TODO: otwierać nową akrtywność z parametrami
             val gameIntent = Intent(this, GameActivity::class.java)
             gameIntent.putExtra("size", this.chosenBoardSize)
             gameIntent.putExtra("win_condition", "mobius")
             gameIntent.putExtra("game_mode", "point")
             gameIntent.putExtra("points_to_win", 2)
-            startActivity(gameIntent)
+            startActivity(gameIntent)*/
         }
 
-        this.decreaseSizeBT.setOnClickListener {
-            if (this.chosenBoardSize > MainActivity.MIN_BOARD_SIZE) {
-                this.chosenBoardSize--
-                this.sizeTV.text = this.chosenBoardSize.toString()
-            }
-        }
 
-        this.increaseSizeBT.setOnClickListener {
-            if (this.chosenBoardSize < MainActivity.MAX_BOARD_SIZE) {
-                this.chosenBoardSize++
-                this.sizeTV.text = this.chosenBoardSize.toString()
-            }
-        }
     }
 
-    companion object {
-        const val MIN_BOARD_SIZE = 3
-        const val MAX_BOARD_SIZE = 10
-    }
+
 }
