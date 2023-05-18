@@ -1,15 +1,15 @@
 package com.tictactoe_master.logic.game
 
-import android.util.Log
 import android.widget.Toast
+import com.tictactoe_master.GameActivity
 import com.tictactoe_master.logic.utils.*
 import com.tictactoe_master.logic.win_condition.ClassicWinCondition
 import com.tictactoe_master.logic.win_condition.IWinCondition
 
 
-
 class PointGame
     constructor(
+        private val context: GameActivity,
         private val _boardSize: Int,
         private val _winCondition: IWinCondition = ClassicWinCondition,
         private val _points: Int = 3
@@ -27,11 +27,9 @@ class PointGame
 
 
     override fun placeFigure (x: Int, y: Int): Boolean {
-        Log.d("test", "finished = ${this._state.gameFinished}")
         if (this._state.gameFinished)
             return false
 
-        Log.d("test", "blocked = ${this._state.gameBlocked}")
         if (this._state.gameBlocked)
             return false
 
@@ -57,8 +55,12 @@ class PointGame
                 score = score,
             )
 
-            Log.d("test", "placeFigure: figure at ($x,$y): ${board[x][y]}")
-            Log.d("test", "score = ${this._state.score[IWinCondition.Result.O]}:${this._state.score[IWinCondition.Result.X]}")
+            if (finished)
+                Toast.makeText(
+                    this.context,
+                    "Game Over: player ${this._currentStatus.result} won!",
+                    Toast.LENGTH_SHORT
+                ).show()
 
             return true;
         }

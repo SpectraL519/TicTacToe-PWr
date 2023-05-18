@@ -9,7 +9,7 @@ data class GameState
         private var _currentPlayer: Figure = Figure.O,
         private var _blocked: Boolean = false,
         private var _finished: Boolean = false,
-        private var _score: MutableMap<IWinCondition.Result, Int> = GameState.DEFAULT_SCORE,
+        private var _score: MutableMap<IWinCondition.Result, Int> = DEFAULT_SCORE,
     ) {
 
     val board get() = this._board
@@ -40,8 +40,8 @@ data class GameState
     }
 
     companion object {
-        val DEFAULT_SCORE: MutableMap<IWinCondition.Result, Int> =
-            mutableMapOf(
+        val DEFAULT_SCORE: MutableMap<IWinCondition.Result, Int>
+            get() = mutableMapOf(
                 IWinCondition.Result.O to 0,
                 IWinCondition.Result.X to 0,
                 IWinCondition.Result.TIE to 0

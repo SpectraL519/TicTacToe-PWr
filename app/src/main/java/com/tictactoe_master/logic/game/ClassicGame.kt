@@ -1,5 +1,7 @@
 package com.tictactoe_master.logic.game
 
+import android.widget.Toast
+import com.tictactoe_master.GameActivity
 import com.tictactoe_master.logic.utils.*
 import com.tictactoe_master.logic.win_condition.ClassicWinCondition
 import com.tictactoe_master.logic.win_condition.IWinCondition
@@ -8,6 +10,7 @@ import com.tictactoe_master.logic.win_condition.IWinCondition
 
 class ClassicGame
     constructor(
+        private val context: GameActivity,
         private val _boardSize: Int,
         private val _winCondition: IWinCondition = ClassicWinCondition)
     : IGame {
@@ -31,18 +34,32 @@ class ClassicGame
             board[x][y] = this._state.currentPlayer;
 
             val result = this.checkStatus().result
-            val gameFinished = (result != IWinCondition.Result.NONE)
+            val finished = (result != IWinCondition.Result.NONE)
             val score: MutableMap<IWinCondition.Result, Int> = this._state.score
-            if (gameFinished)
+            if (finished)
                 score[result] = score.getOrDefault(result, -1) + 1
 
             this._state.update(
                 board = board,
                 currentPlayer = this._state.currentPlayer.next(),
-                blocked = gameFinished,
-                finished = gameFinished,
+                blocked = finished,
+                finished = finished,
                 score = score
             )
+
+            if (finished) {
+                val message =
+                    if (result == IWinCondition.Result.TIE)
+                        result.toString()
+                    else
+                        "player $result won!"
+
+                Toast.makeText(
+                    this.context,
+                    "Game Over: $message",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
 
             return true;
         }

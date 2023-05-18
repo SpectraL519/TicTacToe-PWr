@@ -76,7 +76,7 @@ object ClassicWinCondition : IWinCondition {
                 )
         }
 
-        if (board.isFull())
+        if (board.full())
             return Status(result = IWinCondition.Result.TIE)
 
         return Status(result = IWinCondition.Result.NONE)

@@ -36,9 +36,6 @@ class ChooseGameTypeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_choose_game_type)
 
-        this.gameMode = intent.getStringExtra("game_mode").toString()
-        // TODO: handle different game modes, now I don't do anything with this info
-
         this.initView()
     }
 
@@ -55,8 +52,11 @@ class ChooseGameTypeActivity : AppCompatActivity() {
 
         this.sizeTV.text = this.chosenBoardSize.toString()
 
-        this.pointsToWinTV.text = getString(R.string.number_of_points_to_win) +
-                " " + this.pointsToWin.toString()
+        this.pointsToWinTV.text = String.format(
+            "%s %d",
+            getString(R.string.number_of_points_to_win),
+            this.pointsToWin
+        )
         this.pointsToWinLL.visibility = View.INVISIBLE
 
         this.decreaseSizeBT.setOnClickListener {
@@ -99,8 +99,11 @@ class ChooseGameTypeActivity : AppCompatActivity() {
 
         this.pointsToWinRS.addOnChangeListener { _, value, _ ->
             this.pointsToWin = value.toInt()
-            this.pointsToWinTV.text = getString(R.string.number_of_points_to_win) +
-                    " " + this.pointsToWin.toString()
+            this.pointsToWinTV.text = String.format(
+                "%s %d",
+                getString(R.string.number_of_points_to_win),
+                this.pointsToWin
+            )
         }
 
         this.startGameBT.setOnClickListener {

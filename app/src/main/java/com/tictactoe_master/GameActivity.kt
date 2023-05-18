@@ -3,7 +3,6 @@ package com.tictactoe_master
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.Button
@@ -49,11 +48,12 @@ class GameActivity : AppCompatActivity() {
         }
         this.game = when (intent.getStringExtra("game_type")) {
             "point" -> PointGame(
+                this,
                 this.size,
                 winCondition,
                 intent.getIntExtra("points_to_win", 2)
             )
-            else -> ClassicGame(this.size, winCondition)
+            else -> ClassicGame(this, this.size, winCondition)
         }
     }
 
@@ -125,10 +125,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun cellClick (textView: TextView, x: Int, y: Int) {
-        Log.d("test", "clicked: ($x,$y)")
-
         if (this.game.placeFigure(x, y)) {
-            Log.d("test", "cellClick: figure at ($x,$y): ${this.game.state.getFigure(x, y)}")
             val figure = this.game.state.getFigure(x, y)
             this.cells[x][y].text = figure.toString()
             this.turnTV.text = String.format("TURN: %s", figure.next().toString())
