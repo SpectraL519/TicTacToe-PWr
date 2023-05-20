@@ -10,12 +10,10 @@ import com.tictactoe_master.logic.utils.Status
 object MobiusStripWinCondition : IWinCondition {
     override fun check(board: GameBoard): Status {
         val classicWinStatus: Status = ClassicWinCondition.check(board)
-        if (listOf<IWinCondition.Result>(
-                IWinCondition.Result.O,
-                IWinCondition.Result.X
-            ).contains(classicWinStatus.result)) {
-            return classicWinStatus
-        }
+        if (
+            classicWinStatus.result == IWinCondition.Result.O ||
+            classicWinStatus.result == IWinCondition.Result.X
+        ) return classicWinStatus
 
         val stripO = checkStrip(board, Figure.O)
         if (stripO != null)
@@ -53,7 +51,7 @@ object MobiusStripWinCondition : IWinCondition {
             if (lastConsecutiveFigure == -1)
                 continue
 
-            var stripFound: Boolean = true
+            var stripFound = true
             for (column: Int in lastConsecutiveFigure + 1 until boardSize) {
                 if (board[boardSize - 1 - row][column] != figure) {
                     stripFound = false

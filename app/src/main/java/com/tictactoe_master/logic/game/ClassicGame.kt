@@ -1,11 +1,9 @@
 package com.tictactoe_master.logic.game
 
-import android.widget.Toast
 import com.tictactoe_master.GameActivity
 import com.tictactoe_master.logic.utils.*
 import com.tictactoe_master.logic.win_condition.ClassicWinCondition
 import com.tictactoe_master.logic.win_condition.IWinCondition
-
 
 
 class ClassicGame
@@ -31,7 +29,7 @@ class ClassicGame
 
         val board = this._state.board
         if (board[x][y] == Figure.EMPTY) {
-            board[x][y] = this._state.currentPlayer;
+            board[x][y] = this._state.currentPlayer
 
             val result = this.checkStatus().result
             val finished = (result != IWinCondition.Result.NONE)
@@ -49,14 +47,14 @@ class ClassicGame
 
             if (finished)
                 this.context.showWinMessage(result)
-            return true;
+            return true
         }
 
-        return false;
+        return false
     }
 
     override fun checkStatus() : Status {
-        return this._winCondition.check(this._state.board);
+        return this._winCondition.check(this._state.board)
     }
 
     override fun nextPointAction() : List<Coordinates>? {

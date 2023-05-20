@@ -1,10 +1,7 @@
 package com.tictactoe_master.logic.win_condition
 
-import android.content.Context
-import android.widget.Toast
 import com.tictactoe_master.logic.utils.GameBoard
 import com.tictactoe_master.logic.utils.Status
-
 
 
 interface IWinCondition {

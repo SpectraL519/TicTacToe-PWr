@@ -30,12 +30,12 @@ class MainActivity : AppCompatActivity() {
 
         this.oneVsBotCV.setOnClickListener {
             // this.startGame("1_v_bot")
-            Toast.makeText(this, "This funcionality is not yet implemented", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "This functionality is not yet implemented", Toast.LENGTH_SHORT).show()
         }
 
         this.oneVsOneOnlineCV.setOnClickListener {
             // this.startGame("1_v_1_online")
-            Toast.makeText(this, "This funcionality is not yet implemented", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "This functionality is not yet implemented", Toast.LENGTH_SHORT).show()
         }
     }
 

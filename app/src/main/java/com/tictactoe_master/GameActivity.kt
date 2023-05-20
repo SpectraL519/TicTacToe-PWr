@@ -1,6 +1,5 @@
 package com.tictactoe_master
 
-import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
@@ -31,7 +30,7 @@ class GameActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
-        
+
         this.initLogic()
         this.initView()
     }
@@ -93,36 +92,39 @@ class GameActivity : AppCompatActivity() {
             tableRow.layoutParams = rowParams
             this.gameBoardTL.addView(tableRow)
 
-        this.nextBT = findViewById(R.id.next_bt)
-        this.nextBT.text = this.game.nextPointActionString
-        this.nextBT.setOnClickListener {
-            if (this.game.state.gameBlocked) {
-                // clear win mark
-                for (i in 0 until this.size) {
-                    for (j in 0 until this.size)
-                        this.cells[i][j].setBackgroundColor(Color.LTGRAY)
-                }
-
-                // clear figures
-                val coordinates = this.game.nextPointAction()
-                if (coordinates == null) {
-                    for (i in 0 until this.size) {
-                        for (j in 0 until this.size)
-                            this.cells[i][j].text = ""
+            this.nextBT = findViewById(R.id.next_bt)
+            this.nextBT.text = this.game.nextPointActionString
+            this.nextBT.setOnClickListener {
+                if (this.game.state.gameBlocked) {
+                    // clear win mark
+                    for (x in 0 until this.size) {
+                        for (y in 0 until this.size)
+                            this.cells[x][y].setBackgroundColor(Color.LTGRAY)
                     }
-                }
-                else {
-                    for (c in coordinates)
-                        this.cells[c.row][c.column].text = ""
-                }
 
-                this.turnTV.text = String.format("TURN: %s", this.game.state.currentPlayer.toString())
-                this.nextBT.text = this.game.nextPointActionString
-                this.updateScoreView()
+                    // clear figures
+                    val coordinates = this.game.nextPointAction()
+                    if (coordinates == null) {
+                        for (x in 0 until this.size) {
+                            for (y in 0 until this.size)
+                                this.cells[x][y].text = ""
+                        }
+                    }
+                    else {
+                        for (c in coordinates)
+                            this.cells[c.row][c.column].text = ""
+                    }
+
+                    this.turnTV.text =
+                        String.format("TURN: %s", this.game.state.currentPlayer.toString())
+                    this.nextBT.text = this.game.nextPointActionString
+                    this.updateScoreView()
+                }
             }
         }
+    }
 
-    private fun cellClick (textView: TextView, x: Int, y: Int) {
+    private fun cellClick(textView: TextView, x: Int, y: Int) {
         if (this.game.placeFigure(x, y)) {
             val figure = this.game.state.getFigure(x, y)
             this.cells[x][y].text = figure.toString()
@@ -161,7 +163,7 @@ class GameActivity : AppCompatActivity() {
         )
     }
 
-    fun showWinMessage (result: IWinCondition.Result) {
+    fun showWinMessage(result: IWinCondition.Result) {
         val message =
             if (result == IWinCondition.Result.TIE)
                 result.toString()

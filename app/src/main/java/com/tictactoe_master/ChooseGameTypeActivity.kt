@@ -1,16 +1,13 @@
 package com.tictactoe_master
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.SeekBar
-import android.widget.Switch
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import com.google.android.material.slider.RangeSlider
 
@@ -19,8 +16,6 @@ class ChooseGameTypeActivity : AppCompatActivity() {
     private var chosenWinCond: WinCondition = WinCondition.CLASSIC
     private var chosenGameType: GameType = GameType.CLASSIC
     private var pointsToWin = 2
-
-    private lateinit var gameMode: String
 
     private lateinit var decreaseSizeBT: ImageView
     private lateinit var increaseSizeBT: ImageView

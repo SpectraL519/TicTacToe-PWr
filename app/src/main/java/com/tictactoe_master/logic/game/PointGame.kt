@@ -1,6 +1,5 @@
 package com.tictactoe_master.logic.game
 
-import android.widget.Toast
 import com.tictactoe_master.GameActivity
 import com.tictactoe_master.logic.utils.*
 import com.tictactoe_master.logic.win_condition.ClassicWinCondition
@@ -35,7 +34,7 @@ class PointGame
 
         val board = this._state.board
         if (board[x][y] == Figure.EMPTY) {
-            board[x][y] = this._state.currentPlayer;
+            board[x][y] = this._state.currentPlayer
 
             this._currentStatus = this.checkStatus()
             val pointGained = (this._currentStatus.result != IWinCondition.Result.NONE)
@@ -57,14 +56,14 @@ class PointGame
 
             if (finished)
                 this.context.showWinMessage(this._currentStatus.result)
-            return true;
+            return true
         }
 
-        return false;
+        return false
     }
 
     override fun checkStatus(): Status {
-        return this._winCondition.check(this._state.board);
+        return this._winCondition.check(this._state.board)
     }
 
     override fun nextPointAction(): List<Coordinates>? {
