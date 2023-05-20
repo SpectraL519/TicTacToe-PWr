@@ -17,4 +17,9 @@
     <string name="player_o">Player O:</string>
     <string name="tie">Tie:</string>
     <string name="player_x">Player X:</string>
+    <string name="sign_in">Sign in</string>
+    <string name="login">login</string>
+    <string name="enter_password">Enter password</string>
+    <string name="enter_e_mail">Enter e-mail</string>
+    <string name="repeat_password">Repeat password</string>
 </resources>
