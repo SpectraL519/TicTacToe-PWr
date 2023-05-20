@@ -18,8 +18,11 @@
     <string name="tie">Tie:</string>
     <string name="player_x">Player X:</string>
     <string name="sign_in">Sign in</string>
-    <string name="login">login</string>
+    <string name="login">Log in</string>
     <string name="enter_password">Enter password</string>
     <string name="enter_e_mail">Enter e-mail</string>
     <string name="repeat_password">Repeat password</string>
+    <string name="sign_out">Sign out</string>
+    <string name="already_account">Click here to log in if you already have an account</string>
+    <string name="not_yet_account">Click here to sign in if you don\'t have an account</string>
 </resources>

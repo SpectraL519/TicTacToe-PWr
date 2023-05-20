@@ -65,5 +65,14 @@
         android:layout_marginTop="20dp"
         android:text="@string/login" />
 
+    <TextView
+        android:id="@+id/not_yet_account_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/not_yet_account"
+        android:layout_marginTop="30dp"
+        android:textSize="20sp"
+        android:textAlignment="center"/>
+
 
 </LinearLayout>

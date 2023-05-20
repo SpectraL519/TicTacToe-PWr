@@ -3,13 +3,12 @@ package com.tictactoe_master
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import com.google.android.material.slider.RangeSlider
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class ChooseGameTypeActivity : AppCompatActivity() {
     private var chosenBoardSize = 3
@@ -17,6 +16,7 @@ class ChooseGameTypeActivity : AppCompatActivity() {
     private var chosenGameType: GameType = GameType.CLASSIC
     private var pointsToWin = 2
 
+    private lateinit var accountTV: TextView
     private lateinit var decreaseSizeBT: ImageView
     private lateinit var increaseSizeBT: ImageView
     private lateinit var sizeTV: TextView
@@ -34,6 +34,19 @@ class ChooseGameTypeActivity : AppCompatActivity() {
         this.initView()
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        this.setAccountTVText()
+    }
+
+    private fun setAccountTVText() {
+        this.accountTV.text = when (Firebase.auth.currentUser) {
+            null -> getString(R.string.login)
+            else -> "${getString(R.string.sign_out)} (${Firebase.auth.currentUser!!.email!!.subSequence(0, 5)})"
+        }
+    }
+
     private fun initView() {
         this.decreaseSizeBT = findViewById(R.id.decrease_size_iv)
         this.increaseSizeBT = findViewById(R.id.increase_size_iv)
@@ -44,6 +57,20 @@ class ChooseGameTypeActivity : AppCompatActivity() {
         this.pointsToWinTV = findViewById(R.id.points_to_win_tv)
         this.pointsToWinRS = findViewById(R.id.points_to_win_sb)
         this.startGameBT = findViewById(R.id.start_game_bt)
+        this.accountTV = findViewById(R.id.account_tv)
+
+        this.setAccountTVText()
+        this.accountTV.setOnClickListener {
+            if (Firebase.auth.currentUser == null) {
+                val loginIntent = Intent(this, LoginActivity::class.java)
+                startActivity(loginIntent)
+            }
+            else {
+                Firebase.auth.signOut()
+                this.accountTV.text = getString(R.string.login)
+                Toast.makeText(this, "You've been signed out", Toast.LENGTH_LONG).show()
+            }
+        }
 
         this.sizeTV.text = this.chosenBoardSize.toString()
 

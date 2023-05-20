@@ -77,7 +77,16 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:text="@string/login" />
+        android:text="@string/sign_in" />
+
+    <TextView
+        android:id="@+id/already_account_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/already_account"
+        android:layout_marginTop="30dp"
+        android:textSize="20sp"
+        android:textAlignment="center"/>
 
 
 </LinearLayout>

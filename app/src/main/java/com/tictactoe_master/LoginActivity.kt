@@ -1,10 +1,12 @@
 package com.tictactoe_master
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -19,6 +21,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var emailET: EditText
     private lateinit var passwordET: EditText
     private lateinit var loginBT: Button
+    private lateinit var notYetAccountTV: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,11 +36,19 @@ class LoginActivity : AppCompatActivity() {
         this.emailET = findViewById(R.id.email_et)
         this.passwordET = findViewById(R.id.password_et)
         this.loginBT = findViewById(R.id.login_bt)
+        this.notYetAccountTV = findViewById(R.id.not_yet_account_tv)
+
         this.loginBT.setOnClickListener {
             val email = this.emailET.text.toString()
             val password = this.passwordET.text.toString()
             if (this.validateData(email, password))
                 this.login(email, password)
+        }
+
+        this.notYetAccountTV.setOnClickListener {
+            val signInIntent = Intent(this, SignInActivity::class.java)
+            startActivity(signInIntent)
+            finish()
         }
     }
 
@@ -54,17 +65,6 @@ class LoginActivity : AppCompatActivity() {
 
         return true
     }
-
-    override fun onStart() {
-        super.onStart()
-
-        val currentUser = auth.currentUser
-        if (currentUser != null) {
-            Toast.makeText(this, "You are already logged in", Toast.LENGTH_LONG).show()
-            finish()
-        }
-    }
-
 
     private fun login(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password)
