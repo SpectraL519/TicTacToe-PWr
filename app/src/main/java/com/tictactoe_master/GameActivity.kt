@@ -31,7 +31,7 @@ class GameActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
-
+        
         this.initLogic()
         this.initView()
     }
@@ -92,7 +92,6 @@ class GameActivity : AppCompatActivity() {
             )
             tableRow.layoutParams = rowParams
             this.gameBoardTL.addView(tableRow)
-        }
 
         this.nextBT = findViewById(R.id.next_bt)
         this.nextBT.text = this.game.nextPointActionString
@@ -122,7 +121,6 @@ class GameActivity : AppCompatActivity() {
                 this.updateScoreView()
             }
         }
-    }
 
     private fun cellClick (textView: TextView, x: Int, y: Int) {
         if (this.game.placeFigure(x, y)) {
