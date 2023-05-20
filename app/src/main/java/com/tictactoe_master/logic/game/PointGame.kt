@@ -49,7 +49,7 @@ class PointGame
             this._state.update(
                 board = board,
                 currentPlayer = this._state.currentPlayer.next(),
-                blocked = pointGained,
+                blocked = (pointGained || this._currentStatus.result == IWinCondition.Result.TIE),
                 finished = finished,
                 score = score,
             )
@@ -72,13 +72,16 @@ class PointGame
             return null
         }
 
-        else if (this._state.gameBlocked) {
+        var coordinates: List<Coordinates>? = null
+        if (this._currentStatus.result != IWinCondition.Result.NONE) {
             val board = this._state.board
             if (this._currentStatus.result == IWinCondition.Result.TIE)
                 board.clear()
-            else
-                for (coordinates in this._currentStatus.coordinates)
-                    board[coordinates.row][coordinates.column] = Figure.EMPTY
+            else {
+                coordinates = this._currentStatus.coordinates
+                for (c in this._currentStatus.coordinates)
+                    board[c.row][c.column] = Figure.EMPTY
+            }
 
             this._state.update(
                 board = board,
@@ -86,7 +89,6 @@ class PointGame
             )
         }
 
-        val coordinates = this._currentStatus.coordinates
         this._currentStatus = Status()
         return coordinates
     }
