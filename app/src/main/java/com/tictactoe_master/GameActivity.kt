@@ -1,14 +1,12 @@
 package com.tictactoe_master
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.Gravity
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TableLayout
-import android.widget.TableRow
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.tictactoe_master.logic.game.ClassicGame
 import com.tictactoe_master.logic.game.IGame
@@ -61,6 +59,7 @@ class GameActivity : AppCompatActivity() {
         this.pointsO = findViewById(R.id.points_o_tv)
         this.pointsTie = findViewById(R.id.points_tie_tv)
         this.pointsX = findViewById(R.id.points_x_tv)
+        this.updateScoreView()
 
         this.turnTV = findViewById(R.id.turn_tv)
         this.turnTV.text = String.format("TURN: %s", this.game.state.currentPlayer.toString())
@@ -119,6 +118,7 @@ class GameActivity : AppCompatActivity() {
                 }
 
                 this.turnTV.text = String.format("TURN: %s", this.game.state.currentPlayer.toString())
+                this.nextBT.text = this.game.nextPointActionString
                 this.updateScoreView()
             }
         }
@@ -161,5 +161,19 @@ class GameActivity : AppCompatActivity() {
             getString(R.string.player_x),
             this.game.state.score[IWinCondition.Result.X].toString()
         )
+    }
+
+    fun showWinMessage (result: IWinCondition.Result) {
+        val message =
+            if (result == IWinCondition.Result.TIE)
+                result.toString()
+            else
+                "player $result won!"
+
+        Toast.makeText(
+            this,
+            "Game Over: $message",
+            Toast.LENGTH_SHORT
+        ).show()
     }
 }

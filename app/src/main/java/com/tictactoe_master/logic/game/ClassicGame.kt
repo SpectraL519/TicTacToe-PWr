@@ -47,20 +47,8 @@ class ClassicGame
                 score = score
             )
 
-            if (finished) {
-                val message =
-                    if (result == IWinCondition.Result.TIE)
-                        result.toString()
-                    else
-                        "player $result won!"
-
-                Toast.makeText(
-                    this.context,
-                    "Game Over: $message",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-
+            if (finished)
+                this.context.showWinMessage(result)
             return true;
         }
 

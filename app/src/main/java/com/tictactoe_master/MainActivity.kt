@@ -3,6 +3,7 @@ package com.tictactoe_master
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.cardview.widget.CardView
 
 class MainActivity : AppCompatActivity() {
@@ -28,17 +29,20 @@ class MainActivity : AppCompatActivity() {
         }
 
         this.oneVsBotCV.setOnClickListener {
-            this.startGame("1_v_bot")
+            // this.startGame("1_v_bot")
+            Toast.makeText(this, "This funcionality is not yet implemented", Toast.LENGTH_SHORT).show()
         }
 
         this.oneVsOneOnlineCV.setOnClickListener {
-            this.startGame("1_v_1_online")
+            // this.startGame("1_v_1_online")
+            Toast.makeText(this, "This funcionality is not yet implemented", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun startGame(gameMode: String) {
-        val gameIntent = Intent(this, ChooseGameTypeActivity::class.java)
-        gameIntent.putExtra("game_mode", gameMode)
+    private fun startGame (gameMode: String) {
+        val gameIntent = Intent(this, ChooseGameTypeActivity::class.java).apply {
+            putExtra("game_mode", gameMode)
+        }
         startActivity(gameIntent)
     }
 

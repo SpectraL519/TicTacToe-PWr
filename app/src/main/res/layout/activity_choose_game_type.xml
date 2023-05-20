@@ -9,13 +9,13 @@
     app:constraint_referenced_tags="0dp"
     tools:context=".ChooseGameTypeActivity"
     android:layout_marginStart="10dp"
-    android:layout_marginTop="10dp">
+    android:layout_marginTop="10dp"
+    android:theme="@style/Theme.TicTacToeMaster">
 
     <TextView
         android:id="@+id/coins_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="monospace"
         android:text="0 coins"
         android:textSize="20sp" />
 
@@ -24,7 +24,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:fontFamily="monospace"
         android:gravity="center"
         android:text="@string/title_screen_text"
         android:textSize="34sp" />
@@ -98,9 +97,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:textSize="18dp"
-            android:text="@string/classic_win_condition"
+            android:textSize="18sp"
             android:textColor="@color/text_color"
+            android:text="@string/classic_win_condition"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
 
 

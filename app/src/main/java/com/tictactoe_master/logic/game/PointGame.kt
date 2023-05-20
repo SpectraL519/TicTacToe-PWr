@@ -56,12 +56,7 @@ class PointGame
             )
 
             if (finished)
-                Toast.makeText(
-                    this.context,
-                    "Game Over: player ${this._currentStatus.result} won!",
-                    Toast.LENGTH_SHORT
-                ).show()
-
+                this.context.showWinMessage(this._currentStatus.result)
             return true;
         }
 
@@ -78,7 +73,7 @@ class PointGame
             return null
         }
 
-        else if (this._currentStatus.result != IWinCondition.Result.NONE) {
+        else if (this._state.gameBlocked) {
             val board = this._state.board
             if (this._currentStatus.result == IWinCondition.Result.TIE)
                 board.clear()
