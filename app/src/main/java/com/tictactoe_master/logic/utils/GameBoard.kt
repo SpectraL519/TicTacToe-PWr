@@ -9,7 +9,8 @@ data class GameBoard
 
     fun size(): Int = this._size
 
-    fun isFull(): Boolean = this._board.all { row -> row.all { it != Figure.EMPTY } }
+    fun full(): Boolean = this._board.all { row -> row.all { it != Figure.EMPTY } }
+    fun empty(): Boolean = this._board.all { row -> row.all { it == Figure.EMPTY } }
 
     operator fun get (index: Int): Array<Figure> = this._board[index]
     operator fun get (coordinates: Coordinates): Figure =

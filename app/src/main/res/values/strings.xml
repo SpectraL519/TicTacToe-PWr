@@ -7,4 +7,14 @@
     <string name="onePlayerOnePhone">play against bot</string>
     <string name="start_game">start game</string>
     <string name="chosen_board_size">Chosen board size:</string>
+    <string name="classic_or_point_game">Classic or point game?</string>
+    <string name="classic_game">Classic</string>
+    <string name="point_game">Point</string>
+    <string name="chosen_win_condition">Chosen win condition:</string>
+    <string name="classic_win_condition">Classic</string>
+    <string name="mobius_strip_win_condition">Möbius Strip</string>
+    <string name="number_of_points_to_win">Number of points to win:</string>
+    <string name="player_o">Player O:</string>
+    <string name="tie">Tie:</string>
+    <string name="player_x">Player X:</string>
 </resources>

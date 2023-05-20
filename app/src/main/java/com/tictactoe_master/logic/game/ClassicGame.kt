@@ -1,16 +1,14 @@
 package com.tictactoe_master.logic.game
 
-import com.tictactoe_master.logic.utils.Figure
-import com.tictactoe_master.logic.utils.GameBoard
-import com.tictactoe_master.logic.utils.GameState
-import com.tictactoe_master.logic.utils.Status
+import com.tictactoe_master.GameActivity
+import com.tictactoe_master.logic.utils.*
 import com.tictactoe_master.logic.win_condition.ClassicWinCondition
 import com.tictactoe_master.logic.win_condition.IWinCondition
 
 
-
 class ClassicGame
     constructor(
+        private val context: GameActivity,
         private val _boardSize: Int,
         private val _winCondition: IWinCondition = ClassicWinCondition)
     : IGame {
@@ -19,37 +17,60 @@ class ClassicGame
     override val state: GameState
         get() = this._state
 
+    override val nextPointActionString: String
+        get() = "PLAY AGAIN"
+
     override fun placeFigure (x: Int, y: Int) : Boolean {
+        if (this._state.gameFinished)
+            return false
+
+        if (this._state.gameBlocked)
+            return false
+
         val board = this._state.board
         if (board[x][y] == Figure.EMPTY) {
-            board[x][y] = this._state.currentPlayer;
+            board[x][y] = this._state.currentPlayer
 
-            // this._state = this._state.copy(
+            val result = this.checkStatus().result
+            val finished = (result != IWinCondition.Result.NONE)
+            val score: MutableMap<IWinCondition.Result, Int> = this._state.score
+            if (finished)
+                score[result] = score.getOrDefault(result, -1) + 1
+
             this._state.update(
-                _board = board,
-                _currentPlayer = this._state.currentPlayer.next(),
-                _finished = (this.checkStatus().result != IWinCondition.Result.NONE)
+                board = board,
+                currentPlayer = this._state.currentPlayer.next(),
+                blocked = finished,
+                finished = finished,
+                score = score
             )
 
-            return true;
+            if (finished)
+                this.context.showWinMessage(result)
+            return true
         }
 
-        return false;
+        return false
     }
 
     override fun checkStatus() : Status {
-        return this._winCondition.check(this._state.board);
+        return this._winCondition.check(this._state.board)
+    }
+
+    override fun nextPointAction() : List<Coordinates>? {
+        this.reset()
+        return null
     }
 
     override fun reset() {
         val board = this._state.board
         board.clear()
 
-        // this._state = this._state.copy(
         this._state.update(
-            _board = board,
-            _currentPlayer = Figure.O,
-            _finished = false
+            board = board,
+            currentPlayer = Figure.O,
+            blocked = false,
+            finished = false
         )
     }
 }

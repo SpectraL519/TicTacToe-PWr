@@ -1,83 +1,106 @@
 package com.tictactoe_master.logic.game
 
-import com.tictactoe_master.logic.utils.Figure
-import com.tictactoe_master.logic.utils.GameBoard
-import com.tictactoe_master.logic.utils.GameState
-import com.tictactoe_master.logic.utils.Status
+import com.tictactoe_master.GameActivity
+import com.tictactoe_master.logic.utils.*
 import com.tictactoe_master.logic.win_condition.ClassicWinCondition
 import com.tictactoe_master.logic.win_condition.IWinCondition
 
 
-
 class PointGame
     constructor(
+        private val context: GameActivity,
         private val _boardSize: Int,
         private val _winCondition: IWinCondition = ClassicWinCondition,
         private val _points: Int = 3
     )
     : IGame {
 
-    private var _state: GameState =
-        GameState(
-            _board = GameBoard(this._boardSize),
-            _score = GameState.DEFAULT_SCORE
-        )
+    private var _state: GameState = GameState(GameBoard(this._boardSize))
+    private var _currentStatus: Status = Status()
 
     override val state: GameState
         get() = this._state
 
-    private val board: GameBoard = GameBoard(this._boardSize)
-    private var finished: Boolean = false
+    override val nextPointActionString: String
+        get() = if (this._state.gameFinished) "PLAY AGAIN" else "CONTINUE"
+
 
     override fun placeFigure (x: Int, y: Int): Boolean {
+        if (this._state.gameFinished)
+            return false
+
+        if (this._state.gameBlocked)
+            return false
+
         val board = this._state.board
         if (board[x][y] == Figure.EMPTY) {
-            board[x][y] = this._state.currentPlayer;
+            board[x][y] = this._state.currentPlayer
 
-            val status: Status = this.checkStatus()
-            val pointGained = (status.result != IWinCondition.Result.NONE)
-            val score: MutableMap<IWinCondition.Result, Int> = this._state.score!!
-            val finished: Boolean = (score.maxBy { it.value }.value == this._points)
-
-            if (pointGained) {
-                score[status.result] = score[status.result]?.plus(1)!!
-
-                if (!finished) {
-                    if (status.result == IWinCondition.Result.TIE)
-                        board.clear()
-                    else
-                        for (coordinates in status.coordinates)
-                            board[coordinates.row][coordinates.column] = Figure.EMPTY
-                }
-            }
-
-            // this._state = this._state.copy(
-            this._state.update(
-                _board = board,
-                _currentPlayer = this._state.currentPlayer.next(),
-                _finished = finished,
-                _score = score
+            this._currentStatus = this.checkStatus()
+            val pointGained = (this._currentStatus.result != IWinCondition.Result.NONE)
+            val score: MutableMap<IWinCondition.Result, Int> = this._state.score
+            if (pointGained)
+                score[this._currentStatus.result] = score.getOrDefault(this._currentStatus.result, -1) + 1
+            val finished: Boolean = (
+                score[IWinCondition.Result.O] == this._points ||
+                score[IWinCondition.Result.X] == this._points
             )
 
-            return true;
+            this._state.update(
+                board = board,
+                currentPlayer = this._state.currentPlayer.next(),
+                blocked = pointGained,
+                finished = finished,
+                score = score,
+            )
+
+            if (finished)
+                this.context.showWinMessage(this._currentStatus.result)
+            return true
         }
 
-        return false;
+        return false
     }
 
     override fun checkStatus(): Status {
-        return this._winCondition.check(this.board);
+        return this._winCondition.check(this._state.board)
+    }
+
+    override fun nextPointAction(): List<Coordinates>? {
+        if (this._state.gameFinished) {
+            this.reset()
+            return null
+        }
+
+        else if (this._state.gameBlocked) {
+            val board = this._state.board
+            if (this._currentStatus.result == IWinCondition.Result.TIE)
+                board.clear()
+            else
+                for (coordinates in this._currentStatus.coordinates)
+                    board[coordinates.row][coordinates.column] = Figure.EMPTY
+
+            this._state.update(
+                board = board,
+                blocked = false
+            )
+        }
+
+        val coordinates = this._currentStatus.coordinates
+        this._currentStatus = Status()
+        return coordinates
     }
 
     override fun reset() {
         val board = this._state.board
         board.clear()
 
-        this._state = this._state.copy(
-            _board = board,
-            _currentPlayer = Figure.O,
-            _finished = false,
-            _score = GameState.DEFAULT_SCORE
+        this._state.update(
+            board = board,
+            currentPlayer = Figure.O,
+            blocked = false,
+            finished = false,
+            score = GameState.DEFAULT_SCORE
         )
     }
 }
