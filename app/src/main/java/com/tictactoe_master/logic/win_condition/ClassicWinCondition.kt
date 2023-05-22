@@ -81,4 +81,8 @@ object ClassicWinCondition : IWinCondition {
 
         return Status(result = IWinCondition.Result.NONE)
     }
+
+    override fun getEvaluation(board: GameBoard): Int {
+        TODO("Not yet implemented")
+    }
 }

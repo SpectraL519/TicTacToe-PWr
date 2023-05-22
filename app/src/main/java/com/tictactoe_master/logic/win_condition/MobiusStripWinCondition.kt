@@ -32,6 +32,10 @@ object MobiusStripWinCondition : IWinCondition {
         return classicWinStatus // (TIE, null) or (NONE, null)
     }
 
+    override fun getEvaluation(board: GameBoard): Int {
+        TODO("Not yet implemented")
+    }
+
     private fun checkStrip (
         board: GameBoard,
         figure: Figure
