@@ -15,4 +15,8 @@ data class Coordinates
     override fun compareTo(other: Coordinates): Int {
         return compareValuesBy(this, other, { it.row }, { it.column })
     }
+
+    companion object {
+        val NONE = Coordinates(-1, -1)
+    }
 }
