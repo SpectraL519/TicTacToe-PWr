@@ -10,18 +10,25 @@ import kotlin.math.max
 
 class BotHandler
     constructor(
-        private val winCondition: IWinCondition
+        private val winCondition: IWinCondition,
+        private val player: Figure,
+        private val depth: Int = 3
     ) {
 
-    fun getMove(board: GameBoard, figure: Figure): Coordinates {
-        TODO("Not yet implemented")
-    }
+    fun getMoveCoordinates (board: GameBoard): Coordinates =
+        this.minmax(
+            board,
+            this.depth,
+            Long.MIN_VALUE,
+            Long.MAX_VALUE,
+            this.isMaxPlayer(player)
+        ).coordinates
 
     private fun minmax(
         board: GameBoard,
         depth: Int,
-        alpha: Int,
-        beta: Int,
+        alpha: Long,
+        beta: Long,
         maxPlayer: Boolean
     ): MoveParams {
         val result = this.winCondition.check(board).result
@@ -30,11 +37,11 @@ class BotHandler
             depth <= 0 ||
             result == IWinCondition.Result.O ||
             result == IWinCondition.Result.X
-        ) return MoveParams(null, this.winCondition.getEvaluation(board))
+        ) return MoveParams(Coordinates.NONE, this.winCondition.getEvaluation(board, this.player))
 
         val player = this.getPlayer(maxPlayer)
         val compare = this.getCompareMethod(maxPlayer)
-        var bestMove = MoveParams(null, this.getInitEvaluation(maxPlayer))
+        var bestMove = MoveParams(Coordinates.NONE, this.getInitEvaluation(maxPlayer))
         var _alpha = alpha
         var _beta = beta
 
@@ -64,36 +71,31 @@ class BotHandler
     }
 
 
-    private fun isMaxPlayer (player: Figure): Boolean? =
-        when (player) {
-            Figure.X -> { true }
-            Figure.O -> { false }
-            Figure.EMPTY -> { null }
-        }
+    private fun isMaxPlayer (player: Figure): Boolean = (player == Figure.X)
 
     private fun getPlayer (maxPlayer: Boolean): Figure =
         if (maxPlayer)
-            Figure.X
+            this.player
         else
-            Figure.O
+            this.player.next()
 
-    private fun getCompareMethod (maxPlayer: Boolean): (Int, Int) -> Boolean =
+    private fun getCompareMethod (maxPlayer: Boolean): (Long, Long) -> Boolean =
         if (maxPlayer)
-            fun (evalA: Int, evalB: Int): Boolean = (evalA > evalB)
+            fun (evalA: Long, evalB: Long): Boolean = (evalA > evalB)
         else
-            fun (evalA: Int, evalB: Int): Boolean = (evalA < evalB)
+            fun (evalA: Long, evalB: Long): Boolean = (evalA < evalB)
 
-    private fun getInitEvaluation (maxPlayer: Boolean): Int =
+    private fun getInitEvaluation (maxPlayer: Boolean): Long =
         if (maxPlayer)
-            Int.MIN_VALUE
+            Long.MIN_VALUE
         else
-            Int.MAX_VALUE
+            Long.MAX_VALUE
 
 
 
     private data class MoveParams
         constructor(
-            var coordinates: Coordinates?,
-            var evaluation: Int
+            var coordinates: Coordinates,
+            var evaluation: Long
         )
 }

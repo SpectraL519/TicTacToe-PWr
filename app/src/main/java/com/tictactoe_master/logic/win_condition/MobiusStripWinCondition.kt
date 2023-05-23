@@ -1,5 +1,6 @@
 package com.tictactoe_master.logic.win_condition
 
+import android.media.AsyncPlayer
 import com.tictactoe_master.logic.utils.Coordinates
 import com.tictactoe_master.logic.utils.Figure
 import com.tictactoe_master.logic.utils.GameBoard
@@ -32,8 +33,8 @@ object MobiusStripWinCondition : IWinCondition {
         return classicWinStatus // (TIE, null) or (NONE, null)
     }
 
-    override fun getEvaluation(board: GameBoard): Int {
-        TODO("Not yet implemented")
+    override fun getEvaluation(board: GameBoard, player: Figure): Long {
+        return ClassicWinCondition.getEvaluation(board, player)
     }
 
     private fun checkStrip (
