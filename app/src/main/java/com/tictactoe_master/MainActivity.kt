@@ -7,8 +7,15 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
+import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
+import com.tictactoe_master.online_game.FirebaseCommunication
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,6 +27,46 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        //FirebaseApp.initializeApp(this)
+
+        var opponentFound = false
+        var waiting = false
+        var playerId = Firebase.auth.currentUser!!.email!!
+        var opponentId = "0"
+
+        val database = FirebaseDatabase.getInstance()
+        database.reference.child("games").addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (opponentFound) {
+
+                    if (snapshot.hasChildren()) {
+
+                        for (game in snapshot.children) {
+                            val gameId = game.key!!.toLong()
+                            val playerCount = game.childrenCount.toInt()
+
+                            if (waiting) {
+                                if (playerCount == 2) {
+
+                                }
+                            }
+                        }
+                    }
+                }
+                else {
+
+                    val gameId = System.currentTimeMillis().toString()
+                    snapshot.child(gameId).child("player_id").ref.setValue(playerId)
+                    waiting = true
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
 
         this.initView()
     }
