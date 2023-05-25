@@ -1,69 +1,68 @@
 package com.tictactoe_master.online_game
 
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
+import com.google.firebase.ktx.Firebase
 
 class FirebaseCommunication {
+
     private var gameId = ""
+    private val playerId = Firebase.auth.currentUser!!.email!!
     private val database: FirebaseDatabase = FirebaseDatabase.getInstance()
-    private val gameRef: DatabaseReference
 
-    interface GameEventListener {
-        fun onOpponentMove(row: Int, col: Int)
-        fun onGameEnd(winner: String?)
-    }
+    fun findOpponent() {
+        var opponentFound = false
+        var waiting = false
 
-    constructor() {
-        this.gameRef = database.getReference("games")
-        this.gameId = gameRef.push().key ?: throw IllegalStateException("Failed to generate game ID.")
-        gameRef.child(gameId).setValue(null)
-    }
+        var opponentId = "0"
+        var playerTurn = ""
 
-    constructor(gameId: String) {
-        this.gameId = gameId
-        this.gameRef = database.getReference("games/$gameId")
-    }
+        database.reference.child("games").addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (opponentFound) {
 
-    fun startListening(eventListener: GameEventListener) {
-        gameRef.addChildEventListener(object : ChildEventListener {
-            override fun onChildAdded(dataSnapshot: DataSnapshot, previousChildName: String?) {
-                // Ignoruj to zdarzenie, ponieważ to inicjalizacja planszy
-            }
+                    if (snapshot.hasChildren()) {
 
-            override fun onChildChanged(dataSnapshot: DataSnapshot, previousChildName: String?) {
-                val move = dataSnapshot.getValue(Move::class.java)
-                move?.let {
-                    eventListener.onOpponentMove(move.row, move.col)
+                        for (game in snapshot.children) {
+                            val foundGameId = game.key!!.toLong()
+                            val playerCount = game.childrenCount.toInt()
+
+                            if (waiting) {
+                                if (playerCount == 2) {
+
+                                    playerTurn = playerId
+
+                                    var playerFound = false
+                                    for (player in game.children) {
+                                        val foundPlayerId = player.key
+                                        if (foundPlayerId == playerId) {
+                                            playerFound = true
+                                        }
+                                        else if (playerFound) {
+                                            opponentId = player.key!!
+                                            gameId = foundGameId.toString()
+                                            opponentFound = true
+                                            database.getReference("games").child("turns").child
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else {
+
+                    gameId = System.currentTimeMillis().toString()
+                    snapshot.child(gameId).child("player_id").ref.setValue(playerId)
+                    waiting = true
                 }
             }
 
-            override fun onChildRemoved(dataSnapshot: DataSnapshot) {
-                // Plansza została zresetowana przez przeciwnika
-                eventListener.onGameEnd(null)
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
             }
 
-            override fun onChildMoved(dataSnapshot: DataSnapshot, previousChildName: String?) {
-                // Nie jest używane w tym przypadku
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                // Wystąpił błąd podczas nasłuchiwania zmian
-            }
         })
     }
 
-    fun makeMove(row: Int, col: Int) {
-        val moveRef = gameRef.child("moves").push()
-        val move = Move(row, col)
-        moveRef.setValue(move)
-    }
-
-    fun resetGame() {
-        gameRef.child("moves").removeValue()
-    }
-
-    fun endGame(winner: String?) {
-        gameRef.removeValue()
-    }
-
-    data class Move(val row: Int = -1, val col: Int = -1)
 }

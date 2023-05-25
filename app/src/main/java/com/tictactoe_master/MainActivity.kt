@@ -28,45 +28,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //FirebaseApp.initializeApp(this)
 
-        var opponentFound = false
-        var waiting = false
-        var playerId = Firebase.auth.currentUser!!.email!!
-        var opponentId = "0"
-
-        val database = FirebaseDatabase.getInstance()
-        database.reference.child("games").addValueEventListener(object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (opponentFound) {
-
-                    if (snapshot.hasChildren()) {
-
-                        for (game in snapshot.children) {
-                            val gameId = game.key!!.toLong()
-                            val playerCount = game.childrenCount.toInt()
-
-                            if (waiting) {
-                                if (playerCount == 2) {
-
-                                }
-                            }
-                        }
-                    }
-                }
-                else {
-
-                    val gameId = System.currentTimeMillis().toString()
-                    snapshot.child(gameId).child("player_id").ref.setValue(playerId)
-                    waiting = true
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-        })
 
         this.initView()
     }
