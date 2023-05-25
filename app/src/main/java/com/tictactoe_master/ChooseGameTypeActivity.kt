@@ -136,7 +136,7 @@ class ChooseGameTypeActivity : AppCompatActivity() {
     private fun startGame() {
         val gameIntent = Intent(this, GameActivity::class.java).apply {
             putExtra("size", this@ChooseGameTypeActivity.chosenBoardSize)
-            putExtra("win_cond", this@ChooseGameTypeActivity.toString())
+            putExtra("win_cond", this@ChooseGameTypeActivity.chosenWinCond.toString())
             putExtra("game_type", this@ChooseGameTypeActivity.chosenGameType.toString())
             if (this@ChooseGameTypeActivity.chosenGameType == GameType.POINT)
                 putExtra("points_to_win", this@ChooseGameTypeActivity.pointsToWin)
