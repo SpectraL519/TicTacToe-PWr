@@ -15,4 +15,15 @@ data class Coordinates
     override fun compareTo(other: Coordinates): Int {
         return compareValuesBy(this, other, { it.row }, { it.column })
     }
+
+    companion object {
+        private val REGEX = Regex("C\\((\\d+),(\\d+)\\)")
+
+        fun fromString (strCoordinates: String): Coordinates? {
+            val match = REGEX.find(strCoordinates) ?: return null
+
+            val (x, y) = match.destructured
+            return Coordinates(x.toInt(), y.toInt())
+        }
+    }
 }
