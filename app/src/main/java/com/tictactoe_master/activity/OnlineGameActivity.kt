@@ -12,6 +12,8 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import com.tictactoe_master.R
+import com.tictactoe_master.logic.utils.Figure
+import com.tictactoe_master.logic.win_condition.IWinCondition
 
 class OnlineGameActivity : GameActivity() {
 
@@ -23,7 +25,7 @@ class OnlineGameActivity : GameActivity() {
     private var opponentName = ""
     private var connectionId = ""
 
-    private var playerTurn = ""
+    private var player = Figure.EMPTY
 
     private lateinit var movesEventListener: ValueEventListener
 
@@ -53,7 +55,26 @@ class OnlineGameActivity : GameActivity() {
     }
 
     override fun cellClick(textView: TextView, x: Int, y: Int) {
-        // TODO:
+        if (this.game.state.currentPlayer == this.player) {
+            if (this.game.placeFigure(x, y)) {
+                val figure = this.game.state.getFigure(x, y)
+                this.cells[x][y].text = figure.toString()
+                this.turnTV.text = String.format("TURN: %s", figure.next().toString())
+
+                val status = this.game.checkStatus()
+                if (status.result != IWinCondition.Result.NONE) {
+                    if (status.result == IWinCondition.Result.O || status.result == IWinCondition.Result.X) {
+                        for (c in status.coordinates) {
+                            this.cells[c.row][c.column].setBackgroundColor(getColor(R.color.light_green))
+                        }
+
+                        this.nextBT.text = this.game.nextPointActionString
+                    }
+
+                    this.updateScoreView()
+                }
+            }
+        }
     }
 
     private fun initConnection() {
@@ -91,7 +112,7 @@ class OnlineGameActivity : GameActivity() {
                 if (connection.child("params").value.toString() != this@OnlineGameActivity.encodeGameParams())
                     return
 
-                this@OnlineGameActivity.playerTurn = this@OnlineGameActivity.playerUniqueId
+                this@OnlineGameActivity.player = Figure.O
                 // TODO: apply player turn
 
                 for (player in connection.children) {
@@ -133,7 +154,7 @@ class OnlineGameActivity : GameActivity() {
                         this@OnlineGameActivity.opponentName = player.child("player_name").value as String
                         this@OnlineGameActivity.opponentUniqueId = player.key.toString()
 
-                        this@OnlineGameActivity.playerTurn = this@OnlineGameActivity.opponentUniqueId
+                        this@OnlineGameActivity.player = Figure.X
                         // TODO: apply player turn
 
                         this@OnlineGameActivity.connectionId = connId

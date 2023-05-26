@@ -20,17 +20,17 @@ import com.tictactoe_master.logic.win_condition.MobiusStripWinCondition
 
 open class GameActivity : AppCompatActivity() {
 
-    private var size = 3
-    private lateinit var game: IGame
+    protected var size = 3
+    protected lateinit var game: IGame
 
-    private lateinit var accountTV: TextView
-    private lateinit var pointsO: TextView
-    private lateinit var pointsTie: TextView
-    private lateinit var pointsX: TextView
-    private lateinit var turnTV: TextView
-    private lateinit var gameBoardTL: TableLayout
-    private lateinit var cells: Array<Array<TextView>>
-    private lateinit var nextBT: Button
+    protected lateinit var accountTV: TextView
+    protected lateinit var pointsO: TextView
+    protected lateinit var pointsTie: TextView
+    protected lateinit var pointsX: TextView
+    protected lateinit var turnTV: TextView
+    protected lateinit var gameBoardTL: TableLayout
+    protected lateinit var cells: Array<Array<TextView>>
+    protected lateinit var nextBT: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -177,7 +177,7 @@ open class GameActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateScoreView() {
+    protected fun updateScoreView() {
         this.pointsO.text = String.format(
             "%s %s",
             getString(R.string.player_o),
