@@ -14,11 +14,12 @@ class OnlineGameActivity : GameActivity() {
     private var databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://tictactoe-master-9efa8-default-rtdb.firebaseio.com/")
 
     private var playerUniqueId = "0"
-    private var opponentFound = false
+    private var playerName = Firebase.auth.currentUser!!.email!!
     private var opponentUniqueId = "0"
-    private var createdGame = false
-    private var playerTurn = ""
+    private var opponentName = ""
     private var connectionId = ""
+
+    private var playerTurn = ""
 
     private lateinit var turnsEventListener: ValueEventListener
 
@@ -35,64 +36,65 @@ class OnlineGameActivity : GameActivity() {
         this.databaseReference.child("connections").addValueEventListener(object:
             ValueEventListener {
 
+            private var opponentFound = false
+            private var createdGame = false
+
             private fun createGame(snapshot: DataSnapshot) {
+                this.createdGame = true
+
                 val connectionUniqueId = System.currentTimeMillis().toString()
                 snapshot.child(connectionUniqueId)
-                    .child(playerUniqueId)
+                    .child(this@OnlineGameActivity.playerUniqueId)
                     .child("player_name")
                     .ref.setValue(Firebase.auth.currentUser!!.email)
-
-                createdGame = true
             }
 
             private fun addOpponent(connId: String, connection: DataSnapshot) {
 
-                playerTurn = playerUniqueId
+                this@OnlineGameActivity.playerTurn = this@OnlineGameActivity.playerUniqueId
                 // TODO: apply player turn
 
                 for (player in connection.children) {
-                    if (player.key != playerUniqueId) {
-                        var getOpponentName = player.child("player_name").value as String
-                        Toast.makeText(this@OnlineGameActivity, getOpponentName, Toast.LENGTH_SHORT).show()
-                        opponentUniqueId = player.key.toString()
-                        connectionId = connId
-                        opponentFound = true
+                    if (player.key != this@OnlineGameActivity.playerUniqueId) {
+                        this.opponentFound = true
 
-                        databaseReference.child("turns").child(connectionId)
-                            .addValueEventListener(turnsEventListener)
+                        this@OnlineGameActivity.opponentName = player.child("player_name").value as String
+                        this@OnlineGameActivity.opponentUniqueId = player.key.toString()
+                        this@OnlineGameActivity.connectionId = connId
+
+                        this@OnlineGameActivity.databaseReference.child("turns").child(this@OnlineGameActivity.connectionId)
+                            .addValueEventListener(this@OnlineGameActivity.turnsEventListener)
 
                         // TODO: hide ProcessDialog
 
-                        databaseReference.child("connections").removeEventListener(this)
+                        this@OnlineGameActivity.databaseReference.child("connections").removeEventListener(this)
                     }
                 }
-
-
             }
 
             private fun joinGame(connId: String, connection: DataSnapshot) {
                 connection
-                    .child(playerUniqueId)
+                    .child(this@OnlineGameActivity.playerUniqueId)
                     .child("player_name")
                     .ref.setValue(Firebase.auth.currentUser!!.email)
 
                 for (player in connection.children) {
 
-                    if (player.key != playerUniqueId) {
-                        val getOpponentName = player.child("player_name").value as String
-                        Toast.makeText(this@OnlineGameActivity, getOpponentName, Toast.LENGTH_SHORT).show()
-                        opponentUniqueId = player.key.toString()
+                    if (player.key != this@OnlineGameActivity.playerUniqueId) {
+                        this.opponentFound = true
 
-                        playerTurn = opponentUniqueId
+                        this@OnlineGameActivity.opponentName = player.child("player_name").value as String
+                        this@OnlineGameActivity.opponentUniqueId = player.key.toString()
+
+                        this@OnlineGameActivity.playerTurn = this@OnlineGameActivity.opponentUniqueId
                         // TODO: apply player turn
 
-                        connectionId = connId
-                        opponentFound = true
+                        this@OnlineGameActivity.connectionId = connId
 
-                        databaseReference.child("turns").child(connectionId)
-                            .addValueEventListener(turnsEventListener)
+                        this@OnlineGameActivity.databaseReference.child("turns").child(this@OnlineGameActivity.connectionId)
+                            .addValueEventListener(this@OnlineGameActivity.turnsEventListener)
 
-                        databaseReference.child("connections").removeEventListener(this)
+                        this@OnlineGameActivity.databaseReference.child("connections").removeEventListener(this)
                         break
                     }
 
@@ -101,7 +103,7 @@ class OnlineGameActivity : GameActivity() {
 
             override fun onDataChange(snapshot: DataSnapshot) {
 
-                if (opponentFound)
+                if (this.opponentFound)
                     return
 
                 if (snapshot.hasChildren()) {
@@ -111,23 +113,23 @@ class OnlineGameActivity : GameActivity() {
                         val connId = connection.key!!
                         val getPlayersCount = connection.childrenCount.toInt()
 
-                        if (createdGame && getPlayersCount == 2) {
+                        if (this.createdGame && getPlayersCount == 2) {
                             this.addOpponent(connId, connection)
                             return
                         }
-                        else if (!createdGame && getPlayersCount == 1) {
+                        else if (!this.createdGame && getPlayersCount == 1) {
                             this.joinGame(connId, connection)
                             return
                         }
 
                     }
 
-                    if (!createdGame) {
+                    if (!this.createdGame) {
                         this.createGame(snapshot)
                     }
 
                 }
-                else if (!createdGame) {
+                else if (!this.createdGame) {
                     this.createGame(snapshot)
                 }
 
