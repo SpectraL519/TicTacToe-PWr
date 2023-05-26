@@ -17,7 +17,7 @@ import com.tictactoe_master.logic.win_condition.ClassicWinCondition
 import com.tictactoe_master.logic.win_condition.IWinCondition
 import com.tictactoe_master.logic.win_condition.MobiusStripWinCondition
 
-class GameActivity : AppCompatActivity() {
+open class GameActivity : AppCompatActivity() {
 
     private var size = 3
     private lateinit var game: IGame

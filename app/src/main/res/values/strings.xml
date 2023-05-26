@@ -3,7 +3,7 @@
 
     <string name="title_screen_text">TicTacToe\nMaster</string>
     <string name="twoPlayersOnePhone">1 vs 1 on one phone</string>
-    <string name="twoPlayersTwoPhonesWiFi">1 vs 1 via Wi-Fi</string>
+    <string name="twoPlayersTwoPhonesWiFi">1 vs 1 online</string>
     <string name="onePlayerOnePhone">play against bot</string>
     <string name="start_game">start game</string>
     <string name="chosen_board_size">Chosen board size:</string>

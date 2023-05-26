@@ -15,6 +15,7 @@ class ChooseGameTypeActivity : AppCompatActivity() {
     private var chosenWinCond: WinCondition = WinCondition.CLASSIC
     private var chosenGameType: GameType = GameType.CLASSIC
     private var pointsToWin = 2
+    private var gameMode = ""
 
     private lateinit var accountTV: TextView
     private lateinit var decreaseSizeBT: ImageView
@@ -30,6 +31,8 @@ class ChooseGameTypeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_choose_game_type)
+
+        this.gameMode = intent.getStringExtra("game_mode").toString()
 
         this.initView()
     }
@@ -134,14 +137,26 @@ class ChooseGameTypeActivity : AppCompatActivity() {
     }
 
     private fun startGame() {
-        val gameIntent = Intent(this, GameActivity::class.java).apply {
-            putExtra("size", this@ChooseGameTypeActivity.chosenBoardSize)
-            putExtra("win_cond", this@ChooseGameTypeActivity.chosenWinCond.toString())
-            putExtra("game_type", this@ChooseGameTypeActivity.chosenGameType.toString())
-            if (this@ChooseGameTypeActivity.chosenGameType == GameType.POINT)
-                putExtra("points_to_win", this@ChooseGameTypeActivity.pointsToWin)
+        if (this.gameMode == "1_v_1") {
+            val gameIntent = Intent(this, GameActivity::class.java).apply {
+                putExtra("size", this@ChooseGameTypeActivity.chosenBoardSize)
+                putExtra("win_cond", this@ChooseGameTypeActivity.chosenWinCond.toString())
+                putExtra("game_type", this@ChooseGameTypeActivity.chosenGameType.toString())
+                if (this@ChooseGameTypeActivity.chosenGameType == GameType.POINT)
+                    putExtra("points_to_win", this@ChooseGameTypeActivity.pointsToWin)
+            }
+            startActivity(gameIntent)
         }
-        startActivity(gameIntent)
+        else if (this.gameMode == "1_v_1_online") {
+            val gameIntent = Intent(this, OnlineGameActivity::class.java).apply {
+                putExtra("size", this@ChooseGameTypeActivity.chosenBoardSize)
+                putExtra("win_cond", this@ChooseGameTypeActivity.chosenWinCond.toString())
+                putExtra("game_type", this@ChooseGameTypeActivity.chosenGameType.toString())
+                if (this@ChooseGameTypeActivity.chosenGameType == GameType.POINT)
+                    putExtra("points_to_win", this@ChooseGameTypeActivity.pointsToWin)
+            }
+            startActivity(gameIntent)
+        }
     }
 
     companion object {

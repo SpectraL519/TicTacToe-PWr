@@ -3,19 +3,11 @@ package com.tictactoe_master
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
-import com.google.firebase.FirebaseApp
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
-import com.tictactoe_master.online_game.FirebaseCommunication
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,8 +19,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-
 
         this.initView()
     }
@@ -75,8 +65,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         this.oneVsOneOnlineCV.setOnClickListener {
-            // this.startGame("1_v_1_online")
-            Toast.makeText(this, "This functionality is not yet implemented", Toast.LENGTH_SHORT).show()
+            if (Firebase.auth.currentUser == null)
+                Toast.makeText(this, "First log in to play online", Toast.LENGTH_SHORT).show()
+            else
+                this.startGame("1_v_1_online")
         }
     }
 
@@ -86,6 +78,5 @@ class MainActivity : AppCompatActivity() {
         }
         startActivity(gameIntent)
     }
-
 
 }
