@@ -161,7 +161,7 @@ class ChooseGameTypeActivity : AppCompatActivity() {
 
     companion object {
         const val MIN_BOARD_SIZE = 3
-        const val MAX_BOARD_SIZE = 10
+        const val MAX_BOARD_SIZE = 9
     }
 
     private enum class WinCondition {

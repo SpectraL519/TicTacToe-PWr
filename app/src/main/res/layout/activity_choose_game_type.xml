@@ -175,7 +175,7 @@
             android:layout_height="wrap_content"
             android:stepSize="1"
             android:valueFrom="2"
-            android:valueTo="10"/>
+            android:valueTo="9"/>
     </LinearLayout>
 
     <Button
