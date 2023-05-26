@@ -1,4 +1,4 @@
-package com.tictactoe_master
+package com.tictactoe_master.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +9,7 @@ import androidx.appcompat.widget.SwitchCompat
 import com.google.android.material.slider.RangeSlider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.tictactoe_master.R
 
 class ChooseGameTypeActivity : AppCompatActivity() {
     private var chosenBoardSize = 3

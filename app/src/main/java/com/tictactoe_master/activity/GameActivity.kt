@@ -1,4 +1,4 @@
-package com.tictactoe_master
+package com.tictactoe_master.activity
 
 import android.content.Intent
 import android.graphics.Color
@@ -10,6 +10,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.tictactoe_master.R
 import com.tictactoe_master.logic.game.ClassicGame
 import com.tictactoe_master.logic.game.IGame
 import com.tictactoe_master.logic.game.PointGame
@@ -155,7 +156,7 @@ open class GameActivity : AppCompatActivity() {
         }
     }
 
-    private fun cellClick(textView: TextView, x: Int, y: Int) {
+    protected open fun cellClick(textView: TextView, x: Int, y: Int) {
         if (this.game.placeFigure(x, y)) {
             val figure = this.game.state.getFigure(x, y)
             this.cells[x][y].text = figure.toString()

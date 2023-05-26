@@ -1,4 +1,4 @@
-package com.tictactoe_master
+package com.tictactoe_master.activity
 
 import android.app.ProgressDialog
 import android.graphics.drawable.ColorDrawable
@@ -11,20 +11,21 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
+import com.tictactoe_master.R
 
 class OnlineGameActivity : GameActivity() {
 
     private var databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://tictactoe-master-9efa8-default-rtdb.firebaseio.com/")
 
     private var playerUniqueId = "0"
-    private var playerName = Firebase.auth.currentUser!!.email!!
+    private val playerName = Firebase.auth.currentUser!!.email!!
     private var opponentUniqueId = "0"
     private var opponentName = ""
     private var connectionId = ""
 
     private var playerTurn = ""
 
-    private lateinit var turnsEventListener: ValueEventListener
+    private lateinit var movesEventListener: ValueEventListener
 
     private lateinit var opponentNameTV: TextView
 
@@ -51,6 +52,10 @@ class OnlineGameActivity : GameActivity() {
         return params
     }
 
+    override fun cellClick(textView: TextView, x: Int, y: Int) {
+        // TODO:
+    }
+
     private fun initConnection() {
 
         val progressDialog = ProgressDialog(this)
@@ -62,8 +67,7 @@ class OnlineGameActivity : GameActivity() {
 
         this.playerUniqueId = System.currentTimeMillis().toString()
 
-        this.databaseReference.child("connections").addValueEventListener(object:
-            ValueEventListener {
+        this.databaseReference.child("connections").addValueEventListener(object: ValueEventListener {
 
             private var opponentFound = false
             private var createdGame = false
@@ -79,7 +83,7 @@ class OnlineGameActivity : GameActivity() {
                 snapshot.child(connectionUniqueId)
                     .child(this@OnlineGameActivity.playerUniqueId)
                     .child("player_name")
-                    .ref.setValue(Firebase.auth.currentUser!!.email)
+                    .ref.setValue(this@OnlineGameActivity.playerName)
             }
 
             private fun addOpponent(connId: String, connection: DataSnapshot) {
@@ -98,8 +102,8 @@ class OnlineGameActivity : GameActivity() {
                         this@OnlineGameActivity.opponentUniqueId = player.key.toString()
                         this@OnlineGameActivity.connectionId = connId
 
-                        this@OnlineGameActivity.databaseReference.child("turns").child(this@OnlineGameActivity.connectionId)
-                            .addValueEventListener(this@OnlineGameActivity.turnsEventListener)
+                        this@OnlineGameActivity.databaseReference.child("moves").child(this@OnlineGameActivity.connectionId)
+                            .addValueEventListener(this@OnlineGameActivity.movesEventListener)
 
                         progressDialog.hide()
 
@@ -119,7 +123,7 @@ class OnlineGameActivity : GameActivity() {
                 connection
                     .child(this@OnlineGameActivity.playerUniqueId)
                     .child("player_name")
-                    .ref.setValue(Firebase.auth.currentUser!!.email)
+                    .ref.setValue(this@OnlineGameActivity.playerName)
 
                 for (player in connection.children) {
 
@@ -134,8 +138,8 @@ class OnlineGameActivity : GameActivity() {
 
                         this@OnlineGameActivity.connectionId = connId
 
-                        this@OnlineGameActivity.databaseReference.child("turns").child(this@OnlineGameActivity.connectionId)
-                            .addValueEventListener(this@OnlineGameActivity.turnsEventListener)
+                        this@OnlineGameActivity.databaseReference.child("moves").child(this@OnlineGameActivity.connectionId)
+                            .addValueEventListener(this@OnlineGameActivity.movesEventListener)
 
                         progressDialog.hide()
 
@@ -184,21 +188,10 @@ class OnlineGameActivity : GameActivity() {
 
         })
 
-        this.turnsEventListener = object: ValueEventListener {
+        this.movesEventListener = object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
 
-                for (dataSnapshot in snapshot.children) {
-
-                    if (dataSnapshot.childrenCount.toInt() == 2) {
-
-                        val boxPosition = dataSnapshot.child("box_position").value.toString().toInt()
-                        val getPlayerId = dataSnapshot.child("player_id").value.toString()
-
-                        // TODO: handle selected box
-
-                    }
-
-                }
+                // TODO: handle moves
 
             }
 

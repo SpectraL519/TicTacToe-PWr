@@ -1,6 +1,6 @@
 package com.tictactoe_master.logic.game
 
-import com.tictactoe_master.GameActivity
+import com.tictactoe_master.activity.GameActivity
 import com.tictactoe_master.logic.utils.*
 import com.tictactoe_master.logic.win_condition.ClassicWinCondition
 import com.tictactoe_master.logic.win_condition.IWinCondition
