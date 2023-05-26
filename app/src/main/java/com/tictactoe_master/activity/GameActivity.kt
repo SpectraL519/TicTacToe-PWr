@@ -20,15 +20,15 @@ import com.tictactoe_master.logic.win_condition.MobiusStripWinCondition
 
 open class GameActivity : AppCompatActivity() {
 
-    protected var size = 3
+    private var size = 3
     protected lateinit var game: IGame
 
-    protected lateinit var accountTV: TextView
-    protected lateinit var pointsO: TextView
-    protected lateinit var pointsTie: TextView
-    protected lateinit var pointsX: TextView
+    private lateinit var accountTV: TextView
+    private lateinit var pointsO: TextView
+    private lateinit var pointsTie: TextView
+    private lateinit var pointsX: TextView
     protected lateinit var turnTV: TextView
-    protected lateinit var gameBoardTL: TableLayout
+    private lateinit var gameBoardTL: TableLayout
     protected lateinit var cells: Array<Array<TextView>>
     protected lateinit var nextBT: Button
 

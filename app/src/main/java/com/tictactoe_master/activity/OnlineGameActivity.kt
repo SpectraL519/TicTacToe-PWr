@@ -4,6 +4,7 @@ import android.app.ProgressDialog
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -12,12 +13,15 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import com.tictactoe_master.R
+import com.tictactoe_master.logic.utils.Coordinates
 import com.tictactoe_master.logic.utils.Figure
 import com.tictactoe_master.logic.win_condition.IWinCondition
 
 class OnlineGameActivity : GameActivity() {
 
-    private var databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://tictactoe-master-9efa8-default-rtdb.firebaseio.com/")
+    private var databaseReference = FirebaseDatabase
+        .getInstance()
+        .getReferenceFromUrl("https://tictactoe-master-9efa8-default-rtdb.firebaseio.com/")
 
     private var playerUniqueId = "0"
     private val playerName = Firebase.auth.currentUser!!.email!!
@@ -73,8 +77,15 @@ class OnlineGameActivity : GameActivity() {
 
                     this.updateScoreView()
                 }
+
+                this.databaseReference
+                    .child("moves")
+                    .child(this.connectionId)
+                    .ref.setValue(Coordinates(x, y).toString())
             }
         }
+        else
+            Toast.makeText(this, "Waiting for opponent's move", Toast.LENGTH_SHORT).show()
     }
 
     private fun initConnection() {
@@ -113,7 +124,6 @@ class OnlineGameActivity : GameActivity() {
                     return
 
                 this@OnlineGameActivity.player = Figure.O
-                // TODO: apply player turn
 
                 for (player in connection.children) {
                     if (player.key != "params" && player.key != this@OnlineGameActivity.playerUniqueId) {
@@ -123,14 +133,20 @@ class OnlineGameActivity : GameActivity() {
                         this@OnlineGameActivity.opponentUniqueId = player.key.toString()
                         this@OnlineGameActivity.connectionId = connId
 
-                        this@OnlineGameActivity.databaseReference.child("moves").child(this@OnlineGameActivity.connectionId)
+                        this@OnlineGameActivity.databaseReference
+                            .child("moves")
+                            .child(this@OnlineGameActivity.connectionId)
                             .addValueEventListener(this@OnlineGameActivity.movesEventListener)
 
                         progressDialog.hide()
 
-                        this@OnlineGameActivity.opponentNameTV.text = "Playing with ${this@OnlineGameActivity.opponentName}"
+                        this@OnlineGameActivity.opponentNameTV.text =
+                            "Playing with ${this@OnlineGameActivity.opponentName}"
 
-                        this@OnlineGameActivity.databaseReference.child("connections").removeEventListener(this)
+                        this@OnlineGameActivity.databaseReference
+                            .child("connections")
+                            .removeEventListener(this)
+
                         break
                     }
                 }
@@ -155,18 +171,23 @@ class OnlineGameActivity : GameActivity() {
                         this@OnlineGameActivity.opponentUniqueId = player.key.toString()
 
                         this@OnlineGameActivity.player = Figure.X
-                        // TODO: apply player turn
 
                         this@OnlineGameActivity.connectionId = connId
 
-                        this@OnlineGameActivity.databaseReference.child("moves").child(this@OnlineGameActivity.connectionId)
+                        this@OnlineGameActivity.databaseReference
+                            .child("moves")
+                            .child(this@OnlineGameActivity.connectionId)
                             .addValueEventListener(this@OnlineGameActivity.movesEventListener)
 
                         progressDialog.hide()
 
-                        this@OnlineGameActivity.opponentNameTV.text = "Playing with ${this@OnlineGameActivity.opponentName}"
+                        this@OnlineGameActivity.opponentNameTV.text =
+                            "Playing with ${this@OnlineGameActivity.opponentName}"
 
-                        this@OnlineGameActivity.databaseReference.child("connections").removeEventListener(this)
+                        this@OnlineGameActivity.databaseReference
+                            .child("connections")
+                            .removeEventListener(this)
+
                         break
                     }
 
@@ -212,8 +233,33 @@ class OnlineGameActivity : GameActivity() {
         this.movesEventListener = object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
 
-                // TODO: handle moves
+                val coordinates = Coordinates.fromString(snapshot.value.toString())
 
+                if (coordinates != null) {
+
+                    val x = coordinates.row
+                    val y = coordinates.column
+
+                    this@OnlineGameActivity.game.placeFigure(x, y)
+
+                    val figure = this@OnlineGameActivity.game.state.getFigure(x, y)
+                    this@OnlineGameActivity.cells[x][y].text = figure.toString()
+                    this@OnlineGameActivity.turnTV.text = String.format("TURN: %s", figure.next().toString())
+
+                    val status = this@OnlineGameActivity.game.checkStatus()
+                    if (status.result != IWinCondition.Result.NONE) {
+                        if (status.result == IWinCondition.Result.O || status.result == IWinCondition.Result.X) {
+                            for (c in status.coordinates) {
+                                this@OnlineGameActivity.cells[c.row][c.column]
+                                    .setBackgroundColor(getColor(R.color.light_green))
+                            }
+
+                            this@OnlineGameActivity.nextBT.text = this@OnlineGameActivity.game.nextPointActionString
+                        }
+
+                        this@OnlineGameActivity.updateScoreView()
+                    }
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {}

@@ -22,8 +22,8 @@ data class Coordinates
         fun fromString (strCoordinates: String): Coordinates? {
             val match = REGEX.find(strCoordinates) ?: return null
 
-            val (x, y) = match.destructured
-            return Coordinates(x.toInt(), y.toInt())
+            val (row, column) = match.destructured
+            return Coordinates(row.toInt(), column.toInt())
         }
     }
 }
