@@ -3,8 +3,7 @@ package com.tictactoe_master
 import android.app.ProgressDialog
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -27,10 +26,17 @@ class OnlineGameActivity : GameActivity() {
 
     private lateinit var turnsEventListener: ValueEventListener
 
+    private lateinit var opponentNameTV: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         this.initConnection()
+    }
+
+    override fun initView() {
+        super.initView()
+        this.opponentNameTV = findViewById(R.id.opponent_name_tv)
     }
 
     private fun encodeGameParams(): String {
@@ -97,6 +103,8 @@ class OnlineGameActivity : GameActivity() {
 
                         progressDialog.hide()
 
+                        this@OnlineGameActivity.opponentNameTV.text = "Playing with ${this@OnlineGameActivity.opponentName}"
+
                         this@OnlineGameActivity.databaseReference.child("connections").removeEventListener(this)
                         break
                     }
@@ -130,6 +138,8 @@ class OnlineGameActivity : GameActivity() {
                             .addValueEventListener(this@OnlineGameActivity.turnsEventListener)
 
                         progressDialog.hide()
+
+                        this@OnlineGameActivity.opponentNameTV.text = "Playing with ${this@OnlineGameActivity.opponentName}"
 
                         this@OnlineGameActivity.databaseReference.child("connections").removeEventListener(this)
                         break

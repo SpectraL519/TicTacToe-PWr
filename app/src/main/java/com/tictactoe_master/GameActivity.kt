@@ -71,7 +71,7 @@ open class GameActivity : AppCompatActivity() {
         }
     }
 
-    private fun initView() {
+    protected open fun initView() {
         this.pointsO = findViewById(R.id.points_o_tv)
         this.pointsTie = findViewById(R.id.points_tie_tv)
         this.pointsX = findViewById(R.id.points_x_tv)
