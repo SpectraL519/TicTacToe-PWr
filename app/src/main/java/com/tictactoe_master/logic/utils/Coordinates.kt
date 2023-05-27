@@ -18,5 +18,13 @@ data class Coordinates
 
     companion object {
         val NONE = Coordinates(-1, -1)
+        private val REGEX = Regex("C\\((\\d+),(\\d+)\\)")
+
+        fun fromString (strCoordinates: String): Coordinates? {
+            val match = REGEX.find(strCoordinates) ?: return null
+
+            val (row, column) = match.destructured
+            return Coordinates(row.toInt(), column.toInt())
+        }
     }
 }

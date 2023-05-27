@@ -1,4 +1,4 @@
-package com.tictactoe_master
+package com.tictactoe_master.activity.ui
 
 import android.content.Context
 import android.util.AttributeSet

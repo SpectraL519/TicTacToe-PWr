@@ -1,5 +1,6 @@
-package com.tictactoe_master
+package com.tictactoe_master.activity
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
@@ -7,6 +8,9 @@ import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import com.tictactoe_master.R
 import com.tictactoe_master.logic.game.ClassicGame
 import com.tictactoe_master.logic.game.IGame
 import com.tictactoe_master.logic.game.PointGame
@@ -14,18 +18,19 @@ import com.tictactoe_master.logic.win_condition.ClassicWinCondition
 import com.tictactoe_master.logic.win_condition.IWinCondition
 import com.tictactoe_master.logic.win_condition.MobiusStripWinCondition
 
-class GameActivity : AppCompatActivity() {
+open class GameActivity : AppCompatActivity() {
 
     private var size = 3
-    private lateinit var game: IGame
+    protected lateinit var game: IGame
 
+    private lateinit var accountTV: TextView
     private lateinit var pointsO: TextView
     private lateinit var pointsTie: TextView
     private lateinit var pointsX: TextView
-    private lateinit var turnTV: TextView
+    protected lateinit var turnTV: TextView
     private lateinit var gameBoardTL: TableLayout
-    private lateinit var cells: Array<Array<TextView>>
-    private lateinit var nextBT: Button
+    protected lateinit var cells: Array<Array<TextView>>
+    protected lateinit var nextBT: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +38,19 @@ class GameActivity : AppCompatActivity() {
 
         this.initLogic()
         this.initView()
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        this.setAccountTVText()
+    }
+
+    private fun setAccountTVText() {
+        this.accountTV.text = when (Firebase.auth.currentUser) {
+            null -> getString(R.string.login)
+            else -> "${getString(R.string.sign_out)} (${Firebase.auth.currentUser!!.email!!.subSequence(0, 5)})"
+        }
     }
 
     private fun initLogic() {
@@ -54,11 +72,25 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
-    private fun initView() {
+    protected open fun initView() {
         this.pointsO = findViewById(R.id.points_o_tv)
         this.pointsTie = findViewById(R.id.points_tie_tv)
         this.pointsX = findViewById(R.id.points_x_tv)
+        this.accountTV = findViewById(R.id.account_tv)
         this.updateScoreView()
+
+        this.setAccountTVText()
+        this.accountTV.setOnClickListener {
+            if (Firebase.auth.currentUser == null) {
+                val loginIntent = Intent(this, LoginActivity::class.java)
+                startActivity(loginIntent)
+            }
+            else {
+                Firebase.auth.signOut()
+                this.accountTV.text = getString(R.string.login)
+                Toast.makeText(this, "You've been signed out", Toast.LENGTH_LONG).show()
+            }
+        }
 
         this.turnTV = findViewById(R.id.turn_tv)
         this.turnTV.text = String.format("TURN: %s", this.game.state.currentPlayer.toString())
@@ -124,7 +156,7 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
-    private fun cellClick(textView: TextView, x: Int, y: Int) {
+    protected open fun cellClick(textView: TextView, x: Int, y: Int) {
         if (this.game.placeFigure(x, y)) {
             val figure = this.game.state.getFigure(x, y)
             this.cells[x][y].text = figure.toString()
@@ -145,7 +177,7 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateScoreView() {
+    protected fun updateScoreView() {
         this.pointsO.text = String.format(
             "%s %s",
             getString(R.string.player_o),
