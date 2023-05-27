@@ -21,7 +21,7 @@ import com.tictactoe_master.logic.win_condition.MobiusStripWinCondition
 
 open class GameActivity : AppCompatActivity() {
 
-    private var size = 3
+    protected var size = 3
     protected lateinit var game: IGame
 
     private lateinit var accountTV: TextView
@@ -32,8 +32,6 @@ open class GameActivity : AppCompatActivity() {
     private lateinit var gameBoardTL: TableLayout
     protected lateinit var cells: Array<Array<ImageView>>
     protected lateinit var nextBT: Button
-
-    protected
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,5 +1,6 @@
 package com.tictactoe_master.activity
 
+import android.graphics.Color
 import android.widget.ImageView
 import android.widget.TextView
 import com.tictactoe_master.R
@@ -27,6 +28,36 @@ class BotGameActivity : GameActivity() {
         super.initView()
         this.playingAsTV = findViewById(R.id.playing_as_tv)
         this.playingAsTV.text = "Playing as: ${this.player}"
+
+        this.nextBT.setOnClickListener {
+            if (this.game.state.gameBlocked) {
+                // clear win mark
+                for (x in 0 until this.size) {
+                    for (y in 0 until this.size)
+                        this.cells[x][y].setBackgroundColor(Color.LTGRAY)
+                }
+
+                // clear figures
+                val coordinates = this.game.nextPointAction()
+                if (coordinates == null) {
+                    for (x in 0 until this.size) {
+                        for (y in 0 until this.size)
+                            this.cells[x][y].setImageResource(android.R.color.transparent)
+                    }
+                } else {
+                    for (c in coordinates)
+                        this.cells[c.row][c.column].setImageResource(android.R.color.transparent)
+                }
+
+                this.turnTV.text =
+                    String.format("TURN: %s", this.game.state.currentPlayer.toString())
+                this.nextBT.text = this.game.nextPointActionString
+                this.updateScoreView()
+
+                if (this.player == Figure.X)
+                    this.botMovement()
+            }
+        }
 
         if (this.player == Figure.X)
             this.botMovement()
