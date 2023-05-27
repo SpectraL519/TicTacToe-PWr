@@ -60,35 +60,35 @@ class OnlineGameActivity : GameActivity() {
         return params
     }
 
-    override fun cellClick(textView: TextView, x: Int, y: Int) {
-        if (this.game.state.currentPlayer == this.player) {
-            if (this.game.placeFigure(x, y)) {
-                val figure = this.game.state.getFigure(x, y)
-                this.cells[x][y].text = figure.toString()
-                this.turnTV.text = String.format("TURN: %s", figure.next().toString())
-
-                val status = this.game.checkStatus()
-                if (status.result != IWinCondition.Result.NONE) {
-                    if (status.result == IWinCondition.Result.O || status.result == IWinCondition.Result.X) {
-                        for (c in status.coordinates) {
-                            this.cells[c.row][c.column].setBackgroundColor(getColor(R.color.light_green))
-                        }
-
-                        this.nextBT.text = this.game.nextPointActionString
-                    }
-
-                    this.updateScoreView()
-                }
-
-                this.databaseReference
-                    .child("moves")
-                    .child(this.connectionId)
-                    .ref.setValue(Coordinates(x, y).toString())
-            }
-        }
-        else
-            Toast.makeText(this, "Waiting for opponent's move", Toast.LENGTH_SHORT).show()
-    }
+//    override fun cellClick(textView: TextView, x: Int, y: Int) {
+//        if (this.game.state.currentPlayer == this.player) {
+//            if (this.game.placeFigure(x, y)) {
+//                val figure = this.game.state.getFigure(x, y)
+//                this.cells[x][y].text = figure.toString()
+//                this.turnTV.text = String.format("TURN: %s", figure.next().toString())
+//
+//                val status = this.game.checkStatus()
+//                if (status.result != IWinCondition.Result.NONE) {
+//                    if (status.result == IWinCondition.Result.O || status.result == IWinCondition.Result.X) {
+//                        for (c in status.coordinates) {
+//                            this.cells[c.row][c.column].setBackgroundColor(getColor(R.color.light_green))
+//                        }
+//
+//                        this.nextBT.text = this.game.nextPointActionString
+//                    }
+//
+//                    this.updateScoreView()
+//                }
+//
+//                this.databaseReference
+//                    .child("moves")
+//                    .child(this.connectionId)
+//                    .ref.setValue(Coordinates(x, y).toString())
+//            }
+//        }
+//        else
+//            Toast.makeText(this, "Waiting for opponent's move", Toast.LENGTH_SHORT).show()
+//    }
 
     private fun initConnection() {
 
@@ -247,7 +247,7 @@ class OnlineGameActivity : GameActivity() {
                     this@OnlineGameActivity.game.placeFigure(x, y)
 
                     val figure = this@OnlineGameActivity.game.state.getFigure(x, y)
-                    this@OnlineGameActivity.cells[x][y].text = figure.toString()
+//                    this@OnlineGameActivity.cells[x][y].text = figure.toString()
                     this@OnlineGameActivity.turnTV.text = String.format("TURN: %s", figure.next().toString())
 
                     val status = this@OnlineGameActivity.game.checkStatus()

@@ -31,37 +31,37 @@ class BotGameActivity : GameActivity() {
             this.botMovement()
     }
 
-    override fun cellClick(textView: TextView, x: Int, y: Int) {
-        if (this.game.state.currentPlayer == this.player) {
-            if (this.game.placeFigure(x, y)) {
-                val figure = this.game.state.getFigure(x, y)
-                this.cells[x][y].text = figure.toString()
-                this.turnTV.text = String.format("TURN: %s", figure.next().toString())
-
-                val status = this.game.checkStatus()
-                if (status.result != IWinCondition.Result.NONE) {
-                    if (status.result == IWinCondition.Result.O || status.result == IWinCondition.Result.X) {
-                        for (c in status.coordinates) {
-                            this.cells[c.row][c.column].setBackgroundColor(getColor(R.color.light_green))
-                        }
-
-                        this.nextBT.text = this.game.nextPointActionString
-                    }
-
-                    this.updateScoreView()
-                }
-            }
-
-            if (!this.game.state.board.full())
-                this.botMovement()
-        }
-    }
+//    override fun cellClick(textView: TextView, x: Int, y: Int) {
+//        if (this.game.state.currentPlayer == this.player) {
+//            if (this.game.placeFigure(x, y)) {
+//                val figure = this.game.state.getFigure(x, y)
+//                this.cells[x][y].text = figure.toString()
+//                this.turnTV.text = String.format("TURN: %s", figure.next().toString())
+//
+//                val status = this.game.checkStatus()
+//                if (status.result != IWinCondition.Result.NONE) {
+//                    if (status.result == IWinCondition.Result.O || status.result == IWinCondition.Result.X) {
+//                        for (c in status.coordinates) {
+//                            this.cells[c.row][c.column].setBackgroundColor(getColor(R.color.light_green))
+//                        }
+//
+//                        this.nextBT.text = this.game.nextPointActionString
+//                    }
+//
+//                    this.updateScoreView()
+//                }
+//            }
+//
+//            if (!this.game.state.board.full())
+//                this.botMovement()
+//        }
+//    }
 
     private fun botMovement() {
         val botMove = this.botHandler.getMoveCoordinates(this.game.state.board)
         if (this.game.placeFigure(botMove.row, botMove.column)) {
             val figure = this.game.state.getFigure(botMove.row, botMove.column)
-            this.cells[botMove.row][botMove.column].text = figure.toString()
+//            this.cells[botMove.row][botMove.column].text = figure.toString()
             this.turnTV.text = String.format("TURN: %s", figure.next().toString())
 
             val status = this.game.checkStatus()

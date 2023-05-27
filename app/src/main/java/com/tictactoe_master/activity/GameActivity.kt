@@ -29,7 +29,8 @@ open class GameActivity : AppCompatActivity() {
     private lateinit var pointsX: TextView
     protected lateinit var turnTV: TextView
     private lateinit var gameBoardTL: TableLayout
-    protected lateinit var cells: Array<Array<TextView>>
+    protected lateinit var cells: Array<Array<ImageView>>
+//    protected lateinit var cells: Array<Array<TextView>>
     protected lateinit var nextBT: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,7 +97,7 @@ open class GameActivity : AppCompatActivity() {
         this.gameBoardTL = findViewById(R.id.game_board_tl)
 
         this.gameBoardTL.removeAllViews()
-        this.cells = Array(this.size) { Array(this.size) { TextView(this) } }
+        this.cells = Array(this.size) { Array(this.size) { ImageView(this) } }
         for (i in 0 until this.size) {
             val tableRow = TableRow(this)
             for (j in 0 until this.size) {
@@ -105,12 +106,13 @@ open class GameActivity : AppCompatActivity() {
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     1f
                 )
-                layoutParams.setMargins(3, 3, 3, 3)
+//                layoutParams.setMargins(3, 3, 3, 3)
                 this.cells[i][j].layoutParams = layoutParams
-                this.cells[i][j].textSize = 22f
-                this.cells[i][j].setTypeface(null, Typeface.BOLD)
+//                this.cells[i][j].textSize = 22f
+//                this.cells[i][j].setTypeface(null, Typeface.BOLD)
                 this.cells[i][j].setBackgroundColor(Color.LTGRAY)
-                this.cells[i][j].gravity = Gravity.CENTER
+                this.cells[i][j].setImageResource(R.drawable.circle)
+//                this.cells[i][j].gravity = Gravity.CENTER
                 this.cells[i][j].setOnClickListener { cellClick(cells[i][j], i, j) }
                 tableRow.addView(this.cells[i][j])
             }
@@ -137,12 +139,14 @@ open class GameActivity : AppCompatActivity() {
                     if (coordinates == null) {
                         for (x in 0 until this.size) {
                             for (y in 0 until this.size)
-                                this.cells[x][y].text = ""
+                                this.cells[x][y].setImageResource(R.drawable.circle)
+//                            this.cells[x][y].text = ""
                         }
                     }
                     else {
                         for (c in coordinates)
-                            this.cells[c.row][c.column].text = ""
+                            this.cells[c.row][c.column].setImageResource(R.drawable.circle)
+//                        this.cells[c.row][c.column].text = ""
                     }
 
                     this.turnTV.text =
@@ -152,12 +156,69 @@ open class GameActivity : AppCompatActivity() {
                 }
             }
         }
+//        this.cells = Array(this.size) { Array(this.size) { TextView(this) } }
+//        for (i in 0 until this.size) {
+//            val tableRow = TableRow(this)
+//            for (j in 0 until this.size) {
+//                val layoutParams = TableRow.LayoutParams(
+//                    0,
+//                    ViewGroup.LayoutParams.MATCH_PARENT,
+//                    1f
+//                )
+//                layoutParams.setMargins(3, 3, 3, 3)
+//                this.cells[i][j].layoutParams = layoutParams
+//                this.cells[i][j].textSize = 22f
+//                this.cells[i][j].setTypeface(null, Typeface.BOLD)
+//                this.cells[i][j].setBackgroundColor(Color.LTGRAY)
+//                this.cells[i][j].gravity = Gravity.CENTER
+//                this.cells[i][j].setOnClickListener { cellClick(cells[i][j], i, j) }
+//                tableRow.addView(this.cells[i][j])
+//            }
+//            val rowParams = TableLayout.LayoutParams(
+//                ViewGroup.LayoutParams.MATCH_PARENT,
+//                0,
+//                1f
+//            )
+//            tableRow.layoutParams = rowParams
+//            this.gameBoardTL.addView(tableRow)
+//
+//            this.nextBT = findViewById(R.id.next_bt)
+//            this.nextBT.text = this.game.nextPointActionString
+//            this.nextBT.setOnClickListener {
+//                if (this.game.state.gameBlocked) {
+//                    // clear win mark
+//                    for (x in 0 until this.size) {
+//                        for (y in 0 until this.size)
+//                            this.cells[x][y].setBackgroundColor(Color.LTGRAY)
+//                    }
+//
+//                    // clear figures
+//                    val coordinates = this.game.nextPointAction()
+//                    if (coordinates == null) {
+//                        for (x in 0 until this.size) {
+//                            for (y in 0 until this.size)
+//                                this.cells[x][y].text = ""
+//                        }
+//                    }
+//                    else {
+//                        for (c in coordinates)
+//                            this.cells[c.row][c.column].text = ""
+//                    }
+//
+//                    this.turnTV.text =
+//                        String.format("TURN: %s", this.game.state.currentPlayer.toString())
+//                    this.nextBT.text = this.game.nextPointActionString
+//                    this.updateScoreView()
+//                }
+//            }
+//        }
     }
 
-    protected open fun cellClick(textView: TextView, x: Int, y: Int) {
+    protected open fun cellClick(imageView: ImageView, x: Int, y: Int) {
         if (this.game.placeFigure(x, y)) {
             val figure = this.game.state.getFigure(x, y)
-            this.cells[x][y].text = figure.toString()
+            this.cells[x][y].setImageResource(R.drawable.cross)
+//            this.cells[x][y].text = figure.toString()
             this.turnTV.text = String.format("TURN: %s", figure.next().toString())
 
             val status = this.game.checkStatus()
