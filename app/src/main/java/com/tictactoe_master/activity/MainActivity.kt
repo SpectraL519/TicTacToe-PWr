@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         if (!saveFileLoaded) {
-            CoinHandler.loadBalance(this.filesDir)
+            CoinHandler.loadBalance(this)
             saveFileLoaded = true
         }
 
@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        CoinHandler.saveBalance(this.filesDir)
+        CoinHandler.saveBalance(this)
     }
 
     private fun setAccountTVText() {

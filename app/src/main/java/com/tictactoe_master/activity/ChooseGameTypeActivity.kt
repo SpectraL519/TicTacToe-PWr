@@ -56,7 +56,7 @@ class ChooseGameTypeActivity : AppCompatActivity() {
     }
     override fun onStop() {
         super.onStop()
-        CoinHandler.saveBalance(this.filesDir)
+        CoinHandler.saveBalance(this)
     }
     private fun setAccountTVText() {
         this.accountTV.text = when (Firebase.auth.currentUser) {
