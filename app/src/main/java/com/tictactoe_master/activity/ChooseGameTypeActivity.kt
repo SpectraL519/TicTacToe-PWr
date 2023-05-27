@@ -54,7 +54,10 @@ class ChooseGameTypeActivity : AppCompatActivity() {
             getText(R.string.currency)
         )
     }
-
+    override fun onStop() {
+        super.onStop()
+        CoinHandler.saveBalance(this.filesDir)
+    }
     private fun setAccountTVText() {
         this.accountTV.text = when (Firebase.auth.currentUser) {
             null -> getString(R.string.login)

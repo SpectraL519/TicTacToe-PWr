@@ -47,7 +47,10 @@ open class GameActivity : AppCompatActivity() {
 
         this.setAccountTVText()
     }
-
+    override fun onStop() {
+        super.onStop()
+        CoinHandler.saveBalance(this.filesDir)
+    }
     private fun setAccountTVText() {
         this.accountTV.text = when (Firebase.auth.currentUser) {
             null -> getString(R.string.login)

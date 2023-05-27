@@ -19,12 +19,16 @@ class MainActivity : AppCompatActivity() {
     private lateinit var oneVsOneOnlineCV: CardView
     private lateinit var accountTV: TextView
     private lateinit var coinsTV: TextView
+    private var saveFileLoaded = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        if (!saveFileLoaded) {
+            CoinHandler.loadBalance(this.filesDir)
+            saveFileLoaded = true
+        }
 
-        CoinHandler.loadBalance(this.filesDir)
         this.initView()
     }
 
@@ -47,7 +51,6 @@ class MainActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         CoinHandler.saveBalance(this.filesDir)
-        Log.d("onStop", "MainActivity")
     }
 
     private fun setAccountTVText() {
