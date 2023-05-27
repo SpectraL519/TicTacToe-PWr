@@ -1,6 +1,7 @@
 package com.tictactoe_master.activity
 
 import android.graphics.Color
+import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import com.tictactoe_master.R
@@ -14,10 +15,15 @@ class BotGameActivity : GameActivity() {
 
     private lateinit var playingAsTV: TextView
 
+    override fun onStart() {
+        super.onStart()
+
+
+    }
     override fun initLogic() {
         super.initLogic()
 
-        this.player = listOf(Figure.O, Figure.X).random()
+        this.player = Figure.O
         this.botHandler = BotHandler(
             winCondition = this.game.winCondition,
             player = this.player.next()
@@ -95,7 +101,7 @@ class BotGameActivity : GameActivity() {
         if (this.game.placeFigure(botMove.row, botMove.column)) {
             val figure = this.game.state.getFigure(botMove.row, botMove.column)
             this.cells[botMove.row][botMove.column].setImageResource(figure.getImageResource())
-//            checkDimensions()
+            checkDimensions()
             this.turnTV.text = String.format("TURN: %s", figure.next().toString())
 
             val status = this.game.checkStatus()
