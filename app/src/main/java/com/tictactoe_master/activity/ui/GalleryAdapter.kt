@@ -5,10 +5,15 @@ import android.app.ActionBar
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.tictactoe_master.R
+import com.tictactoe_master.app_data.CoinHandler
+import com.tictactoe_master.app_data.FileDataHandler
+import com.tictactoe_master.logic.utils.Figure
 
 class GalleryAdapter(
+    private val app: AppCompatActivity,
     private val sourceList: ArrayList<Array<Int>>,
     private val onItemListener: OnItemListener
     ): RecyclerView.Adapter<GalleryViewHolder>() {
@@ -33,6 +38,12 @@ class GalleryAdapter(
             holder.selectTV.text = "$price \uD83E\uDE99"
         }else{
             holder.selectTV.text = "select"
+            holder.selectCV.setOnClickListener(){
+                FileDataHandler.writeInt(app, "img1", sourceList[position][0])
+                FileDataHandler.writeInt(app, "img2", sourceList[position][1])
+                Figure.O.setImageResource(sourceList[position][0])
+                Figure.X.setImageResource(sourceList[position][1])
+            }
         }
 //        holder.rating.rating = ratingList[position]
 //        holder.eventName.text = eventName[position]

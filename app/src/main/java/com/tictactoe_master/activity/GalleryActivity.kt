@@ -27,7 +27,7 @@ class GalleryActivity : AppCompatActivity(), GalleryAdapter.OnItemListener {
     }
 
     private fun setRecyclerView() {
-        val eventAdapter = GalleryAdapter(imagesList, this)
+        val eventAdapter = GalleryAdapter(this, imagesList, this)
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
         galleryRecyclerView.layoutManager = layoutManager
         galleryRecyclerView.adapter = eventAdapter

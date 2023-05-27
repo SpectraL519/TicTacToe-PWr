@@ -11,9 +11,11 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.tictactoe_master.R
 import com.tictactoe_master.app_data.CoinHandler
+import com.tictactoe_master.app_data.FileDataHandler
 import com.tictactoe_master.logic.game.ClassicGame
 import com.tictactoe_master.logic.game.IGame
 import com.tictactoe_master.logic.game.PointGame
+import com.tictactoe_master.logic.utils.Figure
 import com.tictactoe_master.logic.win_condition.ClassicWinCondition
 import com.tictactoe_master.logic.win_condition.IWinCondition
 import com.tictactoe_master.logic.win_condition.MobiusStripWinCondition
@@ -73,6 +75,8 @@ open class GameActivity : AppCompatActivity() {
             )
             else -> ClassicGame(this, this.size, winCondition)
         }
+        Figure.O.setImageResource(FileDataHandler.readInt(this, "img1"))
+        Figure.X.setImageResource(FileDataHandler.readInt(this, "img2"))
     }
 
     protected open fun initView() {
