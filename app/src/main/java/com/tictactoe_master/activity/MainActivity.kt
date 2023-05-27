@@ -3,12 +3,14 @@ package com.tictactoe_master.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.tictactoe_master.R
+import com.tictactoe_master.app_data.CoinHandler
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,10 +19,16 @@ class MainActivity : AppCompatActivity() {
     private lateinit var oneVsOneOnlineCV: CardView
     private lateinit var shopCV: CardView
     private lateinit var accountTV: TextView
+    private lateinit var coinsTV: TextView
+    private var saveFileLoaded = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        if (!saveFileLoaded) {
+            CoinHandler.loadBalance(this)
+            saveFileLoaded = true
+        }
 
         this.initView()
     }
@@ -29,6 +37,21 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
 
         this.setAccountTVText()
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        coinsTV.text = String.format(
+            "%s %s",
+            CoinHandler.getBalance(),
+            getText(R.string.currency)
+        )
+    }
+
+    override fun onStop() {
+        super.onStop()
+        CoinHandler.saveBalance(this)
     }
 
     private fun setAccountTVText() {
@@ -44,6 +67,7 @@ class MainActivity : AppCompatActivity() {
         this.oneVsOneOnlineCV = findViewById(R.id.one_v_one_online_cv)
         this.shopCV = findViewById(R.id.shop_cv)
         this.accountTV = findViewById(R.id.account_tv)
+        this.coinsTV = findViewById(R.id.coins_tv)
 
         this.setAccountTVText()
         this.accountTV.setOnClickListener {

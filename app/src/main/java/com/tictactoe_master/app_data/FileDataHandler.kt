@@ -21,26 +21,27 @@ object FileDataHandler : DataHandler {
     override fun writeInt(context: AppCompatActivity, key: String, value: Int) {
         this.setContext(context)
         this.editor!!.putInt(key, value)
+        this.editor!!.apply()
     }
 
     override fun writeFloat(context: AppCompatActivity, key: String, value: Float) {
         this.setContext(context)
         this.editor!!.putFloat(key, value)
+        this.editor!!.apply()
     }
 
     override fun writeString(context: AppCompatActivity, key: String, value: String) {
         this.setContext(context)
         this.editor!!.putString(key, value)
+        this.editor!!.apply()
     }
 
     override fun readInt(context: AppCompatActivity, key: String): Int {
         this.setContext(context)
 
         val value = this.sharedPref!!.getInt(key, Integer.MIN_VALUE)
-
         if (value == Integer.MIN_VALUE)
             throw java.lang.Exception("No data given on key = $key")
-
         return value
     }
 
