@@ -4,15 +4,15 @@ import com.tictactoe_master.logic.utils.Coordinates
 import com.tictactoe_master.logic.utils.Figure
 import com.tictactoe_master.logic.utils.GameBoard
 import com.tictactoe_master.logic.win_condition.IWinCondition
-import kotlin.math.min
 import kotlin.math.max
+import kotlin.math.min
 
 
 class BotHandler
     constructor(
         private val winCondition: IWinCondition,
         private val player: Figure,
-        private val depth: Int = 3
+        private val depth: Int = 4
     ) {
 
     fun getMoveCoordinates (board: GameBoard): Coordinates =
@@ -33,11 +33,8 @@ class BotHandler
     ): MoveParams {
         val result = this.winCondition.check(board).result
 
-        if (
-            depth <= 0 ||
-            result == IWinCondition.Result.O ||
-            result == IWinCondition.Result.X
-        ) return MoveParams(Coordinates.NONE, this.winCondition.getEvaluation(board, this.player))
+        if (depth <= 0 || result != IWinCondition.Result.NONE)
+            return MoveParams(Coordinates.NONE, this.winCondition.getEvaluation(board, this.player))
 
         val player = this.getPlayer(maxPlayer)
         val compare = this.getCompareMethod(maxPlayer)
@@ -70,8 +67,7 @@ class BotHandler
         return bestMove
     }
 
-
-    private fun isMaxPlayer (player: Figure): Boolean = (player == Figure.X)
+    private fun isMaxPlayer (player: Figure): Boolean = (player == this.player)
 
     private fun getPlayer (maxPlayer: Boolean): Figure =
         if (maxPlayer)

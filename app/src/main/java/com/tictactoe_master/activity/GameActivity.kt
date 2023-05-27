@@ -53,9 +53,7 @@ open class GameActivity : AppCompatActivity() {
         }
     }
 
-    private fun initLogic() {
-        // TODO: add vs, bot, online modes handling
-
+    protected open fun initLogic() {
         this.size = intent.getIntExtra("size", 3)
         val winCondition = when (intent.getStringExtra("win_cond")) {
             "mobius" -> MobiusStripWinCondition

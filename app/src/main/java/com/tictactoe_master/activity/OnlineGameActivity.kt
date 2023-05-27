@@ -34,6 +34,7 @@ class OnlineGameActivity : GameActivity() {
     private lateinit var movesEventListener: ValueEventListener
 
     private lateinit var opponentNameTV: TextView
+    private lateinit var playingAsTV: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +45,7 @@ class OnlineGameActivity : GameActivity() {
     override fun initView() {
         super.initView()
         this.opponentNameTV = findViewById(R.id.opponent_name_tv)
+        this.playingAsTV = findViewById(R.id.playing_as_tv)
     }
 
     private fun encodeGameParams(): String {
@@ -124,6 +126,7 @@ class OnlineGameActivity : GameActivity() {
                     return
 
                 this@OnlineGameActivity.player = Figure.O
+                this@OnlineGameActivity.playingAsTV.text = "Playing as: O"
 
                 for (player in connection.children) {
                     if (player.key != "params" && player.key != this@OnlineGameActivity.playerUniqueId) {
@@ -171,6 +174,7 @@ class OnlineGameActivity : GameActivity() {
                         this@OnlineGameActivity.opponentUniqueId = player.key.toString()
 
                         this@OnlineGameActivity.player = Figure.X
+                        this@OnlineGameActivity.playingAsTV.text = "Playing as: X"
 
                         this@OnlineGameActivity.connectionId = connId
 

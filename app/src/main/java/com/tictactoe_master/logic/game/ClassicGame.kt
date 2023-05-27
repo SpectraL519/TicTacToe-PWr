@@ -17,6 +17,9 @@ class ClassicGame
     override val state: GameState
         get() = this._state
 
+    override val winCondition: IWinCondition
+        get() = this._winCondition
+
     override val nextPointActionString: String
         get() = "PLAY AGAIN"
 
