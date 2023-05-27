@@ -1,6 +1,5 @@
 package com.tictactoe_master.activity
 
-import android.util.Log
 import android.widget.TextView
 import com.tictactoe_master.R
 import com.tictactoe_master.logic.BotHandler
@@ -16,8 +15,7 @@ class BotGameActivity : GameActivity() {
     override fun initLogic() {
         super.initLogic()
 
-        // this.player = listOf(Figure.O, Figure.X).random()
-        this.player = Figure.O
+        this.player = listOf(Figure.O, Figure.X).random()
         this.botHandler = BotHandler(
             winCondition = this.game.winCondition,
             player = this.player.next()
@@ -28,6 +26,9 @@ class BotGameActivity : GameActivity() {
         super.initView()
         this.playingAsTV = findViewById(R.id.playing_as_tv)
         this.playingAsTV.text = "Playing as: ${this.player}"
+
+        if (this.player == Figure.X)
+            this.botMovement()
     }
 
     override fun cellClick(textView: TextView, x: Int, y: Int) {
@@ -51,27 +52,29 @@ class BotGameActivity : GameActivity() {
                 }
             }
 
-            if (!this.game.state.board.full()) {
-                val botMove = this.botHandler.getMoveCoordinates(this.game.state.board)
-                Log.d("test", "activity: $botMove")
-                if (this.game.placeFigure(botMove.row, botMove.column)) {
-                    val figure = this.game.state.getFigure(botMove.row, botMove.column)
-                    this.cells[botMove.row][botMove.column].text = figure.toString()
-                    this.turnTV.text = String.format("TURN: %s", figure.next().toString())
+            if (!this.game.state.board.full())
+                this.botMovement()
+        }
+    }
 
-                    val status = this.game.checkStatus()
-                    if (status.result != IWinCondition.Result.NONE) {
-                        if (status.result == IWinCondition.Result.O || status.result == IWinCondition.Result.X) {
-                            for (c in status.coordinates) {
-                                this.cells[c.row][c.column].setBackgroundColor(getColor(R.color.light_green))
-                            }
+    private fun botMovement() {
+        val botMove = this.botHandler.getMoveCoordinates(this.game.state.board)
+        if (this.game.placeFigure(botMove.row, botMove.column)) {
+            val figure = this.game.state.getFigure(botMove.row, botMove.column)
+            this.cells[botMove.row][botMove.column].text = figure.toString()
+            this.turnTV.text = String.format("TURN: %s", figure.next().toString())
 
-                            this.nextBT.text = this.game.nextPointActionString
-                        }
-
-                        this.updateScoreView()
+            val status = this.game.checkStatus()
+            if (status.result != IWinCondition.Result.NONE) {
+                if (status.result == IWinCondition.Result.O || status.result == IWinCondition.Result.X) {
+                    for (c in status.coordinates) {
+                        this.cells[c.row][c.column].setBackgroundColor(getColor(R.color.light_green))
                     }
+
+                    this.nextBT.text = this.game.nextPointActionString
                 }
+
+                this.updateScoreView()
             }
         }
     }
