@@ -96,12 +96,25 @@
         </TableLayout>
     </com.tictactoe_master.activity.ui.SquareLayout>
 
-    <TextView
-        android:id="@+id/turn_tv"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="TURN: O" />
+        android:layout_margin="10dp">
+
+        <TextView
+            android:id="@+id/turn_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TURN: O" />
+
+        <TextView
+            android:id="@+id/playing_as_tv"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text=""/>
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/next_bt"

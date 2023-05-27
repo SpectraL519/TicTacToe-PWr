@@ -21,6 +21,9 @@ class PointGame
     override val state: GameState
         get() = this._state
 
+    override val winCondition: IWinCondition
+        get() = this._winCondition
+
     override val nextPointActionString: String
         get() = if (this._state.gameFinished) "PLAY AGAIN" else "CONTINUE"
 
