@@ -5,4 +5,5 @@
     <color name="light_green">#2ba84a</color>
     <color name="forest_green">#50893e</color>
     <color name="black">#040f0f</color>
+    <color name="light_bg_color">#ffcccccc</color>
 </resources>

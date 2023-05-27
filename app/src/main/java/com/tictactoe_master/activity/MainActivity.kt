@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var oneVsOneCV: CardView
     private lateinit var oneVsBotCV: CardView
     private lateinit var oneVsOneOnlineCV: CardView
+    private lateinit var shopCV: CardView
     private lateinit var accountTV: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         this.oneVsOneCV = findViewById(R.id.one_v_one_cv)
         this.oneVsBotCV = findViewById(R.id.one_v_bot_cv)
         this.oneVsOneOnlineCV = findViewById(R.id.one_v_one_online_cv)
+        this.shopCV = findViewById(R.id.shop_cv)
         this.accountTV = findViewById(R.id.account_tv)
 
         this.setAccountTVText()
@@ -69,6 +71,11 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "First log in to play online", Toast.LENGTH_SHORT).show()
             else
                 this.startGame("1_v_1_online")
+        }
+
+        this.shopCV.setOnClickListener {
+            val myIntent = Intent(this, GalleryActivity::class.java)
+            startActivity(myIntent)
         }
     }
 
