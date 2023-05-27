@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.tictactoe_master.R
+import com.tictactoe_master.app_data.CoinHandler
 import com.tictactoe_master.logic.game.ClassicGame
 import com.tictactoe_master.logic.game.IGame
 import com.tictactoe_master.logic.game.PointGame
@@ -31,6 +32,7 @@ open class GameActivity : AppCompatActivity() {
     private lateinit var gameBoardTL: TableLayout
     protected lateinit var cells: Array<Array<TextView>>
     protected lateinit var nextBT: Button
+    private lateinit var coinsTV: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,7 +77,13 @@ open class GameActivity : AppCompatActivity() {
         this.pointsTie = findViewById(R.id.points_tie_tv)
         this.pointsX = findViewById(R.id.points_x_tv)
         this.accountTV = findViewById(R.id.account_tv)
+        this.coinsTV = findViewById(R.id.coins_tv)
         this.updateScoreView()
+        this.coinsTV.text = String.format(
+            "%s %s",
+            CoinHandler.getBalance(),
+            getText(R.string.currency)
+        )
 
         this.setAccountTVText()
         this.accountTV.setOnClickListener {
@@ -199,7 +207,11 @@ open class GameActivity : AppCompatActivity() {
                 result.toString()
             else
                 "player $result won!"
-
+        this.coinsTV.text = String.format(
+            "%s %s",
+            CoinHandler.getBalance(),
+            getText(R.string.currency)
+        )
         Toast.makeText(
             this,
             "Game Over: $message",

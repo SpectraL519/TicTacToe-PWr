@@ -10,6 +10,7 @@ import com.google.android.material.slider.RangeSlider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.tictactoe_master.R
+import com.tictactoe_master.app_data.CoinHandler
 
 class ChooseGameTypeActivity : AppCompatActivity() {
     private var chosenBoardSize = 3
@@ -28,6 +29,7 @@ class ChooseGameTypeActivity : AppCompatActivity() {
     private lateinit var pointsToWinTV: TextView
     private lateinit var pointsToWinRS: RangeSlider
     private lateinit var startGameBT: Button
+    private lateinit var coinsTV: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +44,15 @@ class ChooseGameTypeActivity : AppCompatActivity() {
         super.onStart()
 
         this.setAccountTVText()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        coinsTV.text = String.format(
+            "%s %s",
+            CoinHandler.getBalance(),
+            getText(R.string.currency)
+        )
     }
 
     private fun setAccountTVText() {
@@ -62,6 +73,7 @@ class ChooseGameTypeActivity : AppCompatActivity() {
         this.pointsToWinRS = findViewById(R.id.points_to_win_sb)
         this.startGameBT = findViewById(R.id.start_game_bt)
         this.accountTV = findViewById(R.id.account_tv)
+        this.coinsTV = findViewById(R.id.coins_tv)
 
         this.setAccountTVText()
         this.accountTV.setOnClickListener {
