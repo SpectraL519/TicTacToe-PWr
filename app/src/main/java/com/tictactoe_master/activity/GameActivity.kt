@@ -31,7 +31,6 @@ open class GameActivity : AppCompatActivity() {
     protected lateinit var turnTV: TextView
     private lateinit var gameBoardTL: TableLayout
     protected lateinit var cells: Array<Array<ImageView>>
-//    protected lateinit var cells: Array<Array<TextView>>
     protected lateinit var nextBT: Button
 
     protected
@@ -170,10 +169,9 @@ open class GameActivity : AppCompatActivity() {
         if (this.game.placeFigure(x, y)) {
             val figure = this.game.state.getFigure(x, y)
 
-            this.cells[x][y].setImageResource(R.drawable.cross)
+            this.cells[x][y].setImageResource(figure.getImageResource())
             checkDimensions()
 
-//            this.cells[x][y].text = figure.toString()
             this.turnTV.text = String.format("TURN: %s", figure.next().toString())
 
             val status = this.game.checkStatus()
@@ -191,8 +189,8 @@ open class GameActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkDimensions(){
-        if (this.cells[0][0].layoutParams.height == -1){
+    protected fun checkDimensions(){
+        if (this.cells[0][0].layoutParams.height == -1 && this.cells[0][0].width != 0){
             val w = this.cells[0][0].width
             for (i in 0 until this.size) {
                 for (j in 0 until this.size) {
