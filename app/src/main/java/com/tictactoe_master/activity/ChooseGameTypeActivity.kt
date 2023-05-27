@@ -138,26 +138,21 @@ class ChooseGameTypeActivity : AppCompatActivity() {
     }
 
     private fun startGame() {
-        if (this.gameMode == "1_v_1") {
-            val gameIntent = Intent(this, GameActivity::class.java).apply {
-                putExtra("size", this@ChooseGameTypeActivity.chosenBoardSize)
-                putExtra("win_cond", this@ChooseGameTypeActivity.chosenWinCond.toString())
-                putExtra("game_type", this@ChooseGameTypeActivity.chosenGameType.toString())
-                if (this@ChooseGameTypeActivity.chosenGameType == GameType.POINT)
-                    putExtra("points_to_win", this@ChooseGameTypeActivity.pointsToWin)
-            }
-            startActivity(gameIntent)
+        val gameActivity = when (this.gameMode) {
+            "1_v_1_online" -> OnlineGameActivity::class.java
+            "1_v_bot" -> BotGameActivity::class.java
+            else -> GameActivity::class.java
         }
-        else if (this.gameMode == "1_v_1_online") {
-            val gameIntent = Intent(this, OnlineGameActivity::class.java).apply {
-                putExtra("size", this@ChooseGameTypeActivity.chosenBoardSize)
-                putExtra("win_cond", this@ChooseGameTypeActivity.chosenWinCond.toString())
-                putExtra("game_type", this@ChooseGameTypeActivity.chosenGameType.toString())
-                if (this@ChooseGameTypeActivity.chosenGameType == GameType.POINT)
-                    putExtra("points_to_win", this@ChooseGameTypeActivity.pointsToWin)
-            }
-            startActivity(gameIntent)
+
+        val gameIntent = Intent(this, gameActivity).apply {
+            putExtra("size", this@ChooseGameTypeActivity.chosenBoardSize)
+            putExtra("win_cond", this@ChooseGameTypeActivity.chosenWinCond.toString())
+            putExtra("game_type", this@ChooseGameTypeActivity.chosenGameType.toString())
+            if (this@ChooseGameTypeActivity.chosenGameType == GameType.POINT)
+                putExtra("points_to_win", this@ChooseGameTypeActivity.pointsToWin)
         }
+
+        startActivity(gameIntent)
     }
 
     companion object {
