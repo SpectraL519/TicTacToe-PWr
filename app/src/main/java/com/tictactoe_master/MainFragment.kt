@@ -17,6 +17,7 @@ import com.tictactoe_master.activity.GalleryActivity
 import com.tictactoe_master.activity.LoginActivity
 import com.tictactoe_master.app_data.CoinHandler
 import com.tictactoe_master.app_data.FileDataHandler
+import com.tictactoe_master.logic.utils.Figure
 
 class MainFragment : Fragment() {
 
@@ -43,6 +44,9 @@ class MainFragment : Fragment() {
 
         this.initPrices()
         this.initView()
+
+        Figure.O.setImageResource(FileDataHandler.readInt(activity as AppCompatActivity, "img1"))
+        Figure.X.setImageResource(FileDataHandler.readInt(activity as AppCompatActivity, "img2"))
         // Inflate the layout for this fragment
         return myView
     }

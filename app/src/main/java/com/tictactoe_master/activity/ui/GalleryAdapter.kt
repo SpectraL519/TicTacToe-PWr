@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
+import com.tictactoe_master.GalleryFragment
 import com.tictactoe_master.R
 import com.tictactoe_master.activity.GalleryActivity
 import com.tictactoe_master.app_data.CoinHandler
@@ -14,6 +15,7 @@ import com.tictactoe_master.logic.utils.Figure
 
 class GalleryAdapter(
     private val app: GalleryActivity,
+    private val fragment: GalleryFragment,
     private val sourceList: ArrayList<Array<Int>>
     ): RecyclerView.Adapter<GalleryViewHolder>() {
 
@@ -78,6 +80,6 @@ class GalleryAdapter(
         sourceList[position][2] = 0
 
         holder.selectCV.setCardBackgroundColor(app.getColor(R.color.dark_green))
-        app.setRecyclerView()
+        fragment.setRecyclerView()
     }
 }

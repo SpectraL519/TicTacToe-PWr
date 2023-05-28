@@ -75,8 +75,6 @@ open class GameActivity : AppCompatActivity() {
             )
             else -> ClassicGame(this, this.size, winCondition)
         }
-        Figure.O.setImageResource(FileDataHandler.readInt(this, "img1"))
-        Figure.X.setImageResource(FileDataHandler.readInt(this, "img2"))
     }
 
     protected open fun initView() {
