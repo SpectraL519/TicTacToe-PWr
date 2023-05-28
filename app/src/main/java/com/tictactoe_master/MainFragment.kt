@@ -25,9 +25,6 @@ class MainFragment : Fragment() {
     private lateinit var oneVsBotCV: CardView
     private lateinit var oneVsOneOnlineCV: CardView
     private lateinit var shopCV: CardView
-    private lateinit var accountTV: TextView
-    private lateinit var coinsTV: TextView
-    private var saveFileLoaded = false
 
     private lateinit var myView : View
 
@@ -37,10 +34,7 @@ class MainFragment : Fragment() {
     ): View {
         myView =inflater.inflate(R.layout.fragment_main, container, false)
 
-        if (!saveFileLoaded) {
-            CoinHandler.loadBalance(activity as AppCompatActivity)
-            saveFileLoaded = true
-        }
+
 
         this.initPrices()
         this.initView()
@@ -51,32 +45,9 @@ class MainFragment : Fragment() {
         return myView
     }
 
-    override fun onStart() {
-        super.onStart()
-
-        this.setAccountTVText()
-    }
-
-
-    override fun onResume() {
-        super.onResume()
-        coinsTV.text = String.format(
-            "%s %s",
-            CoinHandler.getBalance(),
-            getText(R.string.currency)
-        )
-    }
-
     override fun onStop() {
         super.onStop()
         CoinHandler.saveBalance(activity as AppCompatActivity)
-    }
-
-    private fun setAccountTVText() {
-        this.accountTV.text = when (Firebase.auth.currentUser) {
-            null -> getString(R.string.login)
-            else -> "${getString(R.string.sign_out)} (${Firebase.auth.currentUser!!.email!!.subSequence(0, 5)})"
-        }
     }
 
     private fun initView() {
@@ -84,21 +55,7 @@ class MainFragment : Fragment() {
         this.oneVsBotCV = myView.findViewById(R.id.one_v_bot_cv)
         this.oneVsOneOnlineCV = myView.findViewById(R.id.one_v_one_online_cv)
         this.shopCV = myView.findViewById(R.id.shop_cv)
-        this.accountTV = myView.findViewById(R.id.account_tv)
-        this.coinsTV = myView.findViewById(R.id.coins_tv)
 
-        this.setAccountTVText()
-        this.accountTV.setOnClickListener {
-            if (Firebase.auth.currentUser == null) {
-                val loginIntent = Intent(activity, LoginActivity::class.java)
-                startActivity(loginIntent)
-            }
-            else {
-                Firebase.auth.signOut()
-                this.accountTV.text = getString(R.string.login)
-                Toast.makeText(activity, "You've been signed out", Toast.LENGTH_LONG).show()
-            }
-        }
 
         this.oneVsOneCV.setOnClickListener {
             this.startGame("1_v_1")
