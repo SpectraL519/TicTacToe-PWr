@@ -92,6 +92,9 @@ class MainFragment : Fragment() {
             FileDataHandler.writeInt(activity as AppCompatActivity, "p2", 20)
             FileDataHandler.writeInt(activity as AppCompatActivity, "p3", 20)
             FileDataHandler.writeInt(activity as AppCompatActivity, "p4", 20)
+            FileDataHandler.writeInt(activity as AppCompatActivity, "p5", 50)
+            FileDataHandler.writeInt(activity as AppCompatActivity, "p6", 100)
+            FileDataHandler.writeInt(activity as AppCompatActivity, "p7", 200)
         }
     }
 

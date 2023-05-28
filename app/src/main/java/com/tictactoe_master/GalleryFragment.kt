@@ -28,18 +28,29 @@ class GalleryFragment : Fragment() {
         return myView
     }
 
+    override fun onResume() {
+        super.onResume()
+        setRecyclerView()
+    }
+
     private fun initArray(){
         val p0 = FileDataHandler.readInt(activity as AppCompatActivity, "p0")
         val p1 = FileDataHandler.readInt(activity as AppCompatActivity, "p1")
         val p2 = FileDataHandler.readInt(activity as AppCompatActivity, "p2")
         val p3 = FileDataHandler.readInt(activity as AppCompatActivity, "p3")
         val p4 = FileDataHandler.readInt(activity as AppCompatActivity, "p4")
+        val p5 = FileDataHandler.readInt(activity as AppCompatActivity, "p5")
+        val p6 = FileDataHandler.readInt(activity as AppCompatActivity, "p6")
+        val p7 = FileDataHandler.readInt(activity as AppCompatActivity, "p7")
 
         imagesList.add(arrayOf(R.drawable.circle, R.drawable.cross, p0))
         imagesList.add(arrayOf(R.drawable.circle_green2, R.drawable.cross_green2, p1))
         imagesList.add(arrayOf(R.drawable.circle_blue, R.drawable.cross_blue, p2))
         imagesList.add(arrayOf(R.drawable.circle_purple, R.drawable.cross_purple, p3))
         imagesList.add(arrayOf(R.drawable.circle_red, R.drawable.cross_red, p4))
+        imagesList.add(arrayOf(R.drawable.sea1, R.drawable.sea2, p5))
+        imagesList.add(arrayOf(R.drawable.mobile1, R.drawable.mobile2, p6))
+        imagesList.add(arrayOf(R.drawable.cat1, R.drawable.cat2, p7))
     }
 
     fun setRecyclerView() {

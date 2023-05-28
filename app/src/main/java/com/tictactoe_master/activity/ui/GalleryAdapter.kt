@@ -37,7 +37,7 @@ class GalleryAdapter(
         }
         if (price != 0){
             holder.selectTV.text = String.format(
-                "%d %s",
+                "%d%s",
                 price,
                 fragment.getText(R.string.currency)
             )
