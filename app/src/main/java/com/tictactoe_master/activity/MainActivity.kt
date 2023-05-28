@@ -9,8 +9,8 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.tictactoe_master.GalleryFragment
-import com.tictactoe_master.MainFragment
+import com.tictactoe_master.activity.fragment.GalleryFragment
+import com.tictactoe_master.activity.fragment.MainFragment
 import com.tictactoe_master.R
 import com.tictactoe_master.activity.ui.ViewPagerAdapter
 import com.tictactoe_master.logic.CoinHandler

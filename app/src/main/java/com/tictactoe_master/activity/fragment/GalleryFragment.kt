@@ -1,4 +1,4 @@
-package com.tictactoe_master
+package com.tictactoe_master.activity.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.tictactoe_master.R
 import com.tictactoe_master.activity.ui.GalleryAdapter
 import com.tictactoe_master.app_data.FileDataHandler
 

@@ -9,7 +9,7 @@
         android:id="@+id/fragment_gallery"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.tictactoe_master.GalleryFragment"
+        android:name="com.tictactoe_master.activity.fragment.GalleryFragment"
         tools:layout="@layout/fragment_gallery"
         />
 
