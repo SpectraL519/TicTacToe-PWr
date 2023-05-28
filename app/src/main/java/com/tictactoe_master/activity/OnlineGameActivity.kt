@@ -3,6 +3,7 @@ package com.tictactoe_master.activity
 import android.app.ProgressDialog
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -60,11 +61,12 @@ class OnlineGameActivity : GameActivity() {
         return params
     }
 
-    override fun cellClick(textView: TextView, x: Int, y: Int) {
+    override fun cellClick(imageView: ImageView, x: Int, y: Int) {
         if (this.game.state.currentPlayer == this.player) {
             if (this.game.placeFigure(x, y)) {
                 val figure = this.game.state.getFigure(x, y)
-                this.cells[x][y].text = figure.toString()
+                this.cells[x][y].setImageResource(figure.getImageResource())
+                checkDimensions()
                 this.turnTV.text = String.format("TURN: %s", figure.next().toString())
 
                 val status = this.game.checkStatus()
@@ -247,7 +249,8 @@ class OnlineGameActivity : GameActivity() {
                     this@OnlineGameActivity.game.placeFigure(x, y)
 
                     val figure = this@OnlineGameActivity.game.state.getFigure(x, y)
-                    this@OnlineGameActivity.cells[x][y].text = figure.toString()
+                    this@OnlineGameActivity.cells[x][y].setImageResource(figure.getImageResource())
+                    checkDimensions()
                     this@OnlineGameActivity.turnTV.text = String.format("TURN: %s", figure.next().toString())
 
                     val status = this@OnlineGameActivity.game.checkStatus()

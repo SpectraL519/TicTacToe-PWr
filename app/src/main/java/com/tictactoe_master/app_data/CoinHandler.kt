@@ -16,6 +16,10 @@ object CoinHandler {
         return balance
     }
 
+    fun setBalance(b: Int) {
+        this.balance = b
+    }
+    
     fun gameOver(_winCondition: IWinCondition, _boardSize: Int, _points: Int = 1) {
         var winning = _boardSize * _points
         if (_winCondition == MobiusStripWinCondition)

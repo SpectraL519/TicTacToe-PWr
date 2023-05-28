@@ -39,8 +39,8 @@ class BotHandler
         val player = this.getPlayer(maxPlayer)
         val compare = this.getCompareMethod(maxPlayer)
         var bestMove = MoveParams(Coordinates.NONE, this.getInitEvaluation(maxPlayer))
-        var _alpha = alpha
-        var _beta = beta
+        var alphaL = alpha
+        var betaL = beta
 
 
         val boardSize = board.size()
@@ -48,16 +48,16 @@ class BotHandler
             for (y: Int in 0 until boardSize) {
                 if (board[x][y] == Figure.EMPTY) {
                     board[x][y] = player // make a move
-                    val childParams = this.minmax(board, depth - 1, alpha, beta, !maxPlayer)
+                    val childParams = this.minmax(board, depth - 1, alphaL, betaL, !maxPlayer)
                     board[x][y] = Figure.EMPTY // undo the move
 
                     if (compare(childParams.evaluation, bestMove.evaluation)) {
                         bestMove = MoveParams(Coordinates(x, y), childParams.evaluation)
                         if (maxPlayer)
-                            _alpha = max(bestMove.evaluation, _alpha)
+                            alphaL = max(bestMove.evaluation, alphaL)
                         else
-                            _beta = min(bestMove.evaluation, _beta)
-                        if (_beta <= _alpha)
+                            betaL = min(bestMove.evaluation, betaL)
+                        if (betaL <= alphaL)
                             return bestMove
                     }
                 }

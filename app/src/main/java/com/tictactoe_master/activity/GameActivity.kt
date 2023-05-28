@@ -2,26 +2,28 @@ package com.tictactoe_master.activity
 
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.Typeface
 import android.os.Bundle
-import android.view.Gravity
 import android.view.ViewGroup
+import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.tictactoe_master.R
 import com.tictactoe_master.app_data.CoinHandler
+import com.tictactoe_master.app_data.FileDataHandler
 import com.tictactoe_master.logic.game.ClassicGame
 import com.tictactoe_master.logic.game.IGame
 import com.tictactoe_master.logic.game.PointGame
+import com.tictactoe_master.logic.utils.Figure
 import com.tictactoe_master.logic.win_condition.ClassicWinCondition
 import com.tictactoe_master.logic.win_condition.IWinCondition
 import com.tictactoe_master.logic.win_condition.MobiusStripWinCondition
 
+
 open class GameActivity : AppCompatActivity() {
 
-    private var size = 3
+    protected var size = 3
     protected lateinit var game: IGame
 
     private lateinit var accountTV: TextView
@@ -30,7 +32,7 @@ open class GameActivity : AppCompatActivity() {
     private lateinit var pointsX: TextView
     protected lateinit var turnTV: TextView
     private lateinit var gameBoardTL: TableLayout
-    protected lateinit var cells: Array<Array<TextView>>
+    protected lateinit var cells: Array<Array<ImageView>>
     protected lateinit var nextBT: Button
     private lateinit var coinsTV: TextView
 
@@ -73,6 +75,8 @@ open class GameActivity : AppCompatActivity() {
             )
             else -> ClassicGame(this, this.size, winCondition)
         }
+        Figure.O.setImageResource(FileDataHandler.readInt(this, "img1"))
+        Figure.X.setImageResource(FileDataHandler.readInt(this, "img2"))
     }
 
     protected open fun initView() {
@@ -106,24 +110,25 @@ open class GameActivity : AppCompatActivity() {
 
         this.gameBoardTL = findViewById(R.id.game_board_tl)
 
+
         this.gameBoardTL.removeAllViews()
-        this.cells = Array(this.size) { Array(this.size) { TextView(this) } }
+        this.cells = Array(this.size) { Array(this.size) { ImageView(this) } }
         for (i in 0 until this.size) {
             val tableRow = TableRow(this)
-            for (j in 0 until this.size) {
-                val layoutParams = TableRow.LayoutParams(
-                    0,
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    1f
-                )
-                layoutParams.setMargins(3, 3, 3, 3)
-                this.cells[i][j].layoutParams = layoutParams
-                this.cells[i][j].textSize = 22f
-                this.cells[i][j].setTypeface(null, Typeface.BOLD)
-                this.cells[i][j].setBackgroundColor(Color.LTGRAY)
-                this.cells[i][j].gravity = Gravity.CENTER
-                this.cells[i][j].setOnClickListener { cellClick(cells[i][j], i, j) }
-                tableRow.addView(this.cells[i][j])
+                for (j in 0 until this.size) {
+                    val layoutParams = TableRow.LayoutParams(
+                        0,
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        1f
+                    )
+                    layoutParams.setMargins(3, 3, 3, 3)
+                    this.cells[i][j].layoutParams = layoutParams
+
+                    this.cells[i][j].setBackgroundColor(Color.LTGRAY)
+                    this.cells[i][j].setImageResource(android.R.color.transparent)
+                    this.cells[i][j].scaleType = ImageView.ScaleType.FIT_XY
+                    this.cells[i][j].setOnClickListener { cellClick(cells[i][j], i, j) }
+                    tableRow.addView(this.cells[i][j])
             }
             val rowParams = TableLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -132,6 +137,13 @@ open class GameActivity : AppCompatActivity() {
             )
             tableRow.layoutParams = rowParams
             this.gameBoardTL.addView(tableRow)
+
+            this.gameBoardTL.viewTreeObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    gameBoardTL.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                    gameBoardTL.height //height is ready
+                }
+            })
 
             this.nextBT = findViewById(R.id.next_bt)
             this.nextBT.text = this.game.nextPointActionString
@@ -148,12 +160,12 @@ open class GameActivity : AppCompatActivity() {
                     if (coordinates == null) {
                         for (x in 0 until this.size) {
                             for (y in 0 until this.size)
-                                this.cells[x][y].text = ""
+                                this.cells[x][y].setImageResource(android.R.color.transparent)
                         }
                     }
                     else {
                         for (c in coordinates)
-                            this.cells[c.row][c.column].text = ""
+                            this.cells[c.row][c.column].setImageResource(android.R.color.transparent)
                     }
 
                     this.turnTV.text =
@@ -165,10 +177,13 @@ open class GameActivity : AppCompatActivity() {
         }
     }
 
-    protected open fun cellClick(textView: TextView, x: Int, y: Int) {
+    protected open fun cellClick(imageView: ImageView, x: Int, y: Int) {
         if (this.game.placeFigure(x, y)) {
             val figure = this.game.state.getFigure(x, y)
-            this.cells[x][y].text = figure.toString()
+
+            this.cells[x][y].setImageResource(figure.getImageResource())
+            checkDimensions()
+
             this.turnTV.text = String.format("TURN: %s", figure.next().toString())
 
             val status = this.game.checkStatus()
@@ -182,6 +197,17 @@ open class GameActivity : AppCompatActivity() {
                 }
 
                 this.updateScoreView()
+            }
+        }
+    }
+
+    protected fun checkDimensions(){
+        if (this.cells[0][0].layoutParams.height == -1 && this.cells[0][0].width != 0){
+            val w = this.cells[0][0].width
+            for (i in 0 until this.size) {
+                for (j in 0 until this.size) {
+                    this.cells[i][j].layoutParams.height = w
+                }
             }
         }
     }
