@@ -42,6 +42,7 @@ class GalleryFragment : Fragment() {
         val p5 = FileDataHandler.readInt(activity as AppCompatActivity, "p5")
         val p6 = FileDataHandler.readInt(activity as AppCompatActivity, "p6")
         val p7 = FileDataHandler.readInt(activity as AppCompatActivity, "p7")
+        val p8 = FileDataHandler.readInt(activity as AppCompatActivity, "p8")
 
         imagesList.add(arrayOf(R.drawable.circle, R.drawable.cross, p0))
         imagesList.add(arrayOf(R.drawable.circle_green2, R.drawable.cross_green2, p1))
@@ -51,6 +52,7 @@ class GalleryFragment : Fragment() {
         imagesList.add(arrayOf(R.drawable.sea1, R.drawable.sea2, p5))
         imagesList.add(arrayOf(R.drawable.mobile1, R.drawable.mobile2, p6))
         imagesList.add(arrayOf(R.drawable.cat1, R.drawable.cat2, p7))
+        imagesList.add(arrayOf(R.drawable.food1, R.drawable.food2, p8))
     }
 
     fun setRecyclerView() {
