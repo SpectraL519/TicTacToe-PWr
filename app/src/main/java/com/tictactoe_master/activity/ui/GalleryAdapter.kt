@@ -2,12 +2,9 @@ package com.tictactoe_master.activity.ui
 
 import android.annotation.SuppressLint
 import android.app.ActionBar
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.tictactoe_master.R
 import com.tictactoe_master.activity.GalleryActivity
@@ -17,8 +14,7 @@ import com.tictactoe_master.logic.utils.Figure
 
 class GalleryAdapter(
     private val app: GalleryActivity,
-    private val sourceList: ArrayList<Array<Int>>,
-    private val onItemListener: OnItemListener
+    private val sourceList: ArrayList<Array<Int>>
     ): RecyclerView.Adapter<GalleryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GalleryViewHolder {
@@ -27,9 +23,8 @@ class GalleryAdapter(
         val layoutParams = view.layoutParams
         layoutParams.height = ActionBar.LayoutParams.WRAP_CONTENT
         layoutParams.width = ActionBar.LayoutParams.MATCH_PARENT
-//        Log.v("events size", sourceList.size.toString())
 
-        return GalleryViewHolder(view, onItemListener)
+        return GalleryViewHolder(view)
     }
 
     @SuppressLint("SetTextI18n")
@@ -52,19 +47,20 @@ class GalleryAdapter(
                     builder.setMessage("Are you sure you want to buy this theme?")
 
                     builder.setPositiveButton("Yes") { _, _ ->
+                        CoinHandler.setBalance(CoinHandler.getBalance()-price)
+                        CoinHandler.saveBalance(app)
+                        CoinHandler.loadBalance(app)
                         FileDataHandler.writeInt(app, "p${position}", 0)
-                        change(holder,position)
+                        selectTheme(holder,position)
                     }
 
-                    builder.setNegativeButton("No") { dialog, which ->}
-
+                    builder.setNegativeButton("No") { _, _ ->}
                     builder.show()
-
                 }
             }
         }else{
             holder.selectCV.setOnClickListener(){
-                change(holder, position)
+                selectTheme(holder, position)
             }
         }
     }
@@ -73,11 +69,7 @@ class GalleryAdapter(
         return sourceList.size
     }
 
-    interface OnItemListener {
-        fun onItemClick(position: Int)
-    }
-
-    private fun change(holder: GalleryViewHolder, position: Int){
+    private fun selectTheme(holder: GalleryViewHolder, position: Int){
         holder.selectTV.text = "select"
         FileDataHandler.writeInt(app, "img1", sourceList[position][0])
         FileDataHandler.writeInt(app, "img2", sourceList[position][1])

@@ -1,7 +1,5 @@
 package com.tictactoe_master.activity
 
-import android.content.Intent
-import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,7 +8,7 @@ import com.tictactoe_master.R
 import com.tictactoe_master.activity.ui.GalleryAdapter
 import com.tictactoe_master.app_data.FileDataHandler
 
-class GalleryActivity : AppCompatActivity(), GalleryAdapter.OnItemListener {
+class GalleryActivity : AppCompatActivity() {
     private var imagesList = ArrayList<Array<Int>>()
     lateinit var galleryRecyclerView: RecyclerView
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,12 +35,9 @@ class GalleryActivity : AppCompatActivity(), GalleryAdapter.OnItemListener {
     }
 
     fun setRecyclerView() {
-        val eventAdapter = GalleryAdapter(this, imagesList, this)
+        val eventAdapter = GalleryAdapter(this, imagesList)
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
         galleryRecyclerView.layoutManager = layoutManager
         galleryRecyclerView.adapter = eventAdapter
-    }
-
-    override fun onItemClick(position: Int) {
     }
 }
