@@ -14,6 +14,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import com.tictactoe_master.R
+import com.tictactoe_master.app_data.CoinHandler
 import com.tictactoe_master.logic.utils.Coordinates
 import com.tictactoe_master.logic.utils.Figure
 import com.tictactoe_master.logic.win_condition.IWinCondition
@@ -77,6 +78,18 @@ class OnlineGameActivity : GameActivity() {
             }
         } else
             Toast.makeText(this, "Waiting for opponent's move", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun gameOver(
+        result: IWinCondition.Result,
+        _winCondition: IWinCondition,
+        _points: Int
+    ) {
+        if (result == IWinCondition.Result.TIE) {
+            CoinHandler.gameOver(1, _winCondition, size, _points)
+        } else if (result.toString() == player.toString()) {
+            CoinHandler.gameOver(2, _winCondition, size, _points)
+        }
     }
 
     private fun initConnection() {

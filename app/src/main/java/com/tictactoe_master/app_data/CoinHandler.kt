@@ -17,10 +17,11 @@ object CoinHandler {
         this.balance = b
     }
     
-    fun gameOver(_winCondition: IWinCondition, _boardSize: Int, _points: Int = 1) {
+    fun gameOver(multiplier: Int, _winCondition: IWinCondition, _boardSize: Int, _points: Int = 1) {
         var winning = _boardSize * _points
         if (_winCondition == MobiusStripWinCondition)
             winning *= 2
+        winning *= multiplier
         balance += winning
     }
 

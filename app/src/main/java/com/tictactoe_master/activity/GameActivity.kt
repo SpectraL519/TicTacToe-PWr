@@ -181,6 +181,14 @@ open class GameActivity : AppCompatActivity() {
         }
     }
 
+    open fun gameOver(
+        result: IWinCondition.Result,
+        _winCondition: IWinCondition,
+        _points: Int
+    ) {
+        CoinHandler.gameOver(1, _winCondition, size, _points)
+    }
+
     protected fun checkDimensions(){
         if (this.cells[0][0].layoutParams.height == -1 && this.cells[0][0].width != 0){
             val w = this.cells[0][0].width

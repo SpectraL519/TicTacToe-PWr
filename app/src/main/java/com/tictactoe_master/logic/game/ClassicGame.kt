@@ -50,7 +50,7 @@ class ClassicGame
             )
 
             if (finished) {
-                CoinHandler.gameOver(_winCondition, _boardSize)
+                this.context.gameOver(result, _winCondition, 1)
                 this.context.showWinMessage(result)
             }
             return true

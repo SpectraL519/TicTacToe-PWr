@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.widget.ImageView
 import android.widget.TextView
 import com.tictactoe_master.R
+import com.tictactoe_master.app_data.CoinHandler
 import com.tictactoe_master.logic.BotHandler
 import com.tictactoe_master.logic.utils.Figure
 import com.tictactoe_master.logic.win_condition.IWinCondition
@@ -82,6 +83,19 @@ class BotGameActivity : GameActivity() {
             if (!this.game.state.board.full())
                 this.botMovement()
         }
+    }
+
+    override fun gameOver(
+        result: IWinCondition.Result,
+        _winCondition: IWinCondition,
+        _points: Int
+    ) {
+        if (result == IWinCondition.Result.TIE) {
+            CoinHandler.gameOver(1, _winCondition, size, _points)
+        } else if (result.toString() == player.toString()) {
+            CoinHandler.gameOver(2, _winCondition, size, _points)
+        }
+
     }
 
     private fun botMovement() {
