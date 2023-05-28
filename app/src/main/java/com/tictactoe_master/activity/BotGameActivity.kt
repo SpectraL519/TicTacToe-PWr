@@ -4,7 +4,7 @@ import android.graphics.Color
 import android.widget.ImageView
 import android.widget.TextView
 import com.tictactoe_master.R
-import com.tictactoe_master.app_data.CoinHandler
+import com.tictactoe_master.logic.CoinHandler
 import com.tictactoe_master.logic.BotHandler
 import com.tictactoe_master.logic.utils.Figure
 import com.tictactoe_master.logic.win_condition.IWinCondition

@@ -13,7 +13,7 @@ import com.tictactoe_master.GalleryFragment
 import com.tictactoe_master.MainFragment
 import com.tictactoe_master.R
 import com.tictactoe_master.activity.ui.ViewPagerAdapter
-import com.tictactoe_master.app_data.CoinHandler
+import com.tictactoe_master.logic.CoinHandler
 
 class MainActivity : AppCompatActivity() {
     private lateinit var pager: ViewPager

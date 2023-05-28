@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.tictactoe_master.GalleryFragment
 import com.tictactoe_master.R
-import com.tictactoe_master.app_data.CoinHandler
+import com.tictactoe_master.logic.CoinHandler
 import com.tictactoe_master.app_data.FileDataHandler
 import com.tictactoe_master.logic.utils.Figure
 

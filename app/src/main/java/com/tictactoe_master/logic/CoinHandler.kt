@@ -1,7 +1,8 @@
-package com.tictactoe_master.app_data
+package com.tictactoe_master.logic
 
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.tictactoe_master.app_data.FileDataHandler
 import com.tictactoe_master.logic.win_condition.IWinCondition
 import com.tictactoe_master.logic.win_condition.MobiusStripWinCondition
 import java.lang.Exception
@@ -14,7 +15,7 @@ object CoinHandler {
     }
 
     fun setBalance(b: Int) {
-        this.balance = b
+        balance = b
     }
     
     fun gameOver(multiplier: Int, _winCondition: IWinCondition, _boardSize: Int, _points: Int = 1) {

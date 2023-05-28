@@ -13,7 +13,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.tictactoe_master.activity.ChooseGameTypeActivity
-import com.tictactoe_master.app_data.CoinHandler
+import com.tictactoe_master.logic.CoinHandler
 import com.tictactoe_master.app_data.FileDataHandler
 import com.tictactoe_master.logic.utils.Figure
 

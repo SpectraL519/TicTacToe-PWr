@@ -10,7 +10,7 @@ import com.google.android.material.slider.RangeSlider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.tictactoe_master.R
-import com.tictactoe_master.app_data.CoinHandler
+import com.tictactoe_master.logic.CoinHandler
 
 class ChooseGameTypeActivity : AppCompatActivity() {
     private var chosenBoardSize = 3
