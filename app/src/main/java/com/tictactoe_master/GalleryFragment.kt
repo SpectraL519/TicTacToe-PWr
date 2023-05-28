@@ -45,7 +45,7 @@ class GalleryFragment : Fragment() {
     }
 
     fun setRecyclerView() {
-        val eventAdapter = GalleryAdapter(activity as GalleryActivity, this, imagesList)
+        val eventAdapter = GalleryAdapter(activity as AppCompatActivity, this, imagesList)
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(activity)
         galleryRecyclerView.layoutManager = layoutManager
         galleryRecyclerView.adapter = eventAdapter

@@ -5,6 +5,7 @@ import android.app.ActionBar
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.tictactoe_master.GalleryFragment
 import com.tictactoe_master.R
@@ -14,7 +15,7 @@ import com.tictactoe_master.app_data.FileDataHandler
 import com.tictactoe_master.logic.utils.Figure
 
 class GalleryAdapter(
-    private val app: GalleryActivity,
+    private val app: AppCompatActivity,
     private val fragment: GalleryFragment,
     private val sourceList: ArrayList<Array<Int>>
     ): RecyclerView.Adapter<GalleryViewHolder>() {
