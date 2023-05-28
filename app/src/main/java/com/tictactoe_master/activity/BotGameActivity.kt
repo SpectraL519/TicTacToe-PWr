@@ -11,12 +11,10 @@ import com.tictactoe_master.logic.win_condition.IWinCondition
 class BotGameActivity : GameActivity() {
     private lateinit var player: Figure
     private lateinit var botHandler: BotHandler
-
     private lateinit var playingAsTV: TextView
 
     override fun initLogic() {
         super.initLogic()
-
         this.player = Figure.O
         this.botHandler = BotHandler(
             winCondition = this.game.winCondition,
@@ -31,7 +29,6 @@ class BotGameActivity : GameActivity() {
             "Playing as: %s",
             this.player.toString()
         )
-
         this.nextBT.setOnClickListener {
             if (this.game.state.gameBlocked) {
                 // clear win mark
@@ -39,7 +36,6 @@ class BotGameActivity : GameActivity() {
                     for (y in 0 until this.size)
                         this.cells[x][y].setBackgroundColor(Color.LTGRAY)
                 }
-
                 // clear figures
                 val coordinates = this.game.nextPointAction()
                 if (coordinates == null) {
@@ -51,17 +47,16 @@ class BotGameActivity : GameActivity() {
                     for (c in coordinates)
                         this.cells[c.row][c.column].setImageResource(android.R.color.transparent)
                 }
-
-                this.turnTV.text =
-                    String.format("TURN: %s", this.game.state.currentPlayer.toString())
+                this.turnTV.text = String.format(
+                    "TURN: %s",
+                    this.game.state.currentPlayer.toString()
+                )
                 this.nextBT.text = this.game.nextPointActionString
                 this.updateScoreView()
-
                 if (this.player == Figure.X)
                     this.botMovement()
             }
         }
-
         if (this.player == Figure.X)
             this.botMovement()
     }
@@ -73,14 +68,12 @@ class BotGameActivity : GameActivity() {
                 this.cells[x][y].setImageResource(figure.getImageResource())
                 checkDimensions()
                 this.turnTV.text = String.format("TURN: %s", figure.next().toString())
-
                 val status = this.game.checkStatus()
                 if (status.result != IWinCondition.Result.NONE) {
                     if (status.result == IWinCondition.Result.O || status.result == IWinCondition.Result.X) {
                         for (c in status.coordinates) {
                             this.cells[c.row][c.column].setBackgroundColor(getColor(R.color.light_green))
                         }
-
                         this.nextBT.text = this.game.nextPointActionString
                     }
                     this.updateScoreView()
@@ -98,17 +91,14 @@ class BotGameActivity : GameActivity() {
             this.cells[botMove.row][botMove.column].setImageResource(figure.getImageResource())
             checkDimensions()
             this.turnTV.text = String.format("TURN: %s", figure.next().toString())
-
             val status = this.game.checkStatus()
             if (status.result != IWinCondition.Result.NONE) {
                 if (status.result == IWinCondition.Result.O || status.result == IWinCondition.Result.X) {
                     for (c in status.coordinates) {
                         this.cells[c.row][c.column].setBackgroundColor(getColor(R.color.light_green))
                     }
-
                     this.nextBT.text = this.game.nextPointActionString
                 }
-
                 this.updateScoreView()
             }
         }

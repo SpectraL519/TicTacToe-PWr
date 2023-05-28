@@ -13,9 +13,7 @@ import com.google.firebase.ktx.Firebase
 import com.tictactoe_master.R
 
 class SignInActivity : AppCompatActivity() {
-
     private lateinit var auth: FirebaseAuth
-
     private lateinit var emailET: EditText
     private lateinit var passwordET: EditText
     private lateinit var repeatPasswordET: EditText
@@ -25,19 +23,16 @@ class SignInActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
-
         this.initView()
     }
 
     private fun initView() {
         this.auth = Firebase.auth
-
         this.emailET = findViewById(R.id.email_et)
         this.passwordET = findViewById(R.id.password_et)
         this.repeatPasswordET = findViewById(R.id.repeat_password_et)
         this.signInBT = findViewById(R.id.sign_in_bt)
         this.alreadyAccountTV = findViewById(R.id.already_account_tv)
-
         this.signInBT.setOnClickListener {
             val email = this.emailET.text.toString()
             val password = this.passwordET.text.toString()
@@ -45,7 +40,6 @@ class SignInActivity : AppCompatActivity() {
             if (this.validateData(email, password, password2))
                 this.createNewUser(email, password)
         }
-
         this.alreadyAccountTV.setOnClickListener {
             val loginIntent = Intent(this, LoginActivity::class.java)
             startActivity(loginIntent)
@@ -58,17 +52,14 @@ class SignInActivity : AppCompatActivity() {
             Toast.makeText(this, "Enter e-mail and password", Toast.LENGTH_LONG).show()
             return false
         }
-
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             Toast.makeText(this, "Enter correct e-mail address", Toast.LENGTH_LONG).show()
             return false
         }
-
         if (password != password2) {
             Toast.makeText(this, "Given password are different", Toast.LENGTH_LONG).show()
             return false
         }
-
         return true
     }
 
