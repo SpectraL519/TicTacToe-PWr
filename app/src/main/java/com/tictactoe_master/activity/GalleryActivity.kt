@@ -28,7 +28,7 @@ class GalleryActivity : AppCompatActivity() {
         val p4 = FileDataHandler.readInt(this, "p4")
 
         imagesList.add(arrayOf(R.drawable.circle, R.drawable.cross, p0))
-        imagesList.add(arrayOf(R.drawable.circle_green, R.drawable.cross_green, p1))
+        imagesList.add(arrayOf(R.drawable.circle_green2, R.drawable.cross_green2, p1))
         imagesList.add(arrayOf(R.drawable.circle_blue, R.drawable.cross_blue, p2))
         imagesList.add(arrayOf(R.drawable.circle_purple, R.drawable.cross_purple, p3))
         imagesList.add(arrayOf(R.drawable.circle_red, R.drawable.cross_red, p4))
