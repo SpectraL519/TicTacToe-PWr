@@ -12,6 +12,7 @@ import com.google.firebase.ktx.Firebase
 import com.tictactoe_master.R
 import com.tictactoe_master.app_data.CoinHandler
 import com.tictactoe_master.app_data.FileDataHandler
+import com.tictactoe_master.logic.utils.Figure
 
 class MainActivity : AppCompatActivity() {
 
@@ -114,6 +115,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun initPrices(){
         if(!FileDataHandler.checkInt(this, "p0")){
+            FileDataHandler.writeInt(this, "img1", R.drawable.circle)
+            FileDataHandler.writeInt(this, "img2", R.drawable.cross)
             FileDataHandler.writeInt(this, "p0", 0)
             FileDataHandler.writeInt(this, "p1", 0)
             FileDataHandler.writeInt(this, "p2", 20)
