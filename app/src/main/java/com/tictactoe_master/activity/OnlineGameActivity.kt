@@ -111,18 +111,22 @@ class OnlineGameActivity : GameActivity() {
             private fun createGame(snapshot: DataSnapshot) {
                 this.createdGame = true
 
-                val connectionUniqueId = System.currentTimeMillis().toString()
-                snapshot.child(connectionUniqueId)
+                this@OnlineGameActivity.connectionId = System.currentTimeMillis().toString()
+                snapshot.child(this@OnlineGameActivity.connectionId)
                     .child("params")
                     .ref.setValue(this@OnlineGameActivity.encodeGameParams())
 
-                snapshot.child(connectionUniqueId)
+                snapshot.child(this@OnlineGameActivity.connectionId)
                     .child(this@OnlineGameActivity.playerUniqueId)
                     .child("player_name")
                     .ref.setValue(this@OnlineGameActivity.playerName)
             }
 
             private fun addOpponent(connId: String, connection: DataSnapshot) {
+
+                if (this@OnlineGameActivity.connectionId != connId){
+                    return
+                }
 
                 if (connection.child("params").value.toString() != this@OnlineGameActivity.encodeGameParams())
                     return
