@@ -7,7 +7,6 @@ import com.tictactoe_master.logic.win_condition.IWinCondition
 import kotlin.math.max
 import kotlin.math.min
 
-
 class BotHandler
     constructor(
         private val winCondition: IWinCondition,

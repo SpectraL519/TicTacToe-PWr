@@ -149,8 +149,11 @@ class OnlineGameActivity : GameActivity() {
 
                         progressDialog.hide()
 
-                        this@OnlineGameActivity.opponentNameTV.text =
-                            "Playing with ${this@OnlineGameActivity.opponentName}"
+                        this@OnlineGameActivity.opponentNameTV.text = String.format(
+                            "Playing with %s",
+                            this@OnlineGameActivity.opponentName
+                        )
+
 
                         this@OnlineGameActivity.databaseReference
                             .child("connections")
@@ -191,8 +194,11 @@ class OnlineGameActivity : GameActivity() {
 
                         progressDialog.hide()
 
-                        this@OnlineGameActivity.opponentNameTV.text =
-                            "Playing with ${this@OnlineGameActivity.opponentName}"
+                        this@OnlineGameActivity.opponentNameTV.text = String.format(
+                            "Playing with %s",
+                            this@OnlineGameActivity.opponentName
+                        )
+
 
                         this@OnlineGameActivity.databaseReference
                             .child("connections")

@@ -13,7 +13,7 @@ data class GameState
     ) {
 
     val board get() = this._board
-    val boardSize get() = this._board.size()
+//    val boardSize get() = this._board.size()
     fun getFigure (x: Int, y: Int): Figure = this._board[x][y]
 
     val currentPlayer get() = this._currentPlayer
@@ -21,9 +21,9 @@ data class GameState
     val gameFinished get() = this._finished
 
     val score get() = this._score
-    fun getScore (result: IWinCondition.Result): Int {
-        return this._score.getOrDefault(result, 0)
-    }
+//    fun getScore (result: IWinCondition.Result): Int {
+//        return this._score.getOrDefault(result, 0)
+//    }
 
     fun update (
         board: GameBoard = this._board,

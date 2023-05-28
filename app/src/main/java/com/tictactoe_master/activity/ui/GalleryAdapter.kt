@@ -1,6 +1,5 @@
 package com.tictactoe_master.activity.ui
 
-import android.annotation.SuppressLint
 import android.app.ActionBar
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.tictactoe_master.GalleryFragment
 import com.tictactoe_master.R
-import com.tictactoe_master.activity.GalleryActivity
 import com.tictactoe_master.app_data.CoinHandler
 import com.tictactoe_master.app_data.FileDataHandler
 import com.tictactoe_master.logic.utils.Figure
@@ -30,7 +28,6 @@ class GalleryAdapter(
         return GalleryViewHolder(view)
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: GalleryViewHolder, position: Int) {
         holder.img1.setImageResource(sourceList[position][0])
         holder.img2.setImageResource(sourceList[position][1])
@@ -39,16 +36,18 @@ class GalleryAdapter(
             holder.selectCV.setCardBackgroundColor(app.getColor(R.color.dark_green))
         }
         if (price != 0){
-            holder.selectTV.text = "$price \uD83E\uDE99"
-
-            if(price > CoinHandler.getBalance()){
+            holder.selectTV.text = String.format(
+                "%d %s",
+                price,
+                fragment.getText(R.string.currency)
+            )
+            if (price > CoinHandler.getBalance()){
                 holder.selectCV.setCardBackgroundColor(app.getColor(R.color.bg_color))
-            }else{
+            } else {
                 holder.selectCV.setCardBackgroundColor(app.getColor(R.color.light_green))
-                holder.selectCV.setOnClickListener() {
+                holder.selectCV.setOnClickListener {
                     val builder = AlertDialog.Builder(app)
                     builder.setMessage("Are you sure you want to buy this theme?")
-
                     builder.setPositiveButton("Yes") { _, _ ->
                         CoinHandler.setBalance(CoinHandler.getBalance()-price)
                         CoinHandler.saveBalance(app)
@@ -56,13 +55,12 @@ class GalleryAdapter(
                         FileDataHandler.writeInt(app, "p${position}", 0)
                         selectTheme(holder,position)
                     }
-
                     builder.setNegativeButton("No") { _, _ ->}
                     builder.show()
                 }
             }
-        }else{
-            holder.selectCV.setOnClickListener(){
+        } else {
+            holder.selectCV.setOnClickListener {
                 selectTheme(holder, position)
             }
         }
@@ -73,7 +71,7 @@ class GalleryAdapter(
     }
 
     private fun selectTheme(holder: GalleryViewHolder, position: Int){
-        holder.selectTV.text = "select"
+        holder.selectTV.text = fragment.getText(R.string.select_theme)
         FileDataHandler.writeInt(app, "img1", sourceList[position][0])
         FileDataHandler.writeInt(app, "img2", sourceList[position][1])
         Figure.O.setImageResource(sourceList[position][0])

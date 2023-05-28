@@ -8,13 +8,12 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.tictactoe_master.activity.GalleryActivity
 import com.tictactoe_master.activity.ui.GalleryAdapter
 import com.tictactoe_master.app_data.FileDataHandler
 
 class GalleryFragment : Fragment() {
     private var imagesList = ArrayList<Array<Int>>()
-    lateinit var galleryRecyclerView: RecyclerView
+    private lateinit var galleryRecyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,7 +25,6 @@ class GalleryFragment : Fragment() {
         galleryRecyclerView = myView.findViewById(R.id.gallery_RV)
         initArray()
         setRecyclerView()
-
         return myView
     }
 

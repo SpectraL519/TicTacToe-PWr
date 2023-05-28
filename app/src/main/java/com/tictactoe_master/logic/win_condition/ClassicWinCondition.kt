@@ -6,7 +6,6 @@ import com.tictactoe_master.logic.utils.GameBoard
 import com.tictactoe_master.logic.utils.Status
 import kotlin.math.pow
 
-
 object ClassicWinCondition : IWinCondition {
     override fun check (board: GameBoard): Status {
         val boardSize: Int = board.size()
@@ -14,7 +13,7 @@ object ClassicWinCondition : IWinCondition {
         if (board.diagonal().all { it == Figure.O })
             return Status(
                 result = IWinCondition.Result.O,
-                coordinates = List<Coordinates>(boardSize) {
+                coordinates = List(boardSize) {
                     index -> Coordinates(index, index)
                 }
             )
@@ -22,7 +21,7 @@ object ClassicWinCondition : IWinCondition {
         if (board.diagonal().all { it == Figure.X })
             return Status(
                 result = IWinCondition.Result.X,
-                coordinates = List<Coordinates>(boardSize) {
+                coordinates = List(boardSize) {
                     index -> Coordinates(index, index)
                 }
             )
@@ -30,7 +29,7 @@ object ClassicWinCondition : IWinCondition {
         if (board.diagonal(false).all { it == Figure.O })
             return Status(
                 result = IWinCondition.Result.O,
-                coordinates = List<Coordinates>(boardSize) {
+                coordinates = List(boardSize) {
                     index -> Coordinates(index, boardSize - 1 - index)
                 }
             )
@@ -38,7 +37,7 @@ object ClassicWinCondition : IWinCondition {
         if (board.diagonal(false).all { it == Figure.X })
             return Status(
                 result = IWinCondition.Result.X,
-                coordinates = List<Coordinates>(boardSize) {
+                coordinates = List(boardSize) {
                     index -> Coordinates(index, boardSize - 1 - index)
                 }
             )
@@ -47,7 +46,7 @@ object ClassicWinCondition : IWinCondition {
             if (board.row(i).all { it == Figure.O })
                 return Status(
                     result = IWinCondition.Result.O,
-                    coordinates = List<Coordinates>(boardSize) {
+                    coordinates = List(boardSize) {
                         index -> Coordinates(i, index)
                     }
                 )
@@ -55,7 +54,7 @@ object ClassicWinCondition : IWinCondition {
             if (board.row(i).all { it == Figure.X })
                 return Status(
                     result = IWinCondition.Result.X,
-                    coordinates = List<Coordinates>(boardSize) {
+                    coordinates = List(boardSize) {
                         index -> Coordinates(i, index)
                     }
                 )
@@ -63,7 +62,7 @@ object ClassicWinCondition : IWinCondition {
             if (board.column(i).all { it == Figure.O })
                 return Status(
                     result = IWinCondition.Result.O,
-                    coordinates = List<Coordinates>(boardSize) {
+                    coordinates = List(boardSize) {
                         index -> Coordinates(index, i)
                     }
                 )
@@ -71,7 +70,7 @@ object ClassicWinCondition : IWinCondition {
             if (board.column(i).all { it == Figure.X })
                 return Status(
                     result = IWinCondition.Result.X,
-                    coordinates = List<Coordinates>(boardSize) {
+                    coordinates = List(boardSize) {
                         index -> Coordinates(index, i)
                     }
                 )
@@ -88,8 +87,8 @@ object ClassicWinCondition : IWinCondition {
         val maxEval = 10.0.pow(boardSize.toDouble()).toLong()
         val opponent = player.next()
 
-        val playerCounts = Array<Int>(boardSize) { 0 }
-        val opponentCounts = Array<Int>(boardSize) { 0 }
+        val playerCounts = Array(boardSize) { 0 }
+        val opponentCounts = Array(boardSize) { 0 }
         var evaluation: Long = 0
 
         var playerCount = 0

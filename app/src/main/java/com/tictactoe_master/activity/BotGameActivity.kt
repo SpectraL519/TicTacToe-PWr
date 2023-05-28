@@ -1,7 +1,6 @@
 package com.tictactoe_master.activity
 
 import android.graphics.Color
-import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import com.tictactoe_master.R
@@ -28,7 +27,10 @@ class BotGameActivity : GameActivity() {
     override fun initView() {
         super.initView()
         this.playingAsTV = findViewById(R.id.playing_as_tv)
-        this.playingAsTV.text = "Playing as: ${this.player}"
+        this.playingAsTV.text = String.format(
+            "Playing as: %s",
+            this.player.toString()
+        )
 
         this.nextBT.setOnClickListener {
             if (this.game.state.gameBlocked) {
@@ -81,11 +83,9 @@ class BotGameActivity : GameActivity() {
 
                         this.nextBT.text = this.game.nextPointActionString
                     }
-
                     this.updateScoreView()
                 }
             }
-
             if (!this.game.state.board.full())
                 this.botMovement()
         }

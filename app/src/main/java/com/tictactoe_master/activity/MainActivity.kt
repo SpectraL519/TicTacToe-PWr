@@ -5,8 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.widget.Toolbar
-import androidx.cardview.widget.CardView
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.ktx.auth
@@ -16,7 +14,6 @@ import com.tictactoe_master.MainFragment
 import com.tictactoe_master.R
 import com.tictactoe_master.activity.ui.ViewPagerAdapter
 import com.tictactoe_master.app_data.CoinHandler
-import com.tictactoe_master.app_data.FileDataHandler
 
 class MainActivity : AppCompatActivity() {
     private lateinit var pager: ViewPager

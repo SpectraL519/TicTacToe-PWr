@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
@@ -14,8 +13,6 @@ import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.tictactoe_master.activity.ChooseGameTypeActivity
-import com.tictactoe_master.activity.GalleryActivity
-import com.tictactoe_master.activity.LoginActivity
 import com.tictactoe_master.app_data.CoinHandler
 import com.tictactoe_master.app_data.FileDataHandler
 import com.tictactoe_master.logic.utils.Figure

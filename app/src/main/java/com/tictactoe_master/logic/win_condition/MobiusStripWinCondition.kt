@@ -1,12 +1,9 @@
 package com.tictactoe_master.logic.win_condition
 
-import android.media.AsyncPlayer
 import com.tictactoe_master.logic.utils.Coordinates
 import com.tictactoe_master.logic.utils.Figure
 import com.tictactoe_master.logic.utils.GameBoard
 import com.tictactoe_master.logic.utils.Status
-
-
 
 object MobiusStripWinCondition : IWinCondition {
     override fun check(board: GameBoard): Status {
@@ -65,10 +62,10 @@ object MobiusStripWinCondition : IWinCondition {
             }
 
             if (stripFound) {
-                val coordinatesA = List<Coordinates>(lastConsecutiveFigure + 1) {
+                val coordinatesA = List(lastConsecutiveFigure + 1) {
                     index -> Coordinates(row, index)
                 }
-                val coordinatesB = List<Coordinates>(boardSize - 1 - lastConsecutiveFigure) {
+                val coordinatesB = List(boardSize - 1 - lastConsecutiveFigure) {
                     index -> Coordinates(boardSize - 1 - row, boardSize - 1 - index)
                 }
 
