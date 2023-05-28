@@ -13,9 +13,7 @@ import com.google.firebase.ktx.Firebase
 import com.tictactoe_master.R
 
 class LoginActivity : AppCompatActivity() {
-
     private lateinit var auth: FirebaseAuth
-
     private lateinit var emailET: EditText
     private lateinit var passwordET: EditText
     private lateinit var loginBT: Button
@@ -24,25 +22,21 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
         this.initView()
     }
 
     private fun initView() {
         this.auth = Firebase.auth
-
         this.emailET = findViewById(R.id.email_et)
         this.passwordET = findViewById(R.id.password_et)
         this.loginBT = findViewById(R.id.login_bt)
         this.notYetAccountTV = findViewById(R.id.not_yet_account_tv)
-
         this.loginBT.setOnClickListener {
             val email = this.emailET.text.toString()
             val password = this.passwordET.text.toString()
             if (this.validateData(email, password))
                 this.login(email, password)
         }
-
         this.notYetAccountTV.setOnClickListener {
             val signInIntent = Intent(this, SignInActivity::class.java)
             startActivity(signInIntent)
@@ -55,12 +49,10 @@ class LoginActivity : AppCompatActivity() {
             Toast.makeText(this, "Enter e-mail and password", Toast.LENGTH_LONG).show()
             return false
         }
-
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             Toast.makeText(this, "Enter correct e-mail address", Toast.LENGTH_LONG).show()
             return false
         }
-
         return true
     }
 
@@ -75,5 +67,4 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
     }
-
 }

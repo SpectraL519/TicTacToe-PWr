@@ -3,22 +3,21 @@ package com.tictactoe_master.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
-import androidx.cardview.widget.CardView
+import androidx.viewpager.widget.ViewPager
+import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.tictactoe_master.activity.fragment.GalleryFragment
+import com.tictactoe_master.activity.fragment.MainFragment
 import com.tictactoe_master.R
-import com.tictactoe_master.app_data.CoinHandler
-import com.tictactoe_master.app_data.FileDataHandler
+import com.tictactoe_master.activity.ui.ViewPagerAdapter
+import com.tictactoe_master.logic.CoinHandler
 
 class MainActivity : AppCompatActivity() {
-
-    private lateinit var oneVsOneCV: CardView
-    private lateinit var oneVsBotCV: CardView
-    private lateinit var oneVsOneOnlineCV: CardView
-    private lateinit var shopCV: CardView
+    private lateinit var pager: ViewPager
+    private lateinit var tab: TabLayout
     private lateinit var accountTV: TextView
     private lateinit var coinsTV: TextView
     private var saveFileLoaded = false
@@ -26,21 +25,20 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        if (!saveFileLoaded) {
-            CoinHandler.loadBalance(this)
-            saveFileLoaded = true
-        }
-
-        this.initPrices()
-        this.initView()
+        pager = findViewById(R.id.viewPager)
+        tab = findViewById(R.id.tabs)
+        val adapter = ViewPagerAdapter(supportFragmentManager)
+        adapter.addFragment(MainFragment(), "Home")
+        adapter.addFragment(GalleryFragment(), "Themes")
+        pager.adapter = adapter
+        tab.setupWithViewPager(pager)
+        initView()
     }
 
     override fun onStart() {
         super.onStart()
-
         this.setAccountTVText()
     }
-
 
     override fun onResume() {
         super.onResume()
@@ -51,11 +49,6 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    override fun onStop() {
-        super.onStop()
-        CoinHandler.saveBalance(this)
-    }
-
     private fun setAccountTVText() {
         this.accountTV.text = when (Firebase.auth.currentUser) {
             null -> getString(R.string.login)
@@ -64,61 +57,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        this.oneVsOneCV = findViewById(R.id.one_v_one_cv)
-        this.oneVsBotCV = findViewById(R.id.one_v_bot_cv)
-        this.oneVsOneOnlineCV = findViewById(R.id.one_v_one_online_cv)
-        this.shopCV = findViewById(R.id.shop_cv)
         this.accountTV = findViewById(R.id.account_tv)
         this.coinsTV = findViewById(R.id.coins_tv)
-
+        if (!saveFileLoaded) {
+            CoinHandler.loadBalance(this)
+            saveFileLoaded = true
+        }
         this.setAccountTVText()
         this.accountTV.setOnClickListener {
             if (Firebase.auth.currentUser == null) {
                 val loginIntent = Intent(this, LoginActivity::class.java)
                 startActivity(loginIntent)
-            }
-            else {
+            } else {
                 Firebase.auth.signOut()
                 this.accountTV.text = getString(R.string.login)
                 Toast.makeText(this, "You've been signed out", Toast.LENGTH_LONG).show()
             }
-        }
-
-        this.oneVsOneCV.setOnClickListener {
-            this.startGame("1_v_1")
-        }
-
-        this.oneVsBotCV.setOnClickListener {
-            this.startGame("1_v_bot")
-        }
-
-        this.oneVsOneOnlineCV.setOnClickListener {
-            if (Firebase.auth.currentUser == null)
-                Toast.makeText(this, "First log in to play online", Toast.LENGTH_SHORT).show()
-            else
-                this.startGame("1_v_1_online")
-        }
-
-        this.shopCV.setOnClickListener {
-            val myIntent = Intent(this, GalleryActivity::class.java)
-            startActivity(myIntent)
-        }
-    }
-
-    private fun startGame (gameMode: String) {
-        val gameIntent = Intent(this, ChooseGameTypeActivity::class.java).apply {
-            putExtra("game_mode", gameMode)
-        }
-        startActivity(gameIntent)
-    }
-
-    private fun initPrices(){
-        if(!FileDataHandler.checkInt(this, "p0")){
-            FileDataHandler.writeInt(this, "p0", 0)
-            FileDataHandler.writeInt(this, "p1", 0)
-            FileDataHandler.writeInt(this, "p2", 20)
-            FileDataHandler.writeInt(this, "p3", 20)
-            FileDataHandler.writeInt(this, "p4", 20)
         }
     }
 }

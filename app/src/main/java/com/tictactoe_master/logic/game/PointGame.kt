@@ -1,7 +1,6 @@
 package com.tictactoe_master.logic.game
 
 import com.tictactoe_master.activity.GameActivity
-import com.tictactoe_master.app_data.CoinHandler
 import com.tictactoe_master.logic.utils.*
 import com.tictactoe_master.logic.win_condition.ClassicWinCondition
 import com.tictactoe_master.logic.win_condition.IWinCondition
@@ -59,7 +58,7 @@ class PointGame
             )
 
             if (finished) {
-                CoinHandler.gameOver(_winCondition, _boardSize, _points)
+                this.context.gameOver(this._currentStatus.result, _winCondition, _points)
                 this.context.showWinMessage(this._currentStatus.result)
             }
             return true

@@ -1,10 +1,10 @@
 package com.tictactoe_master.activity
 
 import android.graphics.Color
-import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import com.tictactoe_master.R
+import com.tictactoe_master.logic.CoinHandler
 import com.tictactoe_master.logic.BotHandler
 import com.tictactoe_master.logic.utils.Figure
 import com.tictactoe_master.logic.win_condition.IWinCondition
@@ -12,12 +12,10 @@ import com.tictactoe_master.logic.win_condition.IWinCondition
 class BotGameActivity : GameActivity() {
     private lateinit var player: Figure
     private lateinit var botHandler: BotHandler
-
     private lateinit var playingAsTV: TextView
 
     override fun initLogic() {
         super.initLogic()
-
         this.player = Figure.O
         this.botHandler = BotHandler(
             winCondition = this.game.winCondition,
@@ -28,8 +26,10 @@ class BotGameActivity : GameActivity() {
     override fun initView() {
         super.initView()
         this.playingAsTV = findViewById(R.id.playing_as_tv)
-        this.playingAsTV.text = "Playing as: ${this.player}"
-
+        this.playingAsTV.text = String.format(
+            "Playing as: %s",
+            this.player.toString()
+        )
         this.nextBT.setOnClickListener {
             if (this.game.state.gameBlocked) {
                 // clear win mark
@@ -37,7 +37,6 @@ class BotGameActivity : GameActivity() {
                     for (y in 0 until this.size)
                         this.cells[x][y].setBackgroundColor(Color.LTGRAY)
                 }
-
                 // clear figures
                 val coordinates = this.game.nextPointAction()
                 if (coordinates == null) {
@@ -49,17 +48,16 @@ class BotGameActivity : GameActivity() {
                     for (c in coordinates)
                         this.cells[c.row][c.column].setImageResource(android.R.color.transparent)
                 }
-
-                this.turnTV.text =
-                    String.format("TURN: %s", this.game.state.currentPlayer.toString())
+                this.turnTV.text = String.format(
+                    "TURN: %s",
+                    this.game.state.currentPlayer.toString()
+                )
                 this.nextBT.text = this.game.nextPointActionString
                 this.updateScoreView()
-
                 if (this.player == Figure.X)
                     this.botMovement()
             }
         }
-
         if (this.player == Figure.X)
             this.botMovement()
     }
@@ -71,24 +69,33 @@ class BotGameActivity : GameActivity() {
                 this.cells[x][y].setImageResource(figure.getImageResource())
                 checkDimensions()
                 this.turnTV.text = String.format("TURN: %s", figure.next().toString())
-
                 val status = this.game.checkStatus()
                 if (status.result != IWinCondition.Result.NONE) {
                     if (status.result == IWinCondition.Result.O || status.result == IWinCondition.Result.X) {
                         for (c in status.coordinates) {
                             this.cells[c.row][c.column].setBackgroundColor(getColor(R.color.light_green))
                         }
-
                         this.nextBT.text = this.game.nextPointActionString
                     }
-
                     this.updateScoreView()
                 }
             }
-
             if (!this.game.state.board.full())
                 this.botMovement()
         }
+    }
+
+    override fun gameOver(
+        result: IWinCondition.Result,
+        _winCondition: IWinCondition,
+        _points: Int
+    ) {
+        if (result == IWinCondition.Result.TIE) {
+            CoinHandler.gameOver(1, _winCondition, size, _points)
+        } else if (result.toString() == player.toString()) {
+            CoinHandler.gameOver(2, _winCondition, size, _points)
+        }
+
     }
 
     private fun botMovement() {
@@ -98,17 +105,14 @@ class BotGameActivity : GameActivity() {
             this.cells[botMove.row][botMove.column].setImageResource(figure.getImageResource())
             checkDimensions()
             this.turnTV.text = String.format("TURN: %s", figure.next().toString())
-
             val status = this.game.checkStatus()
             if (status.result != IWinCondition.Result.NONE) {
                 if (status.result == IWinCondition.Result.O || status.result == IWinCondition.Result.X) {
                     for (c in status.coordinates) {
                         this.cells[c.row][c.column].setBackgroundColor(getColor(R.color.light_green))
                     }
-
                     this.nextBT.text = this.game.nextPointActionString
                 }
-
                 this.updateScoreView()
             }
         }

@@ -8,14 +8,13 @@
     android:orientation="vertical"
     app:constraint_referenced_tags="0dp"
     tools:context=".activity.ChooseGameTypeActivity"
-    android:layout_marginStart="10dp"
-    android:layout_marginTop="10dp"
-    android:layout_marginEnd="10dp"
     android:theme="@style/Theme.TicTacToeMaster">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@color/dark_green"
         android:orientation="horizontal">
 
         <TextView

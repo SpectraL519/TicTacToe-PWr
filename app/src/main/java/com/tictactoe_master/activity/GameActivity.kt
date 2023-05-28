@@ -10,49 +10,45 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.tictactoe_master.R
-import com.tictactoe_master.app_data.CoinHandler
-import com.tictactoe_master.app_data.FileDataHandler
+import com.tictactoe_master.logic.CoinHandler
 import com.tictactoe_master.logic.game.ClassicGame
 import com.tictactoe_master.logic.game.IGame
 import com.tictactoe_master.logic.game.PointGame
-import com.tictactoe_master.logic.utils.Figure
 import com.tictactoe_master.logic.win_condition.ClassicWinCondition
 import com.tictactoe_master.logic.win_condition.IWinCondition
 import com.tictactoe_master.logic.win_condition.MobiusStripWinCondition
 
 
 open class GameActivity : AppCompatActivity() {
-
     protected var size = 3
-    protected lateinit var game: IGame
-
     private lateinit var accountTV: TextView
     private lateinit var pointsO: TextView
     private lateinit var pointsTie: TextView
     private lateinit var pointsX: TextView
-    protected lateinit var turnTV: TextView
     private lateinit var gameBoardTL: TableLayout
+    private lateinit var coinsTV: TextView
+    protected lateinit var game: IGame
+    protected lateinit var turnTV: TextView
     protected lateinit var cells: Array<Array<ImageView>>
     protected lateinit var nextBT: Button
-    private lateinit var coinsTV: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
-
         this.initLogic()
         this.initView()
     }
 
     override fun onStart() {
         super.onStart()
-
         this.setAccountTVText()
     }
+
     override fun onStop() {
         super.onStop()
         CoinHandler.saveBalance(this)
     }
+
     private fun setAccountTVText() {
         this.accountTV.text = when (Firebase.auth.currentUser) {
             null -> getString(R.string.login)
@@ -75,8 +71,6 @@ open class GameActivity : AppCompatActivity() {
             )
             else -> ClassicGame(this, this.size, winCondition)
         }
-        Figure.O.setImageResource(FileDataHandler.readInt(this, "img1"))
-        Figure.X.setImageResource(FileDataHandler.readInt(this, "img2"))
     }
 
     protected open fun initView() {
@@ -91,26 +85,20 @@ open class GameActivity : AppCompatActivity() {
             CoinHandler.getBalance(),
             getText(R.string.currency)
         )
-
         this.setAccountTVText()
         this.accountTV.setOnClickListener {
             if (Firebase.auth.currentUser == null) {
                 val loginIntent = Intent(this, LoginActivity::class.java)
                 startActivity(loginIntent)
-            }
-            else {
+            } else {
                 Firebase.auth.signOut()
                 this.accountTV.text = getString(R.string.login)
                 Toast.makeText(this, "You've been signed out", Toast.LENGTH_LONG).show()
             }
         }
-
         this.turnTV = findViewById(R.id.turn_tv)
         this.turnTV.text = String.format("TURN: %s", this.game.state.currentPlayer.toString())
-
         this.gameBoardTL = findViewById(R.id.game_board_tl)
-
-
         this.gameBoardTL.removeAllViews()
         this.cells = Array(this.size) { Array(this.size) { ImageView(this) } }
         for (i in 0 until this.size) {
@@ -123,7 +111,6 @@ open class GameActivity : AppCompatActivity() {
                     )
                     layoutParams.setMargins(3, 3, 3, 3)
                     this.cells[i][j].layoutParams = layoutParams
-
                     this.cells[i][j].setBackgroundColor(Color.LTGRAY)
                     this.cells[i][j].setImageResource(android.R.color.transparent)
                     this.cells[i][j].scaleType = ImageView.ScaleType.FIT_XY
@@ -137,14 +124,12 @@ open class GameActivity : AppCompatActivity() {
             )
             tableRow.layoutParams = rowParams
             this.gameBoardTL.addView(tableRow)
-
             this.gameBoardTL.viewTreeObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
                 override fun onGlobalLayout() {
                     gameBoardTL.viewTreeObserver.removeOnGlobalLayoutListener(this)
                     gameBoardTL.height //height is ready
                 }
             })
-
             this.nextBT = findViewById(R.id.next_bt)
             this.nextBT.text = this.game.nextPointActionString
             this.nextBT.setOnClickListener {
@@ -154,7 +139,6 @@ open class GameActivity : AppCompatActivity() {
                         for (y in 0 until this.size)
                             this.cells[x][y].setBackgroundColor(Color.LTGRAY)
                     }
-
                     // clear figures
                     val coordinates = this.game.nextPointAction()
                     if (coordinates == null) {
@@ -167,9 +151,10 @@ open class GameActivity : AppCompatActivity() {
                         for (c in coordinates)
                             this.cells[c.row][c.column].setImageResource(android.R.color.transparent)
                     }
-
-                    this.turnTV.text =
-                        String.format("TURN: %s", this.game.state.currentPlayer.toString())
+                    this.turnTV.text = String.format(
+                        "TURN: %s",
+                        this.game.state.currentPlayer.toString()
+                    )
                     this.nextBT.text = this.game.nextPointActionString
                     this.updateScoreView()
                 }
@@ -180,25 +165,28 @@ open class GameActivity : AppCompatActivity() {
     protected open fun cellClick(imageView: ImageView, x: Int, y: Int) {
         if (this.game.placeFigure(x, y)) {
             val figure = this.game.state.getFigure(x, y)
-
             this.cells[x][y].setImageResource(figure.getImageResource())
             checkDimensions()
-
             this.turnTV.text = String.format("TURN: %s", figure.next().toString())
-
             val status = this.game.checkStatus()
             if (status.result != IWinCondition.Result.NONE) {
                 if (status.result == IWinCondition.Result.O || status.result == IWinCondition.Result.X) {
                     for (c in status.coordinates) {
                         this.cells[c.row][c.column].setBackgroundColor(getColor(R.color.light_green))
                     }
-
                     this.nextBT.text = this.game.nextPointActionString
                 }
-
                 this.updateScoreView()
             }
         }
+    }
+
+    open fun gameOver(
+        result: IWinCondition.Result,
+        _winCondition: IWinCondition,
+        _points: Int
+    ) {
+        CoinHandler.gameOver(1, _winCondition, size, _points)
     }
 
     protected fun checkDimensions(){

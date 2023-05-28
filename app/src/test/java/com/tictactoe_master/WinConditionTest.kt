@@ -28,7 +28,7 @@ class WinConditionTest {
             status = winCondition.check(board)
             Assert.assertEquals(IWinCondition.Result.O, status.result)
             Assert.assertEquals(
-                List<Coordinates>(size) { index -> Coordinates(i, index) },
+                List(size) { index -> Coordinates(i, index) },
                 status.coordinates
             )
 
@@ -37,7 +37,7 @@ class WinConditionTest {
             status = winCondition.check(board)
             Assert.assertEquals(IWinCondition.Result.X, status.result)
             Assert.assertEquals(
-                List<Coordinates>(size) { index -> Coordinates(i, index) },
+                List(size) { index -> Coordinates(i, index) },
                 status.coordinates
             )
 
@@ -47,7 +47,7 @@ class WinConditionTest {
             status = winCondition.check(board)
             Assert.assertEquals(IWinCondition.Result.O, status.result)
             Assert.assertEquals(
-                List<Coordinates>(size) { index -> Coordinates(index, i) },
+                List(size) { index -> Coordinates(index, i) },
                 status.coordinates
             )
 
@@ -57,7 +57,7 @@ class WinConditionTest {
             status = winCondition.check(board)
             Assert.assertEquals(IWinCondition.Result.X, status.result)
             Assert.assertEquals(
-                List<Coordinates>(size) { index -> Coordinates(index, i) },
+                List(size) { index -> Coordinates(index, i) },
                 status.coordinates
             )
         }
@@ -68,7 +68,7 @@ class WinConditionTest {
         status = winCondition.check(board)
         Assert.assertEquals(IWinCondition.Result.O, status.result)
         Assert.assertEquals(
-            List<Coordinates>(size) { index -> Coordinates(index, index) },
+            List(size) { index -> Coordinates(index, index) },
             status.coordinates
         )
 
@@ -78,7 +78,7 @@ class WinConditionTest {
         status = winCondition.check(board)
         Assert.assertEquals(IWinCondition.Result.X, status.result)
         Assert.assertEquals(
-            List<Coordinates>(size) { index -> Coordinates(index, index) },
+            List(size) { index -> Coordinates(index, index) },
             status.coordinates
         )
 
@@ -88,7 +88,7 @@ class WinConditionTest {
         status = winCondition.check(board)
         Assert.assertEquals(IWinCondition.Result.O, status.result)
         Assert.assertEquals(
-            List<Coordinates>(size) { index -> Coordinates(index, size - 1 - index) },
+            List(size) { index -> Coordinates(index, size - 1 - index) },
             status.coordinates
         )
 
@@ -98,7 +98,7 @@ class WinConditionTest {
         status = winCondition.check(board)
         Assert.assertEquals(IWinCondition.Result.X, status.result)
         Assert.assertEquals(
-            List<Coordinates>(size) { index -> Coordinates(index, size - 1 - index) },
+            List(size) { index -> Coordinates(index, size - 1 - index) },
             status.coordinates
         )
 
@@ -137,7 +137,7 @@ class WinConditionTest {
             status = winCondition.check(board)
             Assert.assertEquals(IWinCondition.Result.O, status.result)
             Assert.assertEquals(
-                List<Coordinates>(size) { index -> Coordinates(i, index) },
+                List(size) { index -> Coordinates(i, index) },
                 status.coordinates
             )
 
@@ -146,7 +146,7 @@ class WinConditionTest {
             status = winCondition.check(board)
             Assert.assertEquals(IWinCondition.Result.X, status.result)
             Assert.assertEquals(
-                List<Coordinates>(size) { index -> Coordinates(i, index) },
+                List(size) { index -> Coordinates(i, index) },
                 status.coordinates
             )
 
@@ -156,7 +156,7 @@ class WinConditionTest {
             status = winCondition.check(board)
             Assert.assertEquals(IWinCondition.Result.O, status.result)
             Assert.assertEquals(
-                List<Coordinates>(size) { index -> Coordinates(index, i) },
+                List(size) { index -> Coordinates(index, i) },
                 status.coordinates
             )
 
@@ -166,7 +166,7 @@ class WinConditionTest {
             status = winCondition.check(board)
             Assert.assertEquals(IWinCondition.Result.X, status.result)
             Assert.assertEquals(
-                List<Coordinates>(size) { index -> Coordinates(index, i) },
+                List(size) { index -> Coordinates(index, i) },
                 status.coordinates
             )
         }
@@ -177,7 +177,7 @@ class WinConditionTest {
         status = winCondition.check(board)
         Assert.assertEquals(IWinCondition.Result.O, status.result)
         Assert.assertEquals(
-            List<Coordinates>(size) { index -> Coordinates(index, index) },
+            List(size) { index -> Coordinates(index, index) },
             status.coordinates
         )
 
@@ -187,7 +187,7 @@ class WinConditionTest {
         status = winCondition.check(board)
         Assert.assertEquals(IWinCondition.Result.X, status.result)
         Assert.assertEquals(
-            List<Coordinates>(size) { index -> Coordinates(index, index) },
+            List(size) { index -> Coordinates(index, index) },
             status.coordinates
         )
 
@@ -197,7 +197,7 @@ class WinConditionTest {
         status = winCondition.check(board)
         Assert.assertEquals(IWinCondition.Result.O, status.result)
         Assert.assertEquals(
-            List<Coordinates>(size) { index -> Coordinates(index, size - 1 - index) },
+            List(size) { index -> Coordinates(index, size - 1 - index) },
             status.coordinates
         )
 
@@ -207,7 +207,7 @@ class WinConditionTest {
         status = winCondition.check(board)
         Assert.assertEquals(IWinCondition.Result.X, status.result)
         Assert.assertEquals(
-            List<Coordinates>(size) { index -> Coordinates(index, size - 1 - index) },
+            List(size) { index -> Coordinates(index, size - 1 - index) },
             status.coordinates
         )
 
@@ -226,13 +226,13 @@ class WinConditionTest {
 
         // Mobius strip wins
         board.clear()
-        var coordinates = emptyList<Coordinates>()
+        var coordinates: List<Coordinates>
         for (row: Int in 0 until size) {
             for (lastConsecutive: Int in 0 until size - 1) {
-                val coordinatesA = List<Coordinates>(lastConsecutive + 1) {
+                val coordinatesA = List(lastConsecutive + 1) {
                     index -> Coordinates(row, index)
                 }
-                val coordinatesB = List<Coordinates>(size - 1 - lastConsecutive) {
+                val coordinatesB = List(size - 1 - lastConsecutive) {
                     index -> Coordinates(size - 1 - row, size - 1 - index)
                 }
                 coordinates = (coordinatesA + coordinatesB).sorted()
@@ -276,7 +276,7 @@ class WinConditionTest {
                 status = winCondition.check(board)
                 println("result: " + status.result.toString())
                 for (c in status.coordinates)
-                    print(c.toString() + " ")
+                    print("$c ")
                 println()
                 Assert.assertEquals(IWinCondition.Result.X, status.result)
                 Assert.assertEquals(coordinates, status.coordinates)

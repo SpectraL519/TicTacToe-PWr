@@ -21,5 +21,4 @@ class GalleryViewHolder(
         selectTV = itemView.findViewById(R.id.select_TV)
         selectCV = itemView.findViewById(R.id.select_CV)
     }
-
 }

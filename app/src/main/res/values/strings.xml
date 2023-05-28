@@ -6,7 +6,8 @@
     <string name="twoPlayersTwoPhonesWiFi">1 vs 1 online</string>
     <string name="onePlayerOnePhone">play against bot</string>
     <string name="start_game">start game</string>
-    <string name="currency">coins</string>
+    <string name="currency">\uD83E\uDE99</string>
+    <string name="select_theme">select</string>
     <string name="chosen_board_size">Chosen board size:</string>
     <string name="classic_or_point_game">Classic or point game?</string>
     <string name="classic_game">Classic</string>
@@ -26,4 +27,6 @@
     <string name="sign_out">Sign out</string>
     <string name="already_account">Click here to log in if you already have an account</string>
     <string name="not_yet_account">Click here to sign in if you don\'t have an account</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
