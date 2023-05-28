@@ -113,13 +113,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initPrices(){
-        if(!FileDataHandler.checkInt(this, "priceS")){
-            FileDataHandler.writeInt(this, "priceS", 0)
-            FileDataHandler.writeInt(this, "priceG", 0)
-            FileDataHandler.writeInt(this, "priceB", 20)
-            FileDataHandler.writeInt(this, "priceP", 20)
-            FileDataHandler.writeInt(this, "priceR", 20)
+        if(!FileDataHandler.checkInt(this, "p0")){
+            FileDataHandler.writeInt(this, "p0", 0)
+            FileDataHandler.writeInt(this, "p1", 0)
+            FileDataHandler.writeInt(this, "p2", 20)
+            FileDataHandler.writeInt(this, "p3", 20)
+            FileDataHandler.writeInt(this, "p4", 20)
         }
     }
-
 }

@@ -23,17 +23,17 @@ class GalleryActivity : AppCompatActivity(), GalleryAdapter.OnItemListener {
     }
 
     private fun initArray(){
-        val p1 = FileDataHandler.readInt(this, "priceS")
-        val p2 = FileDataHandler.readInt(this, "priceG")
-        val p3 = FileDataHandler.readInt(this, "priceB")
-        val p4 = FileDataHandler.readInt(this, "priceP")
-        val p5 = FileDataHandler.readInt(this, "priceR")
+        val p0 = FileDataHandler.readInt(this, "p0")
+        val p1 = FileDataHandler.readInt(this, "p1")
+        val p2 = FileDataHandler.readInt(this, "p2")
+        val p3 = FileDataHandler.readInt(this, "p3")
+        val p4 = FileDataHandler.readInt(this, "p4")
 
-        imagesList.add(arrayOf(R.drawable.circle, R.drawable.cross, p1))
-        imagesList.add(arrayOf(R.drawable.circle_green, R.drawable.cross_green, p2))
-        imagesList.add(arrayOf(R.drawable.circle_blue, R.drawable.cross_blue, p3))
-        imagesList.add(arrayOf(R.drawable.circle_purple, R.drawable.cross_purple, p4))
-        imagesList.add(arrayOf(R.drawable.circle_red, R.drawable.cross_red, p5))
+        imagesList.add(arrayOf(R.drawable.circle, R.drawable.cross, p0))
+        imagesList.add(arrayOf(R.drawable.circle_green, R.drawable.cross_green, p1))
+        imagesList.add(arrayOf(R.drawable.circle_blue, R.drawable.cross_blue, p2))
+        imagesList.add(arrayOf(R.drawable.circle_purple, R.drawable.cross_purple, p3))
+        imagesList.add(arrayOf(R.drawable.circle_red, R.drawable.cross_red, p4))
     }
 
     fun setRecyclerView() {
