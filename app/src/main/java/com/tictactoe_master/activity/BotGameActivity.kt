@@ -15,11 +15,6 @@ class BotGameActivity : GameActivity() {
 
     private lateinit var playingAsTV: TextView
 
-    override fun onStart() {
-        super.onStart()
-
-
-    }
     override fun initLogic() {
         super.initLogic()
 
