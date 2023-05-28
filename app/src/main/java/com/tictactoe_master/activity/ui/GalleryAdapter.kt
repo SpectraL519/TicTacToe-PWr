@@ -3,6 +3,7 @@ package com.tictactoe_master.activity.ui
 import android.app.ActionBar
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -51,7 +52,12 @@ class GalleryAdapter(
                     builder.setPositiveButton("Yes") { _, _ ->
                         CoinHandler.setBalance(CoinHandler.getBalance()-price)
                         CoinHandler.saveBalance(app)
-                        CoinHandler.loadBalance(app)
+                        val coinsTV = app.findViewById<TextView>(R.id.coins_tv)
+                        coinsTV.text = String.format(
+                            "%s %s",
+                            CoinHandler.getBalance(),
+                            app.getText(R.string.currency)
+                        )
                         FileDataHandler.writeInt(app, "p${position}", 0)
                         selectTheme(holder,position)
                     }
