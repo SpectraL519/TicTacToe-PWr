@@ -11,6 +11,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.tictactoe_master.R
 import com.tictactoe_master.app_data.CoinHandler
+import com.tictactoe_master.app_data.FileDataHandler
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity() {
             saveFileLoaded = true
         }
 
+        this.initPrices()
         this.initView()
     }
 
@@ -108,6 +110,16 @@ class MainActivity : AppCompatActivity() {
             putExtra("game_mode", gameMode)
         }
         startActivity(gameIntent)
+    }
+
+    private fun initPrices(){
+        if(!FileDataHandler.checkInt(this, "priceS")){
+            FileDataHandler.writeInt(this, "priceS", 0)
+            FileDataHandler.writeInt(this, "priceG", 0)
+            FileDataHandler.writeInt(this, "priceB", 20)
+            FileDataHandler.writeInt(this, "priceP", 20)
+            FileDataHandler.writeInt(this, "priceR", 20)
+        }
     }
 
 }

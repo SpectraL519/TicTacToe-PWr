@@ -63,4 +63,11 @@ object FileDataHandler : DataHandler {
             ?: throw Exception("No data given on key = $key")
     }
 
+    override fun checkInt(context: AppCompatActivity, key: String): Boolean {
+        val value = this.sharedPref!!.getInt(key, Integer.MIN_VALUE)
+
+        if (value == Integer.MIN_VALUE)
+            return false
+        return true
+    }
 }
