@@ -10,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.tictactoe_master.activity.ChooseGameTypeActivity
@@ -73,8 +74,8 @@ class MainFragment : Fragment() {
         }
 
         this.shopCV.setOnClickListener {
-            val myIntent = Intent(activity, GalleryActivity::class.java)
-            startActivity(myIntent)
+            val tabs = requireActivity().findViewById<TabLayout>(R.id.tabs)
+            tabs.getTabAt(1)?.select()
         }
     }
 
