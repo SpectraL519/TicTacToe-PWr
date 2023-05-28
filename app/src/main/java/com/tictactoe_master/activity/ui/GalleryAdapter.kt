@@ -8,12 +8,13 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.tictactoe_master.R
+import com.tictactoe_master.activity.GalleryActivity
 import com.tictactoe_master.app_data.CoinHandler
 import com.tictactoe_master.app_data.FileDataHandler
 import com.tictactoe_master.logic.utils.Figure
 
 class GalleryAdapter(
-    private val app: AppCompatActivity,
+    private val app: GalleryActivity,
     private val sourceList: ArrayList<Array<Int>>,
     private val onItemListener: OnItemListener
     ): RecyclerView.Adapter<GalleryViewHolder>() {
@@ -34,6 +35,9 @@ class GalleryAdapter(
         holder.img1.setImageResource(sourceList[position][0])
         holder.img2.setImageResource(sourceList[position][1])
         val price = sourceList[position][2]
+        if (sourceList[position][0] == Figure.O.getImageResource()){
+            holder.selectCV.setCardBackgroundColor(app.getColor(R.color.dark_green))
+        }
         if (price != 0){
             holder.selectTV.text = "$price \uD83E\uDE99"
         }else{
@@ -43,6 +47,9 @@ class GalleryAdapter(
                 FileDataHandler.writeInt(app, "img2", sourceList[position][1])
                 Figure.O.setImageResource(sourceList[position][0])
                 Figure.X.setImageResource(sourceList[position][1])
+
+                holder.selectCV.setCardBackgroundColor(app.getColor(R.color.dark_green))
+                app.setRecyclerView()
             }
         }
 //        holder.rating.rating = ratingList[position]

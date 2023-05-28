@@ -26,7 +26,7 @@ class GalleryActivity : AppCompatActivity(), GalleryAdapter.OnItemListener {
         imagesList.add(arrayOf(R.drawable.circle_green, R.drawable.cross_green, 0))
     }
 
-    private fun setRecyclerView() {
+    fun setRecyclerView() {
         val eventAdapter = GalleryAdapter(this, imagesList, this)
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
         galleryRecyclerView.layoutManager = layoutManager
